@@ -1,33 +1,36 @@
 # FresherNote
 
-[Heroku link][heroku] **Note:** This should be a link to your production site
+[app.licative.com][heroku] **Note:** This will be a link to the production site
 
-[heroku]: http://www.herokuapp.com
+[heroku]: http://app.licative.com
 
 ## Minimum Viable Product
 
-FresherNote is a web application inspired by Evernote that will be build using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
+Applicative is a web application inspired by Evernote that will be built using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
 
 - [ ] Hosting on Heroku
 - [ ] New account creation, login, and guest/demo login
-- [ ] A production README, replacing this README (**NB**: check out the [sample production README](docs/production_readme.md) -- you'll write this later)
-- [ ] Notes
+- [ ] A production README, replacing this README
+- [ ] Dashboard
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Notebooks for organizing notes
+- [ ] Segmentation
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Tags for notes
+- [ ] Annotations for Segmentation Data Points
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Rich Text Editing of notes
+- [ ] Tagging for annotations
   - [ ] Smooth, bug-free navigation
   - [ ] Adequate seed data to demonstrate the site's features
   - [ ] Adequate CSS styling
-- [ ] Infinite Scroll for Notes
+- [ ] Tutorial for using Segmentation
+  - [ ] Smooth, bug-free navigation
+  - [ ] Adequate seed data to demonstrate the site's features
+  - [ ] Adequate CSS styling
 
 ## Design Docs
 * [View Wireframes][views]
@@ -44,7 +47,7 @@ FresherNote is a web application inspired by Evernote that will be build using R
 
 ## Implementation Timeline
 
-### Phase 1: Backend setup and Front End User Authentication (2 days, W1 W 6pm)
+### Phase 1: Backend setup and Front End User Authentication (1 days, W1 Tu 6pm)
 
 **Objective:** Functioning rails project with front-end Authentication
 
@@ -60,76 +63,48 @@ FresherNote is a web application inspired by Evernote that will be build using R
 - [ ] style signin/signup components
 - [ ] seed users
 
-### Phase 2: Notes Model, API, and components (2 days, W1 F 6pm)
+### Phase 2: Dashboard Model, API, and components (3 days, W1 F 6pm)
 
-**Objective:** Notes can be created, read, edited and destroyed through
-the API.
+**Objective:** Dashboard displays four charts of demo data
 
-- [ ] create `Note` model
-- [ ] seed the database with a small amount of test data
-- [ ] CRUD API for notes (`NotesController`)
-- [ ] jBuilder views for notes
+- [ ] create `Dashboard` model
+- [ ] seed the database with demo data
 - [ ] test out API interaction in the console.
-- implement each note component, building out the flux loop as needed.
-  - [ ] `NotesIndex`
-  - [ ] `NoteIndexItem`
-  - [ ] `NoteForm`
-- [ ] save Notes to the DB when the form loses focus or is left idle after editing.
-- [ ] style notes components
-- [ ] seed notes
+- [ ] integrate `react-highcharts` (based on HighCharts.js).
+- implement each dashboard component, building out the flux loop as needed.
+  - [ ] Funnel Chart
+  - [ ] Segmentation Charts (2)
+  - [ ] Cohorts Chart
 
-### Phase 3: Notebooks (2 day, W2 Tu 6pm)
+### Phase 3: Segmentation (3 days, W2 W 6pm)
 
-**Objective:** Notes belong to Notebooks, and can be viewed by notebook.
+**Objective:** Interactive Segmentation Chart can be altered by dragging/dropping events/properties
 
-- [ ] create `Notebook` model
-- build out API, Flux loop, and components for:
-  - [ ] Notebook CRUD
-  - [ ] adding notes requires a notebook
-  - [ ] moving notes to a different notebook
-  - [ ] viewing notes by notebook
+- [ ] create `Segmentation` model
 - [ ] Use CSS to style new components
-- [ ] Seed Notebooks
 
-Phase 3 adds organization to the Notes. Notes belong to a Notebook,
-which has its own `Index` view.
+### Phase 4: Annotations (1 days, W2 Th 6pm)
 
-### Phase 4: Tags (1 days, W2 W 6pm)
+**Objective:** Segmentation data points can be tagged with annotations.
 
-**Objective:** Notes can be tagged with multiple tags, and tags are searchable.
-
-- [ ] create `Tag` model and join table
+- [ ] create `Annotation` model and join table
 - build out API, Flux loop, and components for:
-  - [ ] fetching tags for notebook
-  - [ ] adding tags to notebook
-  - [ ] creating tags while adding to notebooks
-  - [ ] searching notebooks by tag
+  - [ ] fetching annotations for data point
+  - [ ] adding annotations to data point
 - [ ] Style new elements
-- [ ] Seed tags and tag the seeded Notebooks
+- [ ] Seed annotations and tag the seeded data points
 
-### Phase 5: Allow Complex Styling in Notes (1 days, W2 Th 6pm)
+### Phase 5: Tagging for Annotations (1 days, W2 F 6pm)
 
-**objective:** Enable complex styling of notes.
+**objective:** Enable Tagging for Annotations.
 
-- [ ] Integrate `react-quill` (based on Quill.js).
-- [ ] Use Rails helpers to sanitize HTML before rendering.
-- [ ] Style the new Quill elements.
-- [ ] Add Quill styling to seeded notes
-
-### Phase 6: - Pagination / infinite scroll for Notes Index (1 day, W2 F 6pm)
-
-**objective:** Add infinite scroll to Notes Index
-
-- [ ] Paginate Notes Index API to send 20 results at a time
-- [ ] Append next set of results when user scrolls and is near bottom
-- [ ] Make sure styling still looks good
-- [ ] Ensure we have enough seeded notes to demo infinite scroll
+- [ ] Allow users to tag one another to allow annotation tracking
 
 ### Bonus Features (TBD)
-- [ ] Search through notes for blocks of text
-- [ ] Set reminders on notes
-- [ ] Changelogs for Notes
-- [ ] Multiple sessions
+- [ ] Build out Funnel feature
+- [ ] Build out Cohorts feature
+- [ ] Implement more advanced statistical analyses
+- [ ] Integration of client data
 
 [phase-one]: docs/phases/phase1.md
 [phase-two]: docs/phases/phase2.md
