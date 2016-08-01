@@ -1,4 +1,4 @@
-# FresherNote
+# Applicative
 
 [app.licative.com][heroku] **Note:** This will be a link to the production site
 
