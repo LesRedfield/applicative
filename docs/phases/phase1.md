@@ -1,4 +1,4 @@
-# Phase 1: User Authentication, Note Model and JSON API (2 days, W1 W 6pm)
+# Phase 1: User Authentication, and JSON API (1 day, W1 Tu 6pm)
 
 ## Rails
 ### Models
@@ -19,7 +19,6 @@
 * App
 * LoginForm
 * SignupForm
-* NotesIndex (just a skeleton)
 
 ### Stores
 * CurrentUser

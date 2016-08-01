@@ -6,7 +6,9 @@
 
 ## Minimum Viable Product
 
-Applicative is a web application inspired by Evernote that will be built using Ruby on Rails and React.js.  By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
+Applicative is a web application inspired by Indicative that will be built using Ruby on Rails and React.js.
+
+By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
 
 - [ ] Hosting on Heroku
 - [ ] New account creation, login, and guest/demo login
@@ -34,15 +36,9 @@ Applicative is a web application inspired by Evernote that will be built using R
 
 ## Design Docs
 * [View Wireframes][views]
-* [React Components][components]
-* [Flux Cycles][flux-cycles]
-* [API endpoints][api-endpoints]
 * [DB schema][schema]
 
 [views]: docs/views.md
-[components]: docs/components.md
-[flux-cycles]: docs/flux-cycles.md
-[api-endpoints]: docs/api-endpoints.md
 [schema]: docs/schema.md
 
 ## Implementation Timeline
@@ -107,7 +103,3 @@ Applicative is a web application inspired by Evernote that will be built using R
 - [ ] Integration of client data
 
 [phase-one]: docs/phases/phase1.md
-[phase-two]: docs/phases/phase2.md
-[phase-three]: docs/phases/phase3.md
-[phase-four]: docs/phases/phase4.md
-[phase-five]: docs/phases/phase5.md
