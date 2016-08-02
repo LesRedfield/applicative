@@ -4,7 +4,9 @@
 column name     | data type | details
 ----------------|-----------|-----------------------
 id              | integer   | not null, primary key
-username        | string    | not null, indexed, unique
+email           | string    | not null, indexed, unique
+first_name      | string    |
+last_name       | string    |
 password_digest | string    | not null
 session_token   | string    | not null, indexed, unique
 
@@ -15,7 +17,7 @@ id              | integer   | not null, primary key
 signup          | datetime  | not null, indexed
 signup_platform | string    | not null, indexed
 signup_channel  | string    | not null, indexed
-ab_group        | string    | not null, indexed
+ab_group        | string    | indexed
 age             | integer   | not null, indexed
 gender          | boolean   | not null, indexed
 
@@ -31,9 +33,7 @@ cart_add        | datetime  | indexed
 checkout        | datetime  | indexed
 purchase        | datetime  | indexed
 
-//is it ok to also store customer signup datetime in the events table, since it
-//is an event itself? or just go through the FK every time i access signup, even
-//as an event?
+//a session event is actually a signup event when new_user_session = true
 
 ## annotations
 column name     | data type | details
