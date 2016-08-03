@@ -20,7 +20,7 @@ const App = React.createClass({
         <div>
       		<hgroup className="header-group">
       			<h2 className="header-name">Hi, {SessionStore.currentUser().first_name}!</h2>
-            <h2 className="header-favorites">Check out this Dashboard!</h2>
+            <h2 className="header-favorites">Check out this Dashboard! The data is actually on the backend!!!</h2>
       			<input id="logout" className="header-button" type="submit" value="Logout" onClick={ this._handleLogOut } />
       		</hgroup>
           <Dashboard/>

@@ -26,7 +26,7 @@ const LoginForm = React.createClass({
 
   redirectIfLoggedIn() {
     if (SessionStore.isUserLoggedIn()) {
-      this.context.router.push("/");
+      this.context.router.push("/dashboard");
     }
   },
 

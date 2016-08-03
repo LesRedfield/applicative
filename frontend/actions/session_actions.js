@@ -5,12 +5,12 @@ const hashHistory = require('react-router').hashHistory;
 
 const SessionActions = {
 
-  signUp(formData){
-    SessionApiUtil.signUp(
-      formData,
-      SessionActions.receiveCurrentUser
-    );
-  },
+  // signUp(formData){
+  //   SessionApiUtil.signUp(
+  //     formData,
+  //     SessionActions.receiveCurrentUser
+  //   );
+  // },
 
   logIn(formData){
     SessionApiUtil.logIn(
@@ -21,7 +21,6 @@ const SessionActions = {
 
   logOut() {
     SessionApiUtil.logOut(SessionActions.removeCurrentUser);
-
   },
 
   fetchCurrentUser(complete){
