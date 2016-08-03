@@ -36,15 +36,19 @@ const App = React.createClass({
 
   render() {
     return (
-      <div>
-        <header>
-          <Link to="/" className="header-link"><h1>Applicative</h1></Link>
-          { this.greeting() }
-        </header>
-        {this.props.children}
+      <div className="home-page">
+        <div className="blackout">
+          {this.props.children}
+        </div>
       </div>
     );
   }
 });
 
 module.exports = App;
+
+
+// <header>
+//   <Link to="/" className="header-link"><h1></h1></Link>
+//   { this.greeting() }
+// </header>

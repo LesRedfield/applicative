@@ -59,31 +59,34 @@ const LoginForm = React.createClass({
 
 		return (
 			<div className="login-form-container">
+        <h2 className="login-header">Sign In</h2>
 				<form onSubmit={this.handleSubmit} className="login-form-box">
-	        Welcome to Applicative!
-					<br/>
-					Please { this.formType() } or { navLink }
+          <h3 className="login-message">Enter your email address and password to login.</h3>
 
-					<div className="login-form">
-		        <br />
-						<label> Email:
-							<input type="text"
-		            value={this.state.email}
-		            onChange={this.inputHandler("email")}
-								className="login-input" />
-						</label>
+					<span className="login-form">
+            <div className="inside-login-form">
+  		        <br />
+  						<label>
+  							<input type="text"
+  		            value={this.state.email}
+  		            onChange={this.inputHandler("email")}
+                  placeholder="Email"
+  								className="login-input" />
+  						</label>
 
-		        <br />
-						<label> Password:
-		          <input type="password"
-		            value={this.state.password}
-		            onChange={this.inputHandler("password")}
-								className="login-input" />
-						</label>
+  		        <br />
+  						<label>
+  		          <input type="password"
+  		            value={this.state.password}
+  		            onChange={this.inputHandler("password")}
+                  placeholder="Password"
+  								className="login-input" />
+  						</label>
 
-		        <br />
-						<input type="submit" value="Submit" />
-					</div>
+  		        <br />
+              <button className="login-button">Sign In</button>
+            </div>
+					</span>
 				</form>
 			</div>
 		);
@@ -91,3 +94,6 @@ const LoginForm = React.createClass({
 });
 
 module.exports = LoginForm;
+
+
+// Please { this.formType() } or { navLink }

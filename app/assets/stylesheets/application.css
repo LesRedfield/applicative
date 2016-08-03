@@ -13,3 +13,160 @@
  *= require_tree .
  *= require_self
  */
+
+html, body, header, nav, h1, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p,
+fieldset, label, textarea,
+span, article, footer, time, small {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ outline: 0;
+ font: inherit;
+ color: inherit;
+ text-align: inherit;
+ text-decoration: inherit;
+ vertical-align: inherit;
+ box-sizing: inherit;
+ background: transparent;
+}
+
+.home-page {
+  height: 800px;
+}
+
+/*main {
+  height: 100%;
+}*/
+
+ul {
+ list-style: none;
+}
+
+img {
+ display: block;
+ width: 100%;
+ height: auto;
+}
+
+button,
+input[type="submit"] {
+  cursor: pointer;
+}
+
+/* Clearfix */
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+body, h1, h2 {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.home-page {
+  background: url(https://app.indicative.com/login/images/home_backgrounds_01.jpg) top center no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.blackout {
+  opacity: 1;
+  transition: opacity 200ms 100ms ease;
+
+  visibility: visible;
+
+  /*position: absolute;*/
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,.85);
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+}
+
+.login-header {
+  color: #fff;
+  font-size: 35px;
+  line-height: 36px;
+  opacity: .9;
+  text-align: center;
+  font-weight: 100;
+  padding-top: 20px;
+  margin-bottom: 10px;
+}
+
+.login-message {
+  color: rgba(255,255,255,.9);
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+
+.login-form {
+  display: inline-block;
+  width: 400px;
+}
+
+.inside-login-form {
+  /*padding: 18px;*/
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  display: block;
+  font-weight: 300;
+
+}
+
+input:not([type=checkbox]) {
+  background-position: 7.5px -242.5px;
+  background-image: url(https://app.indicative.com/login/images/generated/icons/reg-sa989232d16.png);
+  background-repeat: no-repeat;
+  background-size: 21px auto;
+
+  width: 91%;
+
+  box-sizing: border-box;
+  padding: 8px 8px 8px 32px;
+
+  margin: 8px;
+
+  background: rgba(45,162,157,.6);
+  border: 0;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 300;
+  box-shadow: none;
+  outline:none;
+}
+
+.login-button {
+  margin: 17px 0;
+  padding: 8px 0;
+  font-size: 38px;
+  vertical-align: middle;
+  color: #2da29d;
+  transition: background-color 200ms ease,color 200ms ease;
+  cursor: pointer;
+  font-weight: 100;
+  background: 0 0;
+  border: none;
+  align-items: flex-start;
+  text-align: center;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+}
