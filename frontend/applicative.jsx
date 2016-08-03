@@ -16,6 +16,7 @@ const SessionActions = require('./actions/session_actions');
 const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
+      <IndexRoute component={ LoginForm } />
       <Route path="/login" component={ LoginForm } />
       <Route path="/signup" component={ LoginForm } />
     </Route>
@@ -26,5 +27,3 @@ document.addEventListener('DOMContentLoaded', function() {
   const root = document.getElementById('content');
   ReactDOM.render(appRouter, root);
 });
-
-// <IndexRoute component={ LoginForm } />

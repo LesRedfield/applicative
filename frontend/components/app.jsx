@@ -15,11 +15,10 @@ const App = React.createClass({
 
   greeting() {
     if (SessionStore.isUserLoggedIn()) {
-
     	return (
     		<hgroup className="header-group">
     			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
-          <h3 className="header-favorites">Try the tutorial!</h3>
+          <h2 className="header-favorites">Try the tutorial!</h2>
     			<input className="header-button" type="submit" value="logout" onClick={ this._handleLogOut } />
     		</hgroup>
     	);
@@ -38,6 +37,7 @@ const App = React.createClass({
     return (
       <div className="home-page">
         <div className="blackout">
+          { this.greeting() }
           {this.props.children}
         </div>
       </div>
@@ -50,5 +50,4 @@ module.exports = App;
 
 // <header>
 //   <Link to="/" className="header-link"><h1></h1></Link>
-//   { this.greeting() }
 // </header>

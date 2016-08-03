@@ -33,10 +33,10 @@ const LoginForm = React.createClass({
 	handleSubmit(e) {
 		e.preventDefault();
 
-    if (this.props.location.pathname === "/login") {
-      SessionActions.logIn(this.state);
-    } else {
+    if (this.props.location.pathname === "/signup") {
       SessionActions.signUp(this.state);
+    } else {
+      SessionActions.logIn(this.state);
     }
 	},
 
