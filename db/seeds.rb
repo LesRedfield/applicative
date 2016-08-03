@@ -8,5 +8,7 @@
 
 User.create!(
   email: "guest",
-  password: "password"
+  password: "password",
+  first_name: "guest",
+  last_name: "user"
 )

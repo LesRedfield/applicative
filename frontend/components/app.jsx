@@ -2,6 +2,7 @@ const React = require('react');
 const Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
+const Dashboard = require('./dashboard');
 
 const App = React.createClass({
 
@@ -16,11 +17,14 @@ const App = React.createClass({
   greeting() {
     if (SessionStore.isUserLoggedIn()) {
     	return (
-    		<hgroup className="header-group">
-    			<h2 className="header-name">Hi, {SessionStore.currentUser().username}!</h2>
-          <h2 className="header-favorites">Try the tutorial!</h2>
-    			<input className="header-button" type="submit" value="logout" onClick={ this._handleLogOut } />
-    		</hgroup>
+        <div>
+      		<hgroup className="header-group">
+      			<h2 className="header-name">Hi, {SessionStore.currentUser().first_name}!</h2>
+            <h2 className="header-favorites">Check out this Dashboard!</h2>
+      			<input id="logout" className="header-button" type="submit" value="Logout" onClick={ this._handleLogOut } />
+      		</hgroup>
+          <Dashboard/>
+      </div>
     	);
     } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
       return (

@@ -40,6 +40,15 @@ const LoginForm = React.createClass({
     }
 	},
 
+  handleGuest(e) {
+    e.preventDefault();
+
+    SessionActions.logIn({
+      email: "guest",
+      password: "password"
+    });
+  },
+
   formType() {
     return this.props.location.pathname.slice(1);
   },
@@ -88,6 +97,7 @@ const LoginForm = React.createClass({
             </div>
 					</span>
 				</form>
+        <input id="guest" className="demo-button" type="submit" value="Sign In As Guest" onClick={ this.handleGuest } />
 			</div>
 		);
 	}

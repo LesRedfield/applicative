@@ -1,8 +1,8 @@
 # Applicative
 
-[app.licative.com][heroku] **Note:** This will be a link to the production site
+[https://applicative.herokuapp.com][heroku]
 
-[heroku]: http://app.licative.com
+[heroku]: https://applicative.herokuapp.com
 
 ## Minimum Viable Product
 
@@ -63,7 +63,7 @@ By the end of Week 9, this app will, at a minimum, satisfy the following criteri
 
 **Objective:** Dashboard displays four charts of demo data
 
-- [ ] create `Dashboard` model
+- [ ] create `Dashboard` component
 - [ ] seed the database with demo data
 - [ ] test out API interaction in the console.
 - [ ] integrate `react-highcharts` (based on HighCharts.js).
@@ -76,7 +76,7 @@ By the end of Week 9, this app will, at a minimum, satisfy the following criteri
 
 **Objective:** Interactive Segmentation Chart can be altered by dragging/dropping events/properties
 
-- [ ] create `Segmentation` model
+- [ ] create `Segmentation` component
 - [ ] Use CSS to style new components
 
 ### Phase 4: Annotations (1 days, W2 Th 6pm)

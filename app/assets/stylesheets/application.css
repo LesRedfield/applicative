@@ -174,3 +174,8 @@ input:not([type=checkbox]) {
 .header-button {
   width: 250px;
 }
+
+#guest, #logout {
+  width: 150px;
+  padding: 8px;
+}
