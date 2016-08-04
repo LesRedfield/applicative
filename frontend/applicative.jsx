@@ -11,8 +11,6 @@ const App = require('./components/app');
 const LoginForm = require('./components/login_form');
 const Dashboard = require('./components/dashboard');
 
-window.DashboardApiUtil = require('./util/dashboard_api_util');
-
 const SessionStore = require('./stores/session_store');
 const SessionActions = require('./actions/session_actions');
 

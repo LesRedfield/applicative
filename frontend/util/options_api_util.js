@@ -1,4 +1,4 @@
-const DashboardApiUtil = {
+const OptionsApiUtil = {
 
   fetchOptions(success) {
 		$.ajax({
@@ -12,4 +12,4 @@ const DashboardApiUtil = {
 
 };
 
-module.exports = DashboardApiUtil;
+module.exports = OptionsApiUtil;
