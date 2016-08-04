@@ -3,14 +3,14 @@ const OptionsConstants = require('../constants/options_constants');
 const AppDispatcher = require('../dispatcher/dispatcher');
 const OptionsStore = new Store(AppDispatcher);
 
-let _options = {};
+let _options = { dashboard: { one: {}, two: {}, three: {}, four: {} } };
 
 
 OptionsStore.all = function(){
   return Object.assign({}, _options);
 };
 
-function _resetOptions(options){
+function _resetAllOptions(options){
   _options = options;
   OptionsStore.__emitChange();
 }
@@ -18,7 +18,7 @@ function _resetOptions(options){
 OptionsStore.__onDispatch = function(payload) {
   switch(payload.actionType) {
     case OptionsConstants.OPTIONS_RECEIVED:
-      _resetOptions(payload.options);
+      _resetAllOptions(payload.options);
       break;
   }
 };

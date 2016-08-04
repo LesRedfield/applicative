@@ -5,25 +5,37 @@ const OptionsActions = require('../actions/options_actions');
 
 const Dashboard = React.createClass({
   getInitialState(){
-    return({options: OptionsStore.all()});
+    return({options: OptionsStore.all().dashboard});
   },
 
   _optionsChanged() {
-    this.setState({options: OptionsStore.all()});
+    this.setState({options: OptionsStore.all().dashboard});
   },
 
   componentDidMount() {
-    OptionsStore.addListener(this._optionsChanged);
-    OptionsActions.fetchOptions();
+    this.optionsListener = OptionsStore.addListener(this._optionsChanged);
+  },
+
+  componentWillUnmount() {
+    this.optionsListener.remove();
   },
 
   render(){
+    const dashNums = ['one', 'two', 'three', 'four'];
+
     return(
-      <div>
-        <Highchart
-          container="dash"
-          options={this.state.options}
-        />
+      <div className='dash'>
+        {
+          dashNums.map( dashNum => {
+            return(
+              <Highchart
+                key={"dash-" + dashNum}
+                container={"dash-" + dashNum}
+                options={this.state.options[dashNum]}
+              />
+            );
+          })
+        }
       </div>
     );
   }

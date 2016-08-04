@@ -33,7 +33,7 @@ span, article, footer, time, small {
 }
 
 .home-page {
-  height: 800px;
+  height: 1000px;
 }
 
 /*main {
@@ -178,4 +178,19 @@ input:not([type=checkbox]) {
 #guest, #logout {
   width: 150px;
   padding: 8px;
+}
+
+.dash-chart {
+  width: 550px;
+  height: 300px;
+  margin: 15px;
+  /*float: left;*/
+  flex-grow: 1;
+}
+
+.dash {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 60px;
+  padding-right: 60px;
 }
