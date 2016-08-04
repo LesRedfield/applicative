@@ -29,7 +29,7 @@ const Dashboard = React.createClass({
           dashNums.map( dashNum => {
             return(
               <Highchart
-                key={"dash-" + dashNum}
+                key={dashNum}
                 container={"dash-" + dashNum}
                 options={this.state.options[dashNum]}
               />

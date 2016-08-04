@@ -11,6 +11,15 @@
 #  checkout         :datetime
 #  purchase         :datetime
 #
+class Array
+  def sum
+    inject(0.0) { |result, el| result + el }
+  end
+
+  def mean
+    sum / size
+  end
+end
 
 class Event < ActiveRecord::Base
 
@@ -19,6 +28,7 @@ class Event < ActiveRecord::Base
   scope :purchased_between, lambda {|start_date, end_date| where("purchase >= ? AND purchase <= ?", start_date, end_date )}
 
   # lots of class methods that take event params and return properly formatted data
+
 
   def self.dashOne
     {
@@ -40,12 +50,8 @@ class Event < ActiveRecord::Base
           text: 'Age'
         }
       },
-      tooltip: {
-        pointFormat: 'Average purchaser age was <b>{point.y:,.0f}</b><br/>on {point.x}'
-      },
       plotOptions: {
         area: {
-          # pointStart: 1940,
           marker: {
             enabled: false,
             symbol: 'circle',
@@ -60,9 +66,23 @@ class Event < ActiveRecord::Base
         },
       series: [{
         name: 'Age',
-        data: Event.all.map do |event|
-                !!event.purchase ? event.customer.age : 0
-              end
+        data: [
+          Event.purchased_between(90.days.ago, 76.days.ago).map do |event|
+            event.customer.age
+          end.mean.to_i,
+          Event.purchased_between(76.days.ago, 62.days.ago).map do |event|
+            event.customer.age
+          end.mean.to_i,
+          Event.purchased_between(62.days.ago, 48.days.ago).map do |event|
+            event.customer.age
+          end.mean.to_i,
+          Event.purchased_between(48.days.ago, 34.days.ago).map do |event|
+            event.customer.age
+          end.mean.to_i,
+          Event.purchased_between(34.days.ago, 20.days.ago).map do |event|
+            event.customer.age
+          end.mean.to_i
+        ]
       }]
     }
   end
