@@ -14,20 +14,22 @@
 
 class Event < ActiveRecord::Base
 
-  has_one :customer
+  belongs_to :customer
+
+  scope :purchased_between, lambda {|start_date, end_date| where("purchase >= ? AND purchase <= ?", start_date, end_date )}
 
   # lots of class methods that take event params and return properly formatted data
 
   def self.dashOne
     {
       chart: {
-        type: 'line'
+        type: 'area'
       },
       title: {
-        text: 'Average Conversion Rate'
+        text: 'Average Purchaser Age'
       },
       subtitle: {
-        text: 'AVG time through Funnel'
+        text: 'Actually in the database!'
       },
       xAxis: {
         categories: ['May 03', 'May 08', 'May 13', 'May 18', 'May 23', 'May 28',
@@ -35,22 +37,224 @@ class Event < ActiveRecord::Base
       },
       yAxis: {
         title: {
-          text: '%'
+          text: 'Age'
         }
       },
+      tooltip: {
+        pointFormat: 'Average purchaser age was <b>{point.y:,.0f}</b><br/>on {point.x}'
+      },
       plotOptions: {
-        line: {
-          dataLabels: {
-            enabled: true
-          },
-          enableMouseTracking: true
+        area: {
+          # pointStart: 1940,
+          marker: {
+            enabled: false,
+            symbol: 'circle',
+            radius: 2,
+            states: {
+              hover: {
+                enabled: true
+              }
+            }
+          }
+        }
+        },
+      series: [{
+        name: 'Age',
+        data: Event.all.map do |event|
+                !!event.purchase ? event.customer.age : 0
+              end
+      }]
+    }
+  end
+
+  def self.dashTwo
+    {
+      chart: {
+          type: 'bar'
+      },
+      title: {
+          text: 'Signup Platform by Gender'
+      },
+      xAxis: {
+          categories: ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android']
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text: 'Total Signups'
+          }
+      },
+      legend: {
+          reversed: true
+
+      },
+      plotOptions: {
+          series: {
+              stacking: 'normal'
+          }
+      },
+      series: [{
+        name: 'Male',
+        data: [
+          Customer.where(gender: true, signup_platform: 'Mac').count,
+          Customer.where(gender: true, signup_platform: 'Windows').count,
+          Customer.where(gender: true, signup_platform: 'iPhone').count,
+          Customer.where(gender: true, signup_platform: 'Windows Phone').count,
+          Customer.where(gender: true, signup_platform: 'Android').count
+        ]
+      }, {
+        name: 'Female',
+        data: [
+          Customer.where(gender: false, signup_platform: 'Mac').count,
+          Customer.where(gender: false, signup_platform: 'Windows').count,
+          Customer.where(gender: false, signup_platform: 'iPhone').count,
+          Customer.where(gender: false, signup_platform: 'Windows Phone').count,
+          Customer.where(gender: false, signup_platform: 'Android').count
+        ]
+      }]
+    }
+  end
+
+  def self.dashThree
+    {
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Average Age by Marketing Channel & A/B Group'
+      },
+      subtitle: {
+        text: 'ActiveRecord is tha Bombdiggity'
+      },
+      xAxis: {
+          categories: ['Search', 'Social Media', 'Affiliate', 'Organic']
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text: 'Average Age'
+          }
+      },
+      legend: {
+          reversed: true
+
+      },
+      plotOptions: {
+          series: {
+              stacking: 'normal'
+          }
+      },
+      series: [{
+        name: 'Group A',
+        data: [
+          Customer.where(ab_group: 'A', signup_channel: 'Search').average(:age).to_i,
+          Customer.where(ab_group: 'A', signup_channel: 'Social Media').average(:age).to_i,
+          Customer.where(ab_group: 'A', signup_channel: 'Affiliate').average(:age).to_i,
+          Customer.where(ab_group: 'A', signup_channel: 'Organic').average(:age).to_i,
+        ]
+      }, {
+        name: 'Group B',
+        data: [
+          Customer.where(ab_group: 'B', signup_channel: 'Search').average(:age).to_i,
+          Customer.where(ab_group: 'B', signup_channel: 'Social Media').average(:age).to_i,
+          Customer.where(ab_group: 'B', signup_channel: 'Affiliate').average(:age).to_i,
+          Customer.where(ab_group: 'B', signup_channel: 'Organic').average(:age).to_i,
+        ]
+      }, {
+        name: 'Neither',
+        data: [
+          Customer.where(ab_group: nil, signup_channel: 'Search').average(:age).to_i,
+          Customer.where(ab_group: nil, signup_channel: 'Social Media').average(:age).to_i,
+          Customer.where(ab_group: nil, signup_channel: 'Affiliate').average(:age).to_i,
+          Customer.where(ab_group: nil, signup_channel: 'Organic').average(:age).to_i,
+        ]
+      }]
+    }
+  end
+
+  def self.dashFour
+    {
+      chart: {
+        type: 'area'
+      },
+      title: {
+        text: 'Biweekly Purchases by Session Platform'
+      },
+      subtitle: {
+        text: 'Source: appacademy.io'
+      },
+      xAxis: {
+        categories: ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28'],
+        tickmarkPlacement: 'on',
+        title: {
+          enabled: false
+        }
+      },
+      yAxis: {
+        title: {
+          text: 'Percent of Purchases'
+        }
+      },
+      tooltip: {
+        shared: true,
+        valueSuffix: ' purchases'
+      },
+      plotOptions: {
+        area: {
+          stacking: 'percent',
+          lineColor: '#666666',
+          lineWidth: 1,
+          marker: {
+            lineWidth: 1,
+            lineColor: '#666666'
+          }
         }
       },
       series: [{
-        name: 'Customers',
-        data: Event.all.map do |event|
-                !!event.purchase ? 1 : 0
-              end
+        name: 'Mac',
+        data: [
+          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Mac').count,
+          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Mac').count,
+          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Mac').count,
+          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Mac').count,
+          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Mac').count
+        ]
+      }, {
+        name: 'Windows',
+        data: [
+          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows').count,
+          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows').count,
+          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows').count,
+          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows').count,
+          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows').count
+        ]
+      }, {
+        name: 'iPhone',
+        data: [
+          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'iPhone').count
+        ]
+      }, {
+        name: 'Windows Phone',
+        data: [
+          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows Phone').count
+        ]
+      }, {
+        name: 'Android',
+        data: [
+          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Android').count,
+          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Android').count,
+          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Android').count,
+          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Android').count,
+          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Android').count
+        ]
       }]
     }
   end
