@@ -1,8 +1,11 @@
 const React = require('react');
-const Highchart = require('./highchart');
+const DragDropContext = require('react-dnd').DragDropContext;
+const HTML5Backend = require('react-dnd-html5-backend');
+
 const OptionsStore = require('../stores/options_store');
 const OptionsActions = require('../actions/options_actions');
 
+const SegChart = require('./seg_chart');
 const RightNav = require('./right_nav');
 
 const Segmentation = React.createClass({
@@ -30,9 +33,7 @@ const Segmentation = React.createClass({
           <span id="seg-head-right">You are exploring Applicative on your own</span>
         </header>
         <div className='seg-chart-outer'>
-            <Highchart
-              key="seg-chart"
-              container="seg-chart"
+            <SegChart
               options={this.state.options}
             />
         </div>
@@ -45,4 +46,4 @@ const Segmentation = React.createClass({
 
 });
 
-module.exports = Segmentation;
+module.exports = DragDropContext(HTML5Backend)(Segmentation);

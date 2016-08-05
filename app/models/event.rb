@@ -25,7 +25,10 @@ class Event < ActiveRecord::Base
 
   belongs_to :customer
 
-  scope :purchased_between, lambda {|start_date, end_date| where("purchase >= ? AND purchase <= ?", start_date, end_date )}
+  scope :purchase_between, lambda {|start_date, end_date| where("purchase >= ? AND purchase <= ?", start_date, end_date )}
+
+  scope :session_between, lambda {|start_date, end_date| where("session >= ? AND session <= ?", start_date, end_date )}
+
 
   # lots of class methods that take event params and return properly formatted data
 
@@ -67,19 +70,19 @@ class Event < ActiveRecord::Base
       series: [{
         name: 'Age',
         data: [
-          Event.purchased_between(90.days.ago, 76.days.ago).map do |event|
+          Event.purchase_between(90.days.ago, 76.days.ago).map do |event|
             event.customer.age
           end.mean.to_i,
-          Event.purchased_between(76.days.ago, 62.days.ago).map do |event|
+          Event.purchase_between(76.days.ago, 62.days.ago).map do |event|
             event.customer.age
           end.mean.to_i,
-          Event.purchased_between(62.days.ago, 48.days.ago).map do |event|
+          Event.purchase_between(62.days.ago, 48.days.ago).map do |event|
             event.customer.age
           end.mean.to_i,
-          Event.purchased_between(48.days.ago, 34.days.ago).map do |event|
+          Event.purchase_between(48.days.ago, 34.days.ago).map do |event|
             event.customer.age
           end.mean.to_i,
-          Event.purchased_between(34.days.ago, 20.days.ago).map do |event|
+          Event.purchase_between(34.days.ago, 20.days.ago).map do |event|
             event.customer.age
           end.mean.to_i
         ]
@@ -233,50 +236,119 @@ class Event < ActiveRecord::Base
       series: [{
         name: 'Mac',
         data: [
-          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Mac').count,
-          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Mac').count,
-          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Mac').count,
-          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Mac').count,
-          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Mac').count
+          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Mac').count,
+          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Mac').count,
+          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Mac').count,
+          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Mac').count,
+          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Mac').count
         ]
       }, {
         name: 'Windows',
         data: [
-          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows').count,
-          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows').count,
-          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows').count,
-          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows').count,
-          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows').count
+          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows').count,
+          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows').count,
+          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows').count,
+          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows').count,
+          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows').count
         ]
       }, {
         name: 'iPhone',
         data: [
-          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'iPhone').count
+          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'iPhone').count,
+          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'iPhone').count
         ]
       }, {
         name: 'Windows Phone',
         data: [
-          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows Phone').count
+          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows Phone').count,
+          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows Phone').count
         ]
       }, {
         name: 'Android',
         data: [
-          Event.purchased_between(90.days.ago, 76.days.ago).where(session_platform: 'Android').count,
-          Event.purchased_between(76.days.ago, 62.days.ago).where(session_platform: 'Android').count,
-          Event.purchased_between(62.days.ago, 48.days.ago).where(session_platform: 'Android').count,
-          Event.purchased_between(48.days.ago, 34.days.ago).where(session_platform: 'Android').count,
-          Event.purchased_between(34.days.ago, 20.days.ago).where(session_platform: 'Android').count
+          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Android').count,
+          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Android').count,
+          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Android').count,
+          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Android').count,
+          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Android').count
         ]
       }]
     }
   end
 
+  def self.segment(event)
+    if event
+
+      {
+        chart: {
+          type: 'area'
+        },
+        title: {
+          text: 'Average Purchaser Age'
+        },
+        subtitle: {
+          text: 'Actually in the database!'
+        },
+        xAxis: {
+          categories: ['May 03', 'May 08', 'May 13', 'May 18', 'May 23', 'May 28',
+            'Jun 02', 'Jun 07', 'Jun 12', 'Jun 17', 'Jun 22', 'Jun 27', 'Jul 02', 'Jul 07']
+        },
+        yAxis: {
+          title: {
+            text: 'Age'
+          }
+        },
+        plotOptions: {
+          area: {
+            marker: {
+              enabled: false,
+              symbol: 'circle',
+              radius: 2,
+              states: {
+                hover: {
+                  enabled: true
+                }
+              }
+            }
+          }
+          },
+        series: [{
+          name: 'Age',
+          data: [
+
+
+
+            Event.send(event + '_between', 90.days.ago, 76.days.ago).map do |event|
+              event.customer.age
+            end.mean.to_i,
+            Event.send(event + '_between', 76.days.ago, 62.days.ago).map do |event|
+              event.customer.age
+            end.mean.to_i,
+            Event.send(event + '_between', 62.days.ago, 48.days.ago).map do |event|
+              event.customer.age
+            end.mean.to_i,
+            Event.send(event + '_between', 48.days.ago, 34.days.ago).map do |event|
+              event.customer.age
+            end.mean.to_i,
+            Event.send(event + '_between', 34.days.ago, 20.days.ago).map do |event|
+              event.customer.age
+            end.mean.to_i
+          ]
+        }]
+      }
+
+    else
+      {}
+    end
+  end
+
 end
+
+
+# Event.send(event + '_between', 90.days.ago, 76.days.ago).map { |event| event.customer.age}.mean.to_i

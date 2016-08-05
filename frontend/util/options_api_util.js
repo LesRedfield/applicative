@@ -8,7 +8,18 @@ const OptionsApiUtil = {
         success(options);
       }
 		});
-	}
+	},
+
+  changeOptions(params, success) {
+    $.ajax({
+			url: '/api/events',
+			type: 'GET',
+      data: { event: params },
+			success: function(options){
+        success(options);
+      }
+		});
+  }
 
 };
 

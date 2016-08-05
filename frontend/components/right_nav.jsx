@@ -1,42 +1,38 @@
 const React = require('react');
-const Segmentation = require('./segmentation');
 
-const LeftNav = React.createClass({
+const Segmentation = require('./segmentation');
+const Event = require('./event');
+
+const RightNav = React.createClass({
 
   getInitialState() {
     return ( { selected: '' } );
   },
 
-  _handleDashboardClick(e) {
+  _handleOptionClick(e) {
     e.preventDefault();
 
-    if ( this.state.selected != 'dashboard' ) {
-      this.setState( { selected: 'dashboard' } );
-
-      hashHistory.push('/dashboard');
-    }
-  },
-
-  _handleSegmentationClick(e) {
-    e.preventDefault();
-
-    if ( this.state.selected != 'segmentation' ) {
-      this.setState( { selected: 'segmentation' } );
-
-      hashHistory.push('/segmentation');
-    }
   },
 
   render() {
+    const eventList = ['session', 'purchase'];
 
     return(
-      <div id='left-nav' className='left-nav'>
-        <input id="left-nav-dashboard" className="left-nav-button" type="submit" value="D" onClick={ this._handleDashboardClick } />
-        <input id="left-nav-segmentation" className="left-nav-button" type="submit" value="S" onClick={ this._handleSegmentationClick } />
+      <div id='right-nav' className='right-nav'>
+        {
+          eventList.map( event => {
+            return (
+              <Event
+                key={event}
+                name={event}
+              />
+            );
+          })
+        }
       </div>
     );
   }
 
 });
 
-module.exports = LeftNav;
+module.exports = RightNav;

@@ -8,6 +8,10 @@ const OptionsActions = {
     OptionsApiUtil.fetchOptions(OptionsActions.receiveOptions);
   },
 
+  changeOptions(params) {
+    OptionsApiUtil.changeOptions(params, OptionsActions.receiveOptions);
+  },
+
   receiveOptions(options) {
     AppDispatcher.dispatch({
       actionType: OptionsConstants.OPTIONS_RECEIVED,
