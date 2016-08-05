@@ -9,7 +9,7 @@ class Api::EventsController < ApplicationController
         two: Event.dashTwo,
         three: Event.dashThree,
         four: Event.dashFour
-      }
+      }, segmentation: Event.dashOne
     }
 
     render json: @options

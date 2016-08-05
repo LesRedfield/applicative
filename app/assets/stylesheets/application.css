@@ -124,7 +124,7 @@ body, h1, h2, h3 {
 
 }
 
-input:not([type=checkbox]) {
+input {
   background-position: 7.5px -242.5px;
   background-image: url(https://app.indicative.com/login/images/generated/icons/reg-sa989232d16.png);
   background-repeat: no-repeat;
@@ -176,6 +176,23 @@ input:not([type=checkbox]) {
   padding: 8px;
 }
 
+#left-nav {
+  width: 60px;
+  float: left;
+}
+
+.left-nav-button {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  height: 50px;
+}
+
+.demo-page {
+  float: left;
+}
+
 .dash-chart {
   width: 550px;
   height: 300px;
@@ -184,9 +201,19 @@ input:not([type=checkbox]) {
   flex-grow: 1;
 }
 
-.dash {
+.dash-charts {
   display: flex;
   flex-wrap: wrap;
-  padding-left: 60px;
-  padding-right: 60px;
+}
+
+.dash-head, .seg-head {
+  color: white;
+}
+
+#dash-head-title {
+  float: left;
+}
+
+#dash-head-right {
+  float: right;
 }

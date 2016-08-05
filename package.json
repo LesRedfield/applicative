@@ -30,6 +30,8 @@
     "flux": "^2.1.1",
     "highcharts": "^4.2.6",
     "react": "^15.3.0",
+    "react-dnd": "^2.1.4",
+    "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^15.3.0",
     "react-router": "^2.6.1",
     "webpack": "^1.13.1"

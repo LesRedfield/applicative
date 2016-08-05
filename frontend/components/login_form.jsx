@@ -18,6 +18,7 @@ const LoginForm = React.createClass({
 
   componentDidMount() {
     this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+    this.redirectIfLoggedIn();
   },
 
   componentWillUnmount() {

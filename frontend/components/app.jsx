@@ -2,7 +2,11 @@ const React = require('react');
 const Link = require('react-router').Link;
 const SessionStore = require('../stores/session_store');
 const SessionActions = require('../actions/session_actions');
+
+const LeftNav = require('./left_nav');
 const Dashboard = require('./dashboard');
+
+
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 
@@ -17,6 +21,7 @@ const App = React.createClass({
   },
 
   greeting() {
+
     if (SessionStore.isUserLoggedIn()) {
     	return (
         <div>
@@ -25,10 +30,24 @@ const App = React.createClass({
             <h2 className="header-favorites">Check out this Dashboard! The data is actually on the backend!!!</h2>
       			<input id="logout" className="header-button" type="submit" value="Logout" onClick={ this._handleLogOut } />
       		</hgroup>
+
+          <div className="demo-page">
+            <LeftNav />
+            <div className="feature">
+              { this.props.children }
+            </div>
+          </div>
         </div>
     	);
     } else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
       hashHistory.push('/login');
+
+    } else {
+      return (
+        <div>
+          { this.props.children }
+        </div>
+      );
     }
   },
 
@@ -37,7 +56,6 @@ const App = React.createClass({
       <div className="home-page">
         <div className="blackout">
           { this.greeting() }
-          { this.props.children }
         </div>
       </div>
     );

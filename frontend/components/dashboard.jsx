@@ -24,18 +24,25 @@ const Dashboard = React.createClass({
     const dashNums = ['one', 'two', 'three', 'four'];
 
     return(
-      <div className='dash'>
-        {
-          dashNums.map( dashNum => {
-            return(
-              <Highchart
-                key={dashNum}
-                container={"dash-" + dashNum}
-                options={this.state.options[dashNum]}
-              />
-            );
-          })
-        }
+      <div className="dashboard">
+        <header className="dash-head">
+          <h1 id="dash-head-title">Dashboard</h1>
+          <span id="dash-head-right">You are exploring Applicative on your own</span>
+        </header>
+        <div className='dash-charts'>
+          {
+            dashNums.map( dashNum => {
+              return(
+
+                <Highchart
+                  key={dashNum}
+                  container={"dash-" + dashNum}
+                  options={this.state.options[dashNum]}
+                />
+              );
+            })
+          }
+        </div>
       </div>
     );
   }
