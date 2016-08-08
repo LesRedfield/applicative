@@ -14,7 +14,7 @@ const OptionsApiUtil = {
     $.ajax({
 			url: '/api/events',
 			type: 'GET',
-      data: { event: params },
+      data: { query: params },
 			success: function(options){
         success(options);
       }

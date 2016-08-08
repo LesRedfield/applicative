@@ -5,13 +5,16 @@ const DragSource = require('react-dnd').DragSource;
 
 const OptionsActions = require('../actions/options_actions');
 
-const eventSource = {
+const propertySource = {
   beginDrag(props) {
     return { name: props.name, query: props.query };
   },
 
   endDrag(props, monitor) {
-    props.query.events.push(props.name);
+
+    props.query.properties.push(props.name);
+
+
     OptionsActions.changeOptions(props.query);
   }
 };
@@ -23,7 +26,7 @@ function collect(connect, monitor) {
   };
 }
 
-const Event = React.createClass({
+const Property = React.createClass({
   propTypes: {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired
@@ -47,4 +50,4 @@ const Event = React.createClass({
   }
 });
 
-module.exports = DragSource(Draggable.EVENT, eventSource, collect)(Event);
+module.exports = DragSource(Draggable.PROPERTY, propertySource, collect)(Property);

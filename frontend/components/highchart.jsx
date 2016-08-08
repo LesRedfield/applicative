@@ -22,7 +22,7 @@ const Highchart = React.createClass({
   //Create the div which the chart will be rendered to.
   render() {
     return(
-      <div id={this.props.container} className='seg-chart'></div>
+      <div id={this.props.container} className='chart'></div>
     );
   }
 });

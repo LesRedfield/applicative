@@ -9,7 +9,7 @@ class Api::EventsController < ApplicationController
         two: Event.dashTwo,
         three: Event.dashThree,
         four: Event.dashFour
-      }, segmentation: Event.segment(params[:event])
+      }, segmentation: Event.segment(params[:query])
     }
 
     render json: @options

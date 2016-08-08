@@ -52,10 +52,10 @@ const SegChart = React.createClass({
         {isOver &&
           <div style={{
             position: 'absolute',
-            top: 0,
-            left: 0,
-            height: '100%',
-            width: '100%',
+            top: 100,
+            left: 50,
+            height: '50%',
+            width: '50%',
             zIndex: 1,
             opacity: 0.5,
             backgroundColor: 'yellow',
@@ -67,4 +67,4 @@ const SegChart = React.createClass({
 
 });
 
-module.exports = DropTarget(Draggable.EVENT, chartTarget, collect)(SegChart);
+module.exports = DropTarget([Draggable.EVENT, Draggable.PROPERTY], chartTarget, collect)(SegChart);

@@ -15,4 +15,8 @@ class Customer < ActiveRecord::Base
 
   has_many :events
 
+  scope :by_gender, lambda { |gender| where(gender: gender) }
+
+  scope :by_all, lambda { |age| where("age >= ?", age) }
+
 end

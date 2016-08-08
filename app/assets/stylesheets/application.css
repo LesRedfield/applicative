@@ -193,15 +193,21 @@ input {
   float: left;
 }
 
+.feature {
+  float: left;
+}
+
 .dash-chart {
   width: 550px;
   height: 300px;
   margin: 15px;
+  margin-bottom: 115px;
   /*float: left;*/
   flex-grow: 1;
 }
 
 .dash-charts {
+  float: left;
   display: flex;
   flex-wrap: wrap;
 }
@@ -216,4 +222,21 @@ input {
 
 #dash-head-right {
   float: right;
+}
+
+.segmentation {
+  width: 1000px;
+}
+
+.seg-query-chart {
+  float: left;
+  width: 70%;
+}
+
+.seg-query-bar {
+  color: white;
+}
+
+.seg-options {
+  float: left;
 }

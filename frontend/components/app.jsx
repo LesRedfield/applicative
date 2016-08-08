@@ -31,7 +31,7 @@ const App = React.createClass({
       			<input id="logout" className="header-button" type="submit" value="Logout" onClick={ this._handleLogOut } />
       		</hgroup>
 
-          <div className="demo-page">
+          <div className="demo-page group">
             <LeftNav />
             <div className="feature">
               { this.props.children }

@@ -29,6 +29,9 @@ class Event < ActiveRecord::Base
 
   scope :session_between, lambda {|start_date, end_date| where("session >= ? AND session <= ?", start_date, end_date )}
 
+  scope :add_between, lambda {|start_date, end_date| where("cart_add >= ? AND cart_add <= ?", start_date, end_date )}
+
+  scope :checkout_between, lambda {|start_date, end_date| where("checkout >= ? AND checkout <= ?", start_date, end_date )}
 
   # lots of class methods that take event params and return properly formatted data
 
@@ -282,15 +285,76 @@ class Event < ActiveRecord::Base
     }
   end
 
-  def self.segment(event)
-    if event
+  def self.segment(query)
+    if query && query['events'] && query['events'].length > 0
+      if query['events'][0] == 'Purchase'
+        event = 'purchase'
+        name = 'Purchaser'
+      elsif query['events'][0] == 'Session'
+        event = 'session'
+        name = 'Session'
+      elsif query['events'][0] == 'Add to Cart'
+        event = 'add'
+        name = 'Cart Add'
+      elsif query['events'][0] == 'Proceed to Checkout'
+        event = 'checkout'
+        name = 'Checkout'
+      end
+
+      if query['properties']
+        byProp = query['properties'][0].downcase
+        segments = [true, false]
+      else
+        byProp = 'gender'
+        segments = [!'all']
+      end
+
+      seriesArr = []
+
+      segments.each do |segment|
+        query['events'].each do |eventName|
+          seriesArr << {
+            name: eventName + segment.to_s,
+            data:
+              [
+                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                .select{|event| event.customer.send(byProp) == segment}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                .select{|event| event.customer.send(byProp) == segment}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                .select{|event| event.customer.send(byProp) == segment}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                .select{|event| event.customer.send(byProp) == segment}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                .select{|event| event.customer.send(byProp) == segment}
+                .count
+              ]
+          }
+        end
+      end
 
       {
+        query: {
+          events: query['events'],
+          properties: if query['properties']
+                        query['properties']
+                      else
+                        []
+                      end
+        },
         chart: {
-          type: 'area'
+          type: 'line'
         },
         title: {
-          text: 'Average Purchaser Age'
+          text: 'Average ' + name + ' Age'
         },
         subtitle: {
           text: 'Actually in the database!'
@@ -318,34 +382,14 @@ class Event < ActiveRecord::Base
             }
           }
           },
-        series: [{
-          name: 'Age',
-          data: [
+        series: seriesArr
 
-
-
-            Event.send(event + '_between', 90.days.ago, 76.days.ago).map do |event|
-              event.customer.age
-            end.mean.to_i,
-            Event.send(event + '_between', 76.days.ago, 62.days.ago).map do |event|
-              event.customer.age
-            end.mean.to_i,
-            Event.send(event + '_between', 62.days.ago, 48.days.ago).map do |event|
-              event.customer.age
-            end.mean.to_i,
-            Event.send(event + '_between', 48.days.ago, 34.days.ago).map do |event|
-              event.customer.age
-            end.mean.to_i,
-            Event.send(event + '_between', 34.days.ago, 20.days.ago).map do |event|
-              event.customer.age
-            end.mean.to_i
-          ]
-        }]
       }
 
     else
       {}
     end
+
   end
 
 end
