@@ -101,7 +101,7 @@ body, h1, h2, h3 {
   margin-right: auto;
 }
 
-.login-header, .header-group {
+.login-header, {
   color: #fff;
   font-size: 35px;
   line-height: 36px;
@@ -188,7 +188,40 @@ input {
   padding: 8px;
 }
 
-#left-nav {
+.header {
+  background: #282C34;
+
+  background-image: image-url("logo.png");
+  background-repeat: no-repeat;
+  background-size: 140px auto;
+  display: block;
+  margin-right: auto;
+
+  color: white;
+}
+
+.top-nav {
+  float: right;
+}
+
+.welcome, .header-button {
+  float: left;
+}
+
+.header-name, .header-favorites {
+  text-align: right;
+}
+
+.logged-in {
+  // background: #29B0AB;
+}
+
+.demo-page {
+  // background: #395175;
+  background: linear-gradient(0deg, #8491A5, #395175 80%) no-repeat;
+}
+
+.left-nav-outer {
   width: 60px;
   float: left;
 }
@@ -202,11 +235,12 @@ input {
 }
 
 .demo-page {
-  float: left;
+  // float: left;
 }
 
 .feature {
   float: left;
+  max-width: 95%;
 }
 
 .dash-chart {

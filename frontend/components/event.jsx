@@ -11,8 +11,8 @@ const eventSource = {
   },
 
   endDrag(props, monitor) {
-    props.query.events.push(props.name);
-    OptionsActions.changeOptions(props.query);
+    // props.query.events.push(props.name);
+    // OptionsActions.changeOptions(props.query);
   }
 };
 

@@ -7,8 +7,22 @@ const DropTarget = require('react-dnd').DropTarget;
 const OptionsStore = require('../stores/options_store');
 const OptionsActions = require('../actions/options_actions');
 
-const chartTarget = {
-  drop(props) {
+const segChartTarget = {
+  drop(props, monitor, component) {
+    let item = monitor.getItem();
+    let itemType = monitor.getItemType();
+
+    if (itemType == "EVENT") {
+      item.query.events.push(item.name);
+    } else if (itemType == "PROPERTY") {
+      item.query.properties.push(item.name);
+    }
+
+    OptionsActions.changeOptions(item.query);
+
+
+
+
     // OptionsActions.changeOptions(props);
   }
 };
@@ -67,4 +81,4 @@ const SegChart = React.createClass({
 
 });
 
-module.exports = DropTarget([Draggable.EVENT, Draggable.PROPERTY], chartTarget, collect)(SegChart);
+module.exports = DropTarget([Draggable.EVENT, Draggable.PROPERTY], segChartTarget, collect)(SegChart);

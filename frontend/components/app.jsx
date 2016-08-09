@@ -24,15 +24,21 @@ const App = React.createClass({
 
     if (SessionStore.isUserLoggedIn()) {
     	return (
-        <div>
-      		<hgroup className="header-group">
-      			<h2 className="header-name">Hi, {SessionStore.currentUser().first_name}!</h2>
-            <h2 className="header-favorites">Check out this Dashboard! The data is actually on the backend!!!</h2>
-      			<input id="logout" className="header-button" type="submit" value="Logout" onClick={ this._handleLogOut } />
+        <div className="logged-in group">
+      		<hgroup className="header group">
+            <span className="top-nav group">
+              <div className="welcome">
+          			<h2 className="header-name">Hi, {SessionStore.currentUser().first_name}!</h2>
+                <h2 className="header-favorites">Start Querying Your Data</h2>
+              </div>
+        			<input id="logout" className="header-button" type="submit" value="Logout" onClick={ this._handleLogOut } />
+            </span>
       		</hgroup>
 
           <div className="demo-page group">
-            <LeftNav />
+            <div className="left-nav-outer">
+              <LeftNav />
+            </div>
             <div className="feature">
               { this.props.children }
             </div>

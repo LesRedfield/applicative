@@ -12,10 +12,10 @@ const propertySource = {
 
   endDrag(props, monitor) {
 
-    props.query.properties.push(props.name);
-
-
-    OptionsActions.changeOptions(props.query);
+    // props.query.properties.push(props.name);
+    //
+    //
+    // OptionsActions.changeOptions(props.query);
   }
 };
 
