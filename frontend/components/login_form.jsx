@@ -69,6 +69,7 @@ const LoginForm = React.createClass({
 
 		return (
 			<div className="login-form-container">
+        <div className="logo"></div>
         <h2 className="login-header">Sign In</h2>
 				<form onSubmit={this.handleSubmit} className="login-form-box">
           <h3 className="login-message">Enter your email address and password to login.</h3>

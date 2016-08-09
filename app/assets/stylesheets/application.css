@@ -89,6 +89,18 @@ body, h1, h2, h3 {
   z-index: 9999;
 }
 
+.logo {
+  background-image: url("logo.png");
+  background-repeat: no-repeat;
+  width: 280px;
+  height: 170px;
+  background-size: 290px auto;
+  background-position: 0 65px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .login-header, .header-group {
   color: #fff;
   font-size: 35px;
