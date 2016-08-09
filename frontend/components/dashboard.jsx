@@ -33,7 +33,7 @@ const Dashboard = React.createClass({
           {
             dashNums.map( dashNum => {
               return(
-                <div className="dash-chart">
+                <div key={dashNum + "-outer"} className="dash-chart">
                   <Highchart
                     key={dashNum}
                     container={"dash-" + dashNum}

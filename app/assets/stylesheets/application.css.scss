@@ -32,6 +32,10 @@ span, article, footer, time, small {
  background: transparent;
 }
 
+html {
+  height: 100%;
+}
+
 .home-page {
   height: 1000px;
 }
@@ -183,17 +187,24 @@ input {
   width: 250px;
 }
 
-#guest, #logout {
+#guest {
   width: 150px;
-  padding: 8px;
+  padding: 6px;
+}
+
+#logout {
+  width: 80px;
+  padding: 6px;
 }
 
 .header {
-  background: #282C34;
-
+  background: #223146;
   background-image: image-url("logo.png");
   background-repeat: no-repeat;
   background-size: 140px auto;
+  background-position: -5px 4px;
+
+  height: 45px;
   display: block;
   margin-right: auto;
 
@@ -208,8 +219,20 @@ input {
   float: left;
 }
 
+.welcome {
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
 .header-name, .header-favorites {
   text-align: right;
+}
+
+.header-favorites {
+  color: #2DA29D;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
 
 .logged-in {
@@ -217,21 +240,53 @@ input {
 }
 
 .demo-page {
-  // background: #395175;
-  background: linear-gradient(0deg, #8491A5, #395175 80%) no-repeat;
+  background-size: 100%;
+  background-image: radial-gradient(farthest-corner at 45px 45px , #395175 0%, #8491A5 100%);
+  padding-top: 4px;
 }
 
 .left-nav-outer {
-  width: 60px;
+  width: 70px;
   float: left;
 }
 
 .left-nav-button {
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  margin-top: 5px;
-  height: 50px;
+  width: 70%;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  height: 40px;
+  cursor: pointer;
+}
+
+#bot-bord {
+  border-bottom: rgba(176,182,182,0.2) solid 1px;
+}
+
+#left-nav-dashboard {
+  background-color: transparent;
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  background-size: 26px auto;
+  background-position: 0 -396px;
+  // border-bottom: rgba(176,182,182,0.2) solid 1px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#left-nav-segmentation {
+  background-color: transparent;
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 23px;
+  background-size: 26px auto;
+  background-position: 0 -610px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .demo-page {
@@ -241,21 +296,28 @@ input {
 .feature {
   float: left;
   max-width: 95%;
+  margin-left: 8px;
 }
 
 .dash-chart {
   width: 550px;
-  height: 300px;
-  margin: 15px;
-  margin-bottom: 115px;
+
+  // height: 300px;
+  margin-bottom: 15px;
+  margin-right: 15px;
   /*float: left;*/
   flex-grow: 1;
+}
+
+.highcharts-container {
+  border-radius: 3px;
 }
 
 .dash-charts {
   float: left;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 5px;
 }
 
 .dash-head, .seg-head {
@@ -264,10 +326,20 @@ input {
 
 #dash-head-title {
   float: left;
+  font-size: 20px;
+  color: rgba(255,255,255,0.5);
+  font-weight: lighter;
+  // margin: 0 0 0 14px;
+  letter-spacing: 1px;
 }
 
 #dash-head-right {
   float: right;
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 400;
+  padding-right: 20px;
+  padding-top: 5px;
 }
 
 .segmentation {

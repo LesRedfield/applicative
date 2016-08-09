@@ -33,8 +33,15 @@ const LeftNav = React.createClass({
 
     return(
       <div id='left-nav' className='left-nav'>
-        <input id="left-nav-dashboard" className="left-nav-button" type="submit" value="D" onClick={ this._handleDashboardClick } />
-        <input id="left-nav-segmentation" className="left-nav-button" type="submit" value="S" onClick={ this._handleSegmentationClick } />
+
+        <div id="bot-bord" className="left-nav-button" onClick={ this._handleDashboardClick }>
+          <div id="left-nav-dashboard" />
+        </div>
+
+        <div className="left-nav-button" onClick={ this._handleSegmentationClick }>
+          <div id="left-nav-segmentation" />
+        </div>
+
       </div>
     );
   }
