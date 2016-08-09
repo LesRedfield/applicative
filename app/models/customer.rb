@@ -25,6 +25,6 @@ class Customer < ActiveRecord::Base
 
 
 
-  scope :by_age, lambda { |age1, age2| where("age >= ? AND age < ?", age1, age2) }
+  scope :by_ages, lambda { |age1, age2| where("age >= ? AND age < ?", age1, age2) }
 
 end

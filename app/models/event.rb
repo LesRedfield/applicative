@@ -36,9 +36,9 @@ class Event < ActiveRecord::Base
   # lots of class methods that take event params and return properly formatted data
 
   PROPERTIES = {
-    reg_platform: [['Mac'], ['Windows'], ['iPhone'], ['Windows Phone'], ['Android']],
-    channel: [['Search'], ['Social Media'], ['Affiliate'], ['Organic']],
-    a_b: [['A'], ['B'], [nil]],
+    signup_platform: [['Mac'], ['Windows'], ['iPhone'], ['Windows Phone'], ['Android']],
+    signup_channel: [['Search'], ['Social Media'], ['Affiliate'], ['Organic']],
+    ab_group: [['A'], ['B'], [nil]],
     age: [[18, 30], [30, 45], [45, 60]],
     gender: [[true], [false]]
   }
@@ -297,40 +297,73 @@ class Event < ActiveRecord::Base
     if query && query['events'] && query['events'].length > 0
       if query['events'][0] == 'Purchase'
         event = 'purchase'
-        name = 'Purchaser'
+        name = 'Purchases'
       elsif query['events'][0] == 'Session'
         event = 'session'
-        name = 'Session'
+        name = 'Sessions'
       elsif query['events'][0] == 'Add to Cart'
         event = 'add'
-        name = 'Cart Add'
+        name = 'Cart Adds'
       elsif query['events'][0] == 'Proceed to Checkout'
         event = 'checkout'
-        name = 'Checkout'
+        name = 'Checkouts'
       end
 
-      if query['properties'] && query['properties'][0] == 'Age'
-        byProp = 'by_' + query['properties'][0].downcase
-        segments = PROPERTIES[query['properties'][0].downcase.to_sym]
-        debugger
-
+      if query['properties'] && query['properties'][0] == 'AB Group'
+        byProp = 'ab_group'
+        segments = PROPERTIES[byProp.to_sym]
+        nameP = ' by ' + query['properties'][0]
+      elsif query['properties'] && query['properties'][0] == 'Marketing Channel'
+        byProp = 'signup_channel'
+        segments = PROPERTIES[byProp.to_sym]
+        nameP = ' by ' + query['properties'][0]
+      elsif query['properties'] && query['properties'][0] == 'Signup Platform'
+        byProp = 'signup_platform'
+        segments = PROPERTIES[byProp.to_sym]
+        nameP = ' by ' + query['properties'][0]
       elsif query['properties']
         byProp = query['properties'][0].downcase
         segments = PROPERTIES[query['properties'][0].downcase.to_sym]
+        nameP = ' by ' + query['properties'][0]
       else
-        byProp = 'class'
-        segments = [[Customer]]
+        byProp = 'none'
+        segments = [['all']]
+        nameP = ''
       end
 
       seriesArr = []
 
       segments.each do |segment|
-        query['events'].each do |eventName|
-          # debugger
+        query['events'].each do |eventJawn|
+          if eventJawn == 'Add to Cart'
+            eventName = 'add'
+          elsif eventJawn == 'Proceed to Checkout'
+            eventName = 'checkout'
+          else
+            eventName = eventJawn
+          end
+
           seriesArr << {
-            name: eventName + segment.to_s,
+            name: name + segment.to_s,
             data:
-              if segment.length < 2
+              if byProp == 'none'
+                [
+                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                  .count
+                ]
+              elsif segment.length < 2
                 [
                   Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
                   .select{|event| event.customer.send(byProp) == segment[0]}
@@ -355,23 +388,23 @@ class Event < ActiveRecord::Base
               else
                 [
                   Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                  .select{|event| event.customer.send(byProp, *segment)}
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
                   .count,
 
                   Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                  .select{|event| event.customer.send(byProp, *segment)}
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
                   .count,
 
                   Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                  .select{|event| event.customer.send(byProp, *segment)}
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
                   .count,
 
                   Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                  .select{|event| event.customer.send(byProp, *segment)}
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
                   .count,
 
                   Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                  .select{|event| event.customer.send(byProp, *segment)}
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
                   .count
                 ]
               end
@@ -392,10 +425,10 @@ class Event < ActiveRecord::Base
           type: 'line'
         },
         title: {
-          text: 'Average ' + name + ' Age'
+          text: name + nameP
         },
         subtitle: {
-          text: 'Actually in the database!'
+          text: ''
         },
         xAxis: {
           categories: ['May 03', 'May 08', 'May 13', 'May 18', 'May 23', 'May 28',
@@ -403,7 +436,7 @@ class Event < ActiveRecord::Base
         },
         yAxis: {
           title: {
-            text: 'Age'
+            text: 'Quantity'
           }
         },
         plotOptions: {

@@ -17,7 +17,7 @@ const RightNav = React.createClass({
 
   render() {
     const eventList = ['Add to Cart', 'Proceed to Checkout', 'Purchase', 'Session'];
-    const propertiesList = ['Age', 'Gender', 'A/B Group', 'Marketing Channel'];
+    const propertiesList = ['AB Group', 'Age', 'Gender', 'Marketing Channel', 'Signup Platform'];
 
     return(
       <div id='right-nav' className='right-nav'>
