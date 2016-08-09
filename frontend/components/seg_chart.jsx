@@ -19,11 +19,6 @@ const segChartTarget = {
     }
 
     OptionsActions.changeOptions(item.query);
-
-
-
-
-    // OptionsActions.changeOptions(props);
   }
 };
 

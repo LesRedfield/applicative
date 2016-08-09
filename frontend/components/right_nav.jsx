@@ -21,15 +21,21 @@ const RightNav = React.createClass({
 
     return(
       <div id='right-nav' className='right-nav'>
+        <div className='right-nav-header'>
+          Events/Properties
+        </div>
+
         <div className='right-nav-events'>
           {
             eventList.map( event => {
               return (
-                <Event
-                  key={event}
-                  name={event}
-                  query={this.props.query}
-                />
+                <div className="seg-opt">
+                  <Event
+                    key={event}
+                    name={event}
+                    query={this.props.query}
+                  />
+                </div>
               );
             })
           }
@@ -39,11 +45,13 @@ const RightNav = React.createClass({
           {
             propertiesList.map( property => {
               return (
-                <Property
-                  key={property}
-                  name={property}
-                  query={this.props.query}
-                />
+                <div className="seg-opt">
+                  <Property
+                    key={property}
+                    name={property}
+                    query={this.props.query}
+                  />
+                </div>
               );
             })
           }

@@ -96,7 +96,7 @@ body, h1, h2, h3 {
 .logo {
   background-image: image-url("logo.png");
   background-repeat: no-repeat;
-  width: 280px;
+  width: 270px;
   height: 170px;
   background-size: 290px auto;
   background-position: 0 65px;
@@ -112,8 +112,8 @@ body, h1, h2, h3 {
   opacity: .9;
   text-align: center;
   font-weight: 100;
-  padding-top: 20px;
-  margin-bottom: 10px;
+  padding-top: 36px;
+  margin-bottom: -8px;
 }
 
 .login-message {
@@ -131,28 +131,56 @@ body, h1, h2, h3 {
 }
 
 .inside-login-form {
+  margin-top: -17px;
   /*padding: 18px;*/
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   box-sizing: border-box;
   letter-spacing: 1px;
   display: block;
   font-weight: 300;
-
 }
 
-input {
-  background-position: 7.5px -242.5px;
+.login-input-email {
   background-image: url(https://app.indicative.com/login/images/generated/icons/reg-sa989232d16.png);
   background-repeat: no-repeat;
   background-size: 21px auto;
+  background-position: 7.5px -143.5px;
+}
 
-  width: 91%;
+.login-input-password {
+  background-image: url(https://app.indicative.com/login/images/generated/icons/reg-sa989232d16.png);
+  background-repeat: no-repeat;
+  background-size: 21px auto;
+  background-position: 7.5px -242.5px;
+}
 
+.arrow {
+  margin-left: 13px;
+  width: 48px;
+  height: 32px;
+  background-position: 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  background-image: url(https://app.indicative.com/login/images/generated/icons/login-s97928a4df8.png);
+  background-repeat: no-repeat;
+  background-size: 190px auto;
+}
+
+input {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  letter-spacing: 1px;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+
+
+
+  width: 90%;
   box-sizing: border-box;
   padding: 8px 8px 8px 32px;
-
   margin: 8px;
-
   background: rgba(45,162,157,.6);
   border: 0;
   border-radius: 2px;
@@ -236,13 +264,14 @@ input {
 }
 
 .logged-in {
-  // background: #29B0AB;
+  height: 100%;
 }
 
 .demo-page {
   background-size: 100%;
   background-image: radial-gradient(farthest-corner at 45px 45px , #395175 0%, #8491A5 100%);
   padding-top: 4px;
+  height: 100%;
 }
 
 .left-nav-outer {
@@ -289,14 +318,10 @@ input {
   margin-right: auto;
 }
 
-.demo-page {
-  // float: left;
-}
-
 .feature {
   float: left;
-  max-width: 95%;
-  margin-left: 8px;
+  width: 95%;
+  height: 100%;
 }
 
 .dash-chart {
@@ -311,6 +336,8 @@ input {
 
 .highcharts-container {
   border-radius: 3px;
+  height: 100%;
+  width: 100%;
 }
 
 .dash-charts {
@@ -324,7 +351,7 @@ input {
   color: white;
 }
 
-#dash-head-title {
+#dash-head-title, #seg-head-title {
   float: left;
   font-size: 20px;
   color: rgba(255,255,255,0.5);
@@ -333,7 +360,7 @@ input {
   letter-spacing: 1px;
 }
 
-#dash-head-right {
+#dash-head-right, #seg-head-right {
   float: right;
   font-size: 13px;
   color: rgba(255,255,255,0.75);
@@ -343,20 +370,59 @@ input {
 }
 
 .segmentation {
-  width: 1000px;
+  height: 100%;
+}
+
+.seg-body {
+  width: 100%;
+  background-color: #29B0AB;
+  margin-top: 5px;
+  border-radius: 3px;
 }
 
 .seg-query-chart {
   float: left;
-  width: 70%;
+  width: 85%;
 }
 
 .seg-query-bar {
+  height: 50px;
   color: white;
+  width: 100%;
 }
 
 .seg-options {
+  width: 205px;
   float: left;
+  background-color: #2DA29D;
+  color: white;
+}
+
+.right-nav-header {
+  line-height: 36px;
+  padding-left: 32px;
+  font-weight: 300;
+  font-size: 16px;
+  width: 100%;
+  color: white;
+  height: 36px;
+  text-align: left;
+}
+
+.seg-opt {
+  border-radius: 2px 2px 2px 2px;
+  position: relative;
+  margin: 2px 0;
+  display: inline-block;
+  width: 170px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: white;
+  font-size: 11px;
+  padding: 3px;
+  color: black;
+  text-align: left;
+  padding-left: 32px;
 }
 
 .query-events, .query-properties {

@@ -36,9 +36,6 @@ const Event = React.createClass({
     return connectDragSource(
       <div style={{
         opacity: isDragging ? 0.5 : 1,
-        fontSize: 25,
-        color: 'white',
-        fontWeight: 'bold',
         cursor: 'move'
       }}>
         {this.props.name}

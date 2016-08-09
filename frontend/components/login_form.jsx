@@ -82,7 +82,7 @@ const LoginForm = React.createClass({
   		            value={this.state.email}
   		            onChange={this.inputHandler("email")}
                   placeholder="Email"
-  								className="login-input" />
+  								className="login-input-email" />
   						</label>
 
   		        <br />
@@ -91,11 +91,15 @@ const LoginForm = React.createClass({
   		            value={this.state.password}
   		            onChange={this.inputHandler("password")}
                   placeholder="Password"
-  								className="login-input" />
+  								className="login-input-password" />
   						</label>
 
   		        <br />
-              <button className="login-button">Sign In</button>
+
+              <button className="login-button">
+                Sign In
+                <span className="arrow"></span>
+              </button>
             </div>
 					</span>
 				</form>
