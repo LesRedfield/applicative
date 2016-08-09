@@ -35,6 +35,14 @@ class Event < ActiveRecord::Base
 
   # lots of class methods that take event params and return properly formatted data
 
+  PROPERTIES = {
+    reg_platform: [['Mac'], ['Windows'], ['iPhone'], ['Windows Phone'], ['Android']],
+    channel: [['Search'], ['Social Media'], ['Affiliate'], ['Organic']],
+    a_b: [['A'], ['B'], [nil]],
+    age: [[18, 30], [30, 45], [45, 60]],
+    gender: [[true], [false]]
+  }
+
 
   def self.dashOne
     {
@@ -301,42 +309,72 @@ class Event < ActiveRecord::Base
         name = 'Checkout'
       end
 
-      if query['properties']
+      if query['properties'] && query['properties'][0] == 'Age'
+        byProp = 'by_' + query['properties'][0].downcase
+        segments = PROPERTIES[query['properties'][0].downcase.to_sym]
+        debugger
+
+      elsif query['properties']
         byProp = query['properties'][0].downcase
-        segments = [true, false]
+        segments = PROPERTIES[query['properties'][0].downcase.to_sym]
       else
-        byProp = 'gender'
-        segments = [!'all']
+        byProp = 'class'
+        segments = [[Customer]]
       end
 
       seriesArr = []
 
       segments.each do |segment|
         query['events'].each do |eventName|
+          # debugger
           seriesArr << {
             name: eventName + segment.to_s,
             data:
-              [
-                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                .select{|event| event.customer.send(byProp) == segment}
-                .count,
+              if segment.length < 2
+                [
+                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
 
-                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                .select{|event| event.customer.send(byProp) == segment}
-                .count,
+                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
 
-                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                .select{|event| event.customer.send(byProp) == segment}
-                .count,
+                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
 
-                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                .select{|event| event.customer.send(byProp) == segment}
-                .count,
+                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
 
-                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                .select{|event| event.customer.send(byProp) == segment}
-                .count
-              ]
+                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count
+                ]
+              else
+                [
+                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                  .select{|event| event.customer.send(byProp, *segment)}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                  .select{|event| event.customer.send(byProp, *segment)}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                  .select{|event| event.customer.send(byProp, *segment)}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                  .select{|event| event.customer.send(byProp, *segment)}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                  .select{|event| event.customer.send(byProp, *segment)}
+                  .count
+                ]
+              end
           }
         end
       end

@@ -26,8 +26,14 @@ const Segmentation = React.createClass({
     this.optionsListener.remove();
   },
 
-  _handleRemove(event) {
+  _handleRemoveEvent(event) {
     OptionsStore.removeEvent(event);
+
+    OptionsActions.changeOptions(OptionsStore.all().segmentation.query);
+  },
+
+  _handleRemoveProperty(property) {
+    OptionsStore.removeProperty(property);
 
     OptionsActions.changeOptions(OptionsStore.all().segmentation.query);
   },
@@ -48,17 +54,32 @@ const Segmentation = React.createClass({
 
         <div className='seg-body group'>
           <div className='seg-query-chart'>
-            <div className='seg-query-bar'>
-              {
-                query.events.map( event => {
-                  return (
-                    <div>
-                      {event}
-                      <input id="remove" className="event-remove" type="submit" value="Remove" onClick={ this._handleRemove.bind(this, event) } />
-                    </div>
-                  );
-                })
-              }
+            <div className='seg-query-bar group'>
+              <div className='query-events'>
+                {
+                  query.events.map( event => {
+                    return (
+                      <div>
+                        {event}
+                        <input id="remove" className="event-remove" type="submit" value="Remove" onClick={ this._handleRemoveEvent.bind(this, event) } />
+                      </div>
+                    );
+                  })
+                }
+              </div>
+              <div className='query-properties'>
+                {
+                  query.properties.map( property => {
+                    return (
+                      <div>
+                        {property}
+                        <input id="remove" className="property-remove" type="submit" value="Remove" onClick={ this._handleRemoveProperty.bind(this, property) } />
+                      </div>
+                    );
+                  })
+                }
+              </div>
+
             </div>
             <div className='seg-chart-outer'>
                 <SegChart

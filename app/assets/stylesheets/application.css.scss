@@ -90,7 +90,7 @@ body, h1, h2, h3 {
 }
 
 .logo {
-  background-image: url("logo.png");
+  background-image: image-url("logo.png");
   background-repeat: no-repeat;
   width: 280px;
   height: 170px;
@@ -250,5 +250,9 @@ input {
 }
 
 .seg-options {
+  float: left;
+}
+
+.query-events, .query-properties {
   float: left;
 }

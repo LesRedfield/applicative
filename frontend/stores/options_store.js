@@ -15,8 +15,14 @@ OptionsStore.removeEvent = function(event){
   if (idx != -1) {
     _options.segmentation.query.events.splice(idx, 1);
   }
+};
 
-  // debugger
+OptionsStore.removeProperty = function(property){
+  let idx = _options.segmentation.query.properties.indexOf(`${property}`);
+
+  if (idx != -1) {
+    _options.segmentation.query.properties.splice(idx, 1);
+  }
 };
 
 function _resetAllOptions(options){
