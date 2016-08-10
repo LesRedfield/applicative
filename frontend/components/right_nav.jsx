@@ -20,41 +20,48 @@ const RightNav = React.createClass({
     const propertiesList = ['AB Group', 'Age', 'Gender', 'Marketing Channel', 'Signup Platform'];
 
     return(
-      <div id='right-nav' className='right-nav'>
+      <div id='right-nav' className='right-nav group'>
         <div className='right-nav-header'>
           Events/Properties
         </div>
 
-        <div className='right-nav-events'>
-          {
-            eventList.map( event => {
-              return (
-                <div className="seg-opt">
-                  <Event
-                    key={event}
-                    name={event}
-                    query={this.props.query}
-                  />
-                </div>
-              );
-            })
-          }
+        <div className="right-nav-data">
+          <div className="right-navs">
+            <div className='right-nav-events'>
+              {
+                eventList.map( event => {
+                  return (
+                    <div className="seg-opt">
+                      <Event
+                        key={event}
+                        name={event}
+                        query={this.props.query}
+                      />
+                    </div>
+                  );
+                })
+              }
+            </div>
+            <br/>
+            <div className='right-nav-properties'>
+              {
+                propertiesList.map( property => {
+                  return (
+                    <div className="seg-opt">
+                      <Property
+                        key={property}
+                        name={property}
+                        query={this.props.query}
+                      />
+                    </div>
+                  );
+                })
+              }
+            </div>
+          </div>
         </div>
-        <br/>
-        <div className='right-nav-properties'>
-          {
-            propertiesList.map( property => {
-              return (
-                <div className="seg-opt">
-                  <Property
-                    key={property}
-                    name={property}
-                    query={this.props.query}
-                  />
-                </div>
-              );
-            })
-          }
+        <div className="right-nav-menu">
+          N
         </div>
       </div>
     );

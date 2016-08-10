@@ -284,7 +284,8 @@ input {
 
 .demo-page {
   padding-top: 4px;
-  height: 100%;
+  padding-right: 5px;
+  height: calc(100% - 45px);
   width: 100%;
 }
 
@@ -335,7 +336,7 @@ input {
 .feature {
   float: left;
   width: calc(100% - 70px);
-  // height: 100%;
+  height: 100%;
 }
 
 .dash-chart {
@@ -393,41 +394,41 @@ input {
 
 .seg-body {
   width: 100%;
-  background-color: #29B0AB;
-  margin-top: 5px;
+  margin-top: 8px;
   border-radius: 3px;
   position: relative;
-  // height: 100%;
-  margin-bottom: 15px;
+  height: calc(100% - 61px);
+  margin-bottom: 30px;
 }
 
 .seg-query-chart {
+  background-color: #29B0AB;
   float: left;
-  width: calc(100% - 205px);
-  // height: 90%;
+  width: calc(100% - 280px);
+  height: 100%;
+  border-radius: 3px;
 }
 
 .seg-query-bar {
-  height: 50px;
+  height: 67px;
   color: white;
   // width: 100%;
 }
 
 .seg-chart-outer {
-  // height: 90%;
+  height: calc(100% - 67px);
 }
 
 .seg-chart-inner {
-  // height: 90%;
+  height: 100%;
 }
 
 #seg-chart {
-  // height: 90%;
-  min-height: 430px;
+  height: 100%;
 }
 
 .seg-options {
-  width: 205px;
+  width: 280px;
   float: left;
   background-color: #2DA29D;
   color: white;
@@ -435,6 +436,25 @@ input {
   right: 0;
   top: 0;
   bottom: 0;
+  border-radius: 4px;
+}
+
+.right-nav {
+  position: relative;
+  height: 100%;
+}
+
+.right-nav-data {
+  width: calc(100% - 30px);
+  background-color: #CBDFDF;
+  height: calc(100% - 36px);
+}
+
+.right-nav-menu {
+  width: 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .right-nav-header {

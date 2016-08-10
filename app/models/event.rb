@@ -46,6 +46,7 @@ class Event < ActiveRecord::Base
 
   def self.dashOne
     {
+      colors: ['#26a8a6'],
       chart: {
         type: 'area'
       },
@@ -106,6 +107,7 @@ class Event < ActiveRecord::Base
 
   def self.dashTwo
     {
+      colors: ['#912520', '#26a8a6'],
       chart: {
           type: 'bar'
       },

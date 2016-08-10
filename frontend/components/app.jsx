@@ -35,14 +35,12 @@ const App = React.createClass({
             </span>
       		</hgroup>
 
-          <div className="pos-rel">
-            <div className="demo-page group">
-              <span className="left-nav-outer">
-                <LeftNav />
-              </span>
-              <div className="feature group">
-                { this.props.children }
-              </div>
+          <div className="demo-page group">
+            <span className="left-nav-outer">
+              <LeftNav />
+            </span>
+            <div className="feature group">
+              { this.props.children }
             </div>
           </div>
         </div>
