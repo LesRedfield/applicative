@@ -77,7 +77,10 @@ class Event < ActiveRecord::Base
             }
           }
         }
-        },
+      },
+      credits: {
+        enabled: false
+      },
       series: [{
         name: 'Age',
         data: [
@@ -126,6 +129,9 @@ class Event < ActiveRecord::Base
           series: {
               stacking: 'normal'
           }
+      },
+      credits: {
+        enabled: false
       },
       series: [{
         name: 'Male',
@@ -177,6 +183,9 @@ class Event < ActiveRecord::Base
           series: {
               stacking: 'normal'
           }
+      },
+      credits: {
+        enabled: false
       },
       series: [{
         name: 'Group A',
@@ -243,6 +252,9 @@ class Event < ActiveRecord::Base
             lineColor: '#666666'
           }
         }
+      },
+      credits: {
+        enabled: false
       },
       series: [{
         name: 'Mac',
@@ -452,13 +464,20 @@ class Event < ActiveRecord::Base
               }
             }
           }
-          },
+        },
+        credits: {
+          enabled: false
+        },
         series: seriesArr
 
       }
 
     else
-      {}
+      {
+        credits: {
+          enabled: false
+        }
+      }
     end
 
   end

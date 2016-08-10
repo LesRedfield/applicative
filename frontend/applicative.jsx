@@ -28,5 +28,8 @@ const appRouter = (
 
 document.addEventListener('DOMContentLoaded', function() {
   const root = document.getElementById('content');
+  if (window.currentUser) {
+    SessionActions.receiveCurrentUser(window.currentUser);
+  }  
   ReactDOM.render(appRouter, root);
 });

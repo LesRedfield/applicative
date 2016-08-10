@@ -68,43 +68,50 @@ const LoginForm = React.createClass({
     }
 
 		return (
-			<div className="login-form-container">
-        <div className="logo"></div>
-        <h2 className="login-header">Sign In</h2>
-				<form onSubmit={this.handleSubmit} className="login-form-box">
-          <h3 className="login-message">Enter your email address and password to login.</h3>
 
-					<span className="login-form">
-            <div className="inside-login-form">
-  		        <br />
-  						<label>
-  							<input type="text"
-  		            value={this.state.email}
-  		            onChange={this.inputHandler("email")}
-                  placeholder="Email"
-  								className="login-input-email" />
-  						</label>
+      <div className="home-page">
+        <div className="blackout">
+        
+    			<div className="login-form-container">
+            <div className="logo"></div>
+            <h2 className="login-header">Sign In</h2>
+    				<form onSubmit={this.handleSubmit} className="login-form-box">
+              <h3 className="login-message">Enter your email address and password to login.</h3>
 
-  		        <br />
-  						<label>
-  		          <input type="password"
-  		            value={this.state.password}
-  		            onChange={this.inputHandler("password")}
-                  placeholder="Password"
-  								className="login-input-password" />
-  						</label>
+    					<span className="login-form">
+                <div className="inside-login-form">
+      		        <br />
+      						<label>
+      							<input type="text"
+      		            value={this.state.email}
+      		            onChange={this.inputHandler("email")}
+                      placeholder="Email"
+      								className="login-input-email" />
+      						</label>
 
-  		        <br />
+      		        <br />
+      						<label>
+      		          <input type="password"
+      		            value={this.state.password}
+      		            onChange={this.inputHandler("password")}
+                      placeholder="Password"
+      								className="login-input-password" />
+      						</label>
 
-              <button className="login-button">
-                Sign In
-                <span className="arrow"></span>
-              </button>
-            </div>
-					</span>
-				</form>
-        <input id="guest" className="demo-button" type="submit" value="Sign In As Guest" onClick={ this.handleGuest } />
-			</div>
+      		        <br />
+
+                  <button className="login-button">
+                    Sign In
+                    <span className="arrow"></span>
+                  </button>
+                </div>
+    					</span>
+    				</form>
+            <input id="guest" className="demo-button" type="submit" value="Sign In As Guest" onClick={ this.handleGuest } />
+    			</div>
+        </div>
+      </div>
+
 		);
 	}
 });

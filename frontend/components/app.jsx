@@ -35,12 +35,14 @@ const App = React.createClass({
             </span>
       		</hgroup>
 
-          <div className="demo-page group">
-            <span className="left-nav-outer">
-              <LeftNav />
-            </span>
-            <div className="feature">
-              { this.props.children }
+          <div className="pos-rel">
+            <div className="demo-page group">
+              <span className="left-nav-outer">
+                <LeftNav />
+              </span>
+              <div className="feature group">
+                { this.props.children }
+              </div>
             </div>
           </div>
         </div>
@@ -50,7 +52,7 @@ const App = React.createClass({
 
     } else {
       return (
-        <div>
+        <div className="tall group">
           { this.props.children }
         </div>
       );
@@ -59,10 +61,8 @@ const App = React.createClass({
 
   render() {
     return (
-      <div className="home-page">
-        <div className="blackout">
-          { this.greeting() }
-        </div>
+      <div className="tall">
+        { this.greeting() }
       </div>
     );
   }
@@ -70,6 +70,11 @@ const App = React.createClass({
 
 module.exports = App;
 
+// <div className="home-page">
+//   <div className="blackout">
+//     { this.greeting() }
+//   </div>
+// </div>
 
 // <header>
 //   <Link to="/" className="header-link"><h1></h1></Link>

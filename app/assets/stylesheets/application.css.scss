@@ -36,8 +36,20 @@ html {
   height: 100%;
 }
 
+body {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+}
+
+.tall {
+  height: 100%;
+}
+
 .home-page {
-  height: 1000px;
+  height: 100%;
 }
 
 ul {
@@ -265,13 +277,15 @@ input {
 
 .logged-in {
   height: 100%;
+  background-size: 100%;
+  background-image: radial-gradient(farthest-corner at 45px 45px , #395175 0%, #8491A5 100%);
+
 }
 
 .demo-page {
-  background-size: 100%;
-  background-image: radial-gradient(farthest-corner at 45px 45px , #395175 0%, #8491A5 100%);
   padding-top: 4px;
   height: 100%;
+  width: 100%;
 }
 
 .left-nav-outer {
@@ -320,8 +334,8 @@ input {
 
 .feature {
   float: left;
-  width: 95%;
-  height: 100%;
+  width: calc(100% - 70px);
+  // height: 100%;
 }
 
 .dash-chart {
@@ -369,6 +383,10 @@ input {
   padding-top: 5px;
 }
 
+#dash-one, #dash-two, #dash-three, #dash-four {
+  height: 240px;
+}
+
 .segmentation {
   height: 100%;
 }
@@ -378,17 +396,34 @@ input {
   background-color: #29B0AB;
   margin-top: 5px;
   border-radius: 3px;
+  position: relative;
+  // height: 100%;
+  margin-bottom: 15px;
 }
 
 .seg-query-chart {
   float: left;
-  width: 85%;
+  width: calc(100% - 205px);
+  // height: 90%;
 }
 
 .seg-query-bar {
   height: 50px;
   color: white;
-  width: 100%;
+  // width: 100%;
+}
+
+.seg-chart-outer {
+  // height: 90%;
+}
+
+.seg-chart-inner {
+  // height: 90%;
+}
+
+#seg-chart {
+  // height: 90%;
+  min-height: 430px;
 }
 
 .seg-options {
@@ -396,6 +431,10 @@ input {
   float: left;
   background-color: #2DA29D;
   color: white;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .right-nav-header {

@@ -46,14 +46,14 @@ const Segmentation = React.createClass({
     }
 
     return(
-      <div className="segmentation">
+      <div className="segmentation group">
         <header className="seg-head group">
           <h1 id="seg-head-title">Segmentation</h1>
           <span id="seg-head-right">You are exploring Applicative on your own</span>
         </header>
 
         <div className='seg-body group'>
-          <div className='seg-query-chart'>
+          <div className='seg-query-chart group'>
             <div className='seg-query-bar group'>
               <div className='query-events'>
                 {
