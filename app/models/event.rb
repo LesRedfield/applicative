@@ -47,6 +47,7 @@ class Event < ActiveRecord::Base
   def self.dashOne
     {
       colors: ['#26a8a6'],
+      # colors: ['#C0FFFF'],
       chart: {
         type: 'area'
       },
@@ -66,6 +67,14 @@ class Event < ActiveRecord::Base
         }
       },
       plotOptions: {
+        series: {
+          fillColor: {
+              linearGradient: [0, 0, 0, 300],
+              stops: [
+                [0, '#C0FFFF']
+              ]
+            }
+        },
         area: {
           marker: {
             enabled: false,
@@ -100,7 +109,8 @@ class Event < ActiveRecord::Base
           Event.purchase_between(34.days.ago, 20.days.ago).map do |event|
             event.customer.age
           end.mean.to_i
-        ]
+        ],
+        lineWidth: 1
       }]
     }
   end
@@ -109,7 +119,7 @@ class Event < ActiveRecord::Base
     {
       colors: ['#912520', '#26a8a6'],
       chart: {
-          type: 'bar'
+          type: 'column'
       },
       title: {
           text: 'Signup Platform by Gender'
@@ -129,7 +139,8 @@ class Event < ActiveRecord::Base
       },
       plotOptions: {
           series: {
-              stacking: 'normal'
+              stacking: 'normal',
+              pointWidth: 20
           }
       },
       credits: {
@@ -159,26 +170,29 @@ class Event < ActiveRecord::Base
 
   def self.dashThree
     {
+      colors: ['#26a8a6'],
       chart: {
-          type: 'column'
+          type: 'bar'
       },
       title: {
-          text: 'Average Age by Marketing Channel & A/B Group'
+          text: 'Signup by Marketing Channel'
       },
-      subtitle: {
-        text: 'ActiveRecord is tha Bombdiggity'
-      },
+      # subtitle: {
+      #   enabled: false,
+      #   text: 'ActiveRecord is tha Bombdiggity'
+      # },
       xAxis: {
           categories: ['Search', 'Social Media', 'Affiliate', 'Organic']
       },
       yAxis: {
           min: 0,
           title: {
-              text: 'Average Age'
+              text: 'Signups'
           }
       },
       legend: {
-          reversed: true
+        enabled: false,
+        reversed: true
 
       },
       plotOptions: {
@@ -190,35 +204,42 @@ class Event < ActiveRecord::Base
         enabled: false
       },
       series: [{
-        name: 'Group A',
+        name: 'Signups',
         data: [
-          Customer.where(ab_group: 'A', signup_channel: 'Search').average(:age).to_i,
-          Customer.where(ab_group: 'A', signup_channel: 'Social Media').average(:age).to_i,
-          Customer.where(ab_group: 'A', signup_channel: 'Affiliate').average(:age).to_i,
-          Customer.where(ab_group: 'A', signup_channel: 'Organic').average(:age).to_i,
+          Customer.where(signup_channel: 'Search').count,
+          Customer.where(signup_channel: 'Social Media').count,
+          Customer.where(signup_channel: 'Affiliate').count,
+          Customer.where(signup_channel: 'Organic').count
         ]
-      }, {
-        name: 'Group B',
-        data: [
-          Customer.where(ab_group: 'B', signup_channel: 'Search').average(:age).to_i,
-          Customer.where(ab_group: 'B', signup_channel: 'Social Media').average(:age).to_i,
-          Customer.where(ab_group: 'B', signup_channel: 'Affiliate').average(:age).to_i,
-          Customer.where(ab_group: 'B', signup_channel: 'Organic').average(:age).to_i,
-        ]
-      }, {
-        name: 'Neither',
-        data: [
-          Customer.where(ab_group: nil, signup_channel: 'Search').average(:age).to_i,
-          Customer.where(ab_group: nil, signup_channel: 'Social Media').average(:age).to_i,
-          Customer.where(ab_group: nil, signup_channel: 'Affiliate').average(:age).to_i,
-          Customer.where(ab_group: nil, signup_channel: 'Organic').average(:age).to_i,
-        ]
-      }]
+      }
+
+      # , {
+      #   name: 'Group B',
+      #   data: [
+      #     Customer.where(ab_group: 'B', signup_channel: 'Search').average(:age).to_i,
+      #     Customer.where(ab_group: 'B', signup_channel: 'Social Media').average(:age).to_i,
+      #     Customer.where(ab_group: 'B', signup_channel: 'Affiliate').average(:age).to_i,
+      #     Customer.where(ab_group: 'B', signup_channel: 'Organic').average(:age).to_i,
+      #   ]
+      # }
+
+      # , {
+      #   name: 'Neither',
+      #   data: [
+      #     Customer.where(ab_group: nil, signup_channel: 'Search').average(:age).to_i,
+      #     Customer.where(ab_group: nil, signup_channel: 'Social Media').average(:age).to_i,
+      #     Customer.where(ab_group: nil, signup_channel: 'Affiliate').average(:age).to_i,
+      #     Customer.where(ab_group: nil, signup_channel: 'Organic').average(:age).to_i,
+      #   ]
+      # }
+
+      ]
     }
   end
 
   def self.dashFour
     {
+      colors: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
       chart: {
         type: 'area'
       },
@@ -247,11 +268,20 @@ class Event < ActiveRecord::Base
       plotOptions: {
         area: {
           stacking: 'percent',
-          lineColor: '#666666',
-          lineWidth: 1,
+          lineColor: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
+          lineWidth: 2,
           marker: {
-            lineWidth: 1,
-            lineColor: '#666666'
+            lineColor: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
+            symbol: 'circle',
+            radius: 2,
+            enabled: false,
+            states: {
+              hover: {
+                halo: {
+                  size: 1
+                }
+              }
+            }
           }
         }
       },
