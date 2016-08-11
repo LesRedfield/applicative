@@ -26,6 +26,7 @@ const App = React.createClass({
     	return (
         <div className="logged-in group">
       		<hgroup className="header group">
+            <Link to="/" className="logo-link"></Link>
             <span className="top-nav group">
               <div className="welcome">
           			<h2 className="header-name">Hi, {SessionStore.currentUser().first_name}!</h2>
@@ -42,6 +43,15 @@ const App = React.createClass({
             <div className="feature group">
               { this.props.children }
             </div>
+          </div>
+
+          <div className="footer group">
+            <span className="bot-nav group">
+              <div className="bot-nav-item">Contact Us</div>
+              <div className="bot-nav-item">Terms of Service</div>
+              <div className="bot-nav-item">Privacy Policy</div>
+              <div id="copyright" className="bot-nav-item">© 2016 Applicative, Inc.</div>
+            </span>
           </div>
         </div>
     	);

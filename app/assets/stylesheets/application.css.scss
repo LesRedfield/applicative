@@ -239,16 +239,23 @@ input {
 
 .header {
   background: #223146;
-  background-image: image-url("logo.png");
-  background-repeat: no-repeat;
-  background-size: 140px auto;
-  background-position: -5px 4px;
 
   height: 45px;
   display: block;
   margin-right: auto;
 
   color: white;
+}
+
+.logo-link {
+  background-image: image-url("logo.png");
+  background-repeat: no-repeat;
+  background-size: 140px auto;
+  background-position: -5px 4px;
+  height: 45px;
+  display: block;
+  float: left;
+  width: 125px;
 }
 
 .top-nav {
@@ -276,10 +283,10 @@ input {
 }
 
 .logged-in {
-  height: 100%;
+  min-height: 100%;
   background-size: 100%;
   background-image: radial-gradient(farthest-corner at 45px 45px , #395175 0%, #8491A5 100%);
-
+  position: relative;
 }
 
 .demo-page {
@@ -295,42 +302,53 @@ input {
 }
 
 .left-nav-button {
-  width: 70%;
+  width: 40px;
   padding: 10px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 0;
   height: 40px;
   cursor: pointer;
+  display: block;
 }
 
-#bot-bord {
-  border-bottom: rgba(176,182,182,0.2) solid 1px;
-}
+// #bot-bord {
+//   border-bottom: rgba(176,182,182,0.2) solid 1px;
+// }
 
 #left-nav-dashboard {
   background-color: transparent;
   background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
+  // width: 20px;
+  // height: 20px;
   background-size: 26px auto;
-  background-position: 0 -396px;
+  background-position: 10px -356px;
   // border-bottom: rgba(176,182,182,0.2) solid 1px;
   margin-left: auto;
   margin-right: auto;
+
+  border-bottom: rgba(176,182,182,0.2) solid 1px;
+}
+
+#left-nav-dashboard.current {
+  background-position: 10px -386px;
 }
 
 #left-nav-segmentation {
   background-color: transparent;
   background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
   background-repeat: no-repeat;
-  width: 20px;
-  height: 23px;
+  // width: 20px;
+  // height: 23px;
   background-size: 26px auto;
-  background-position: 0 -610px;
+  background-position: 10px -601px;
   margin-left: auto;
   margin-right: auto;
+}
+
+#left-nav-segmentation.current {
+  background-position: 10px -634px;
 }
 
 .feature {
@@ -360,6 +378,7 @@ input {
   display: flex;
   flex-wrap: wrap;
   margin-top: 5px;
+  margin-bottom: 25px;
 }
 
 .dash-head, .seg-head {
@@ -486,4 +505,30 @@ input {
 
 .query-events, .query-properties {
   float: left;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.bot-nav {
+  color: rgba(255,255,255,0.6);
+  font-size: 10px;
+  float: right;
+  padding-bottom: 10px
+}
+
+.bot-nav-item {
+  float: left;
+  border-right: rgba(255,255,255,0.6) solid 1px;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 7px;
+  font-weight: 300;
+}
+
+#copyright {
+  border-right: none;
 }

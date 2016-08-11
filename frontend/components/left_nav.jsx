@@ -1,4 +1,5 @@
 const React = require('react');
+const Link = require('react-router').Link;
 const Dashboard = require('./dashboard');
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
@@ -34,13 +35,12 @@ const LeftNav = React.createClass({
     return(
       <div id='left-nav' className='left-nav'>
 
-        <div id="bot-bord" className="left-nav-button" onClick={ this._handleDashboardClick }>
-          <div id="left-nav-dashboard" />
-        </div>
+        <Link to="/dashboard" id="left-nav-dashboard" className="left-nav-button" activeClassName="current">
+        </Link>
 
-        <div className="left-nav-button" onClick={ this._handleSegmentationClick }>
-          <div id="left-nav-segmentation" />
-        </div>
+        <Link to="/segmentation" id="left-nav-segmentation" className="left-nav-button" activeClassName="current">
+        </Link>
+
 
       </div>
     );
@@ -49,3 +49,11 @@ const LeftNav = React.createClass({
 });
 
 module.exports = LeftNav;
+
+// <div id="bot-bord" className="left-nav-button">
+//   <div id="left-nav-dashboard" />
+// </div>
+//
+// <div className="left-nav-button">
+//   <div id="left-nav-segmentation" />
+// </div>
