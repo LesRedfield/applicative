@@ -15,7 +15,7 @@ const Segmentation = React.createClass({
 
   _optionsChanged() {
     this.setState({options: OptionsStore.all().segmentation});
-
+    this._addClickListener();
   },
 
   componentDidMount() {
@@ -24,6 +24,23 @@ const Segmentation = React.createClass({
 
   componentWillUnmount() {
     this.optionsListener.remove();
+  },
+
+  _addClickListener() {
+
+    if (this.state.options.plotOptions) {
+      let newState = this.state.options;
+      newState.plotOptions.series.point = {
+        events: {
+          click: function() {
+            alert (this.category +': '+ this.y);
+            console.log(this);
+          }
+        }
+      };
+
+      this.setState({ options: newState });
+    }
   },
 
   _handleRemoveEvent(event) {

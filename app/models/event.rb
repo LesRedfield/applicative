@@ -517,11 +517,11 @@ class Event < ActiveRecord::Base
           }
         },
         plotOptions: {
-          area: {
+          series: {
             marker: {
-              enabled: false,
+              enabled: true,
               symbol: 'circle',
-              radius: 2,
+              radius: 4,
               states: {
                 hover: {
                   enabled: true

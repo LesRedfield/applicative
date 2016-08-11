@@ -26,7 +26,7 @@ const App = React.createClass({
     	return (
         <div className="logged-in group">
       		<hgroup className="header group">
-            <Link to="/" className="logo-link"></Link>
+            <Link to="/dashboard" className="logo-link"></Link>
             <span className="top-nav group">
               <div className="welcome">
           			<h2 className="header-name">Hi, {SessionStore.currentUser().first_name}!</h2>

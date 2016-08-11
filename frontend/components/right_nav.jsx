@@ -4,10 +4,43 @@ const Segmentation = require('./segmentation');
 const Event = require('./event');
 const Property = require('./property');
 
+const Menu = React.createClass({
+
+  render() {
+    let selected = this.props.selectedNav;
+    let menuTabs = this.props.navs.map((nav, index) => {
+      let klass = 'menu-' + index + ' menu-tab';
+      let picKlass = 'menu-' + index + '-pic' + ' menu-tab-pic';
+      if (nav === selected) {
+        klass += ' selected';
+        picKlass += ' selected';
+      }
+
+
+      return (
+        <div
+          key={index}
+          className={klass}
+          onClick={this.props.onNavChosen.bind(null, nav)}>
+          <div className={picKlass}></div>
+        </div>
+      );
+    });
+
+    return (
+      <div className='menu-tabs'>
+        {menuTabs}
+      </div>
+    );
+
+  }
+
+});
+
 const RightNav = React.createClass({
 
   getInitialState() {
-    return ( { selected: '' } );
+    return ( { selectedNav: 'Events' } );
   },
 
   _handleOptionClick(e) {
@@ -15,53 +48,60 @@ const RightNav = React.createClass({
 
   },
 
+  selectNav(nav) {
+    this.setState({ selectedNav: nav });
+  },
+
   render() {
-    const eventList = ['Add to Cart', 'Proceed to Checkout', 'Purchase', 'Session'];
-    const propertiesList = ['AB Group', 'Age', 'Gender', 'Marketing Channel', 'Signup Platform'];
+    const lists = {
+      'Events': ['Add to Cart', 'Proceed to Checkout', 'Purchase', 'Session'],
+      'Properties': ['AB Group', 'Age', 'Gender', 'Marketing Channel', 'Signup Platform']
+    };
+
+    let navList = lists[this.state.selectedNav];
 
     return(
       <div id='right-nav' className='right-nav group'>
         <div className='right-nav-header'>
-          Events/Properties
+          {this.state.selectedNav}
         </div>
 
         <div className="right-nav-data">
           <div className="right-navs">
-            <div className='right-nav-events'>
-              {
-                eventList.map( event => {
+            {
+              navList.map( nav => {
+                if (this.state.selectedNav === 'Events') {
                   return (
                     <div className="seg-opt">
                       <Event
-                        key={event}
-                        name={event}
+                        key={nav}
+                        name={nav}
                         query={this.props.query}
                       />
                     </div>
                   );
-                })
-              }
-            </div>
-            <br/>
-            <div className='right-nav-properties'>
-              {
-                propertiesList.map( property => {
+                } else {
                   return (
                     <div className="seg-opt">
                       <Property
-                        key={property}
-                        name={property}
+                        key={nav}
+                        name={nav}
                         query={this.props.query}
                       />
                     </div>
                   );
-                })
-              }
-            </div>
+                }
+              })
+            }
+
           </div>
         </div>
         <div className="right-nav-menu">
-          N
+          <Menu
+            selectedNav={ this.state.selectedNav }
+            onNavChosen={ this.selectNav }
+            navs={ ['Events', 'Properties'] }>
+          </Menu>
         </div>
       </div>
     );
@@ -70,3 +110,40 @@ const RightNav = React.createClass({
 });
 
 module.exports = RightNav;
+
+
+
+// const eventList = ['Add to Cart', 'Proceed to Checkout', 'Purchase', 'Session'];
+// const propertiesList = ['AB Group', 'Age', 'Gender', 'Marketing Channel', 'Signup Platform'];
+
+// <div className='right-nav-events'>
+//   {
+//     eventList.map( event => {
+//       return (
+//         <div className="seg-opt">
+//           <Event
+//             key={event}
+//             name={event}
+//             query={this.props.query}
+//             />
+//         </div>
+//       );
+//     })
+//   }
+// </div>
+// <br/>
+// <div className='right-nav-properties'>
+//   {
+//     propertiesList.map( property => {
+//       return (
+//         <div className="seg-opt">
+//           <Property
+//             key={property}
+//             name={property}
+//             query={this.props.query}
+//             />
+//         </div>
+//       );
+//     })
+//   }
+// </div>

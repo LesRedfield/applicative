@@ -292,6 +292,7 @@ input {
 .demo-page {
   padding-top: 4px;
   padding-right: 5px;
+  padding-bottom: 5px;
   height: calc(100% - 45px);
   width: 100%;
 }
@@ -408,7 +409,9 @@ input {
 }
 
 .segmentation {
-  height: 100%;
+  height: calc(100% - 55px);
+  width: calc(100% - 70px);
+  position: absolute;
 }
 
 .seg-body {
@@ -473,7 +476,52 @@ input {
   width: 30px;
   position: absolute;
   right: 0;
-  top: 0;
+  top: 36px;
+}
+
+.menu-tabs {
+  height: 100%;
+}
+
+.menu-tab {
+  height: 36px;
+  width: 100%;
+  background-color: #2DA29D;
+  cursor: pointer;
+  padding-top: 9px;
+}
+
+.menu-tab.selected {
+  background-color: #CBDFDF;
+}
+
+.menu-tab-pic {
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-size: 312px;
+  background-repeat: no-repeat;
+  margin: auto;
+
+  display: block;
+}
+
+.menu-0-pic {
+  width: 16px;
+  height: 18px;
+  background-position: 0px -2279.5px;
+}
+
+.menu-0-pic.selected {
+  background-position: 0px -2335.5px;
+}
+
+.menu-1-pic {
+  height: 19px;
+  width: 19px;
+  background-position: 0px -2441.5px;
+}
+
+.menu-1-pic.selected {
+  background-position: 0px -2499.5px;
 }
 
 .right-nav-header {
@@ -487,20 +535,24 @@ input {
   text-align: left;
 }
 
+.right-navs {
+  padding-top: 32px;
+}
+
 .seg-opt {
   border-radius: 2px 2px 2px 2px;
   position: relative;
   margin: 2px 0;
   display: inline-block;
-  width: 170px;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  width: 90%;
+  height: 24px;
   background-color: white;
   font-size: 11px;
-  padding: 3px;
+  font-weight: 300;
+  padding: 5px;
   color: black;
   text-align: left;
-  padding-left: 32px;
+  padding-left: 28px;
 }
 
 .query-events, .query-properties {
