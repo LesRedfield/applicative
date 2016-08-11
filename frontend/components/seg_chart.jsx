@@ -51,29 +51,76 @@ const SegChart = React.createClass({
     const connectDropTarget = this.props.connectDropTarget;
     const isOver = this.props.isOver;
 
-    return connectDropTarget(
-      <div className="seg-chart-inner">
-        <Highchart
-          key="seg-chart"
-          container="seg-chart"
-          options={this.state.options}
-        />
-        {isOver &&
-          <div style={{
-            position: 'absolute',
-            top: 100,
-            left: 50,
-            height: '50%',
-            width: '50%',
-            zIndex: 1,
-            opacity: 0.5,
-            backgroundColor: 'yellow',
-          }} />
-        }
-      </div>
-    );
+    if (this.state.options.chart) {
+      return connectDropTarget(
+        <div className="seg-chart-inner">
+          <Highchart
+            key="seg-chart"
+            container="seg-chart"
+            options={this.state.options}
+            />
+          {isOver &&
+            <div style={{
+              position: 'absolute',
+              top: 100,
+              left: 50,
+              height: '50%',
+              width: '50%',
+              zIndex: 1,
+              opacity: 0.5,
+              backgroundColor: 'yellow',
+            }} />
+          }
+        </div>
+      );
+    } else {
+      return connectDropTarget(
+        <div className="seg-chart-inner">
+          <div className="no-event">
+            <div className="no-event-messages">
+              <div className="top-text">
+                Ask anything. Answer everything. Ad hoc data exploration at your fingertips.
+              </div>
+              <div className="no-event-pic"></div>
+              <div className="bottom-text">
+                Drag in an Event to start.
+              </div>
+            </div>
+          </div>
+          {isOver &&
+            <div className="no-event-hover">
+              <div className="no-event-messages">
+                <div className="top-text">
+                  Ask anything. Answer everything. Ad hoc data exploration at your fingertips.
+                </div>
+                <div className="no-event-pic-hover"></div>
+                <div className="bottom-text-hover">
+                  Drag in an Event to start.
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      );
+    }
+
   }
 
 });
 
 module.exports = DropTarget([Draggable.EVENT, Draggable.PROPERTY], segChartTarget, collect)(SegChart);
+
+
+
+// {isOver &&
+//   <div style={{
+//     position: 'absolute',
+//     top: 100,
+//     left: 50,
+//     height: '50%',
+//     width: '50%',
+//     zIndex: 1,
+//     opacity: 0.5,
+//     backgroundColor: 'yellow',
+//   }} />
+// }

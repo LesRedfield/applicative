@@ -412,6 +412,7 @@ input {
   height: calc(100% - 55px);
   width: calc(100% - 70px);
   position: absolute;
+  padding-right: 5px;
 }
 
 .seg-body {
@@ -419,8 +420,8 @@ input {
   margin-top: 8px;
   border-radius: 3px;
   position: relative;
-  height: calc(100% - 61px);
-  margin-bottom: 30px;
+  height: calc(100% - 59px);
+  // margin-bottom: 30px;
 }
 
 .seg-query-chart {
@@ -443,6 +444,99 @@ input {
 
 .seg-chart-inner {
   height: 100%;
+  background-color: white;
+  position: relative;
+}
+
+.no-event {
+  position: absolute;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: initial;
+  opacity: 1;
+  color: rgb(207, 207, 207);
+  top: 50px;
+  right: 50px;
+  left: 50px;
+  bottom: 50px;
+  font-weight: 300;
+  text-align: center;
+  background: white;
+  border-color: rgba(207, 207, 207, 0.6);
+  border-width: 8px;
+  font-size: 90px;
+  padding-bottom: 20px;
+  border-style: dashed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.no-event-hover {
+  position: absolute;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: initial;
+  opacity: 1;
+  color: #2DA29D;
+  top: 50px;
+  right: 50px;
+  left: 50px;
+  bottom: 50px;
+  font-weight: 300;
+  text-align: center;
+  background: white;
+  border-color: #2DA29D;
+  border-width: 8px;
+  font-size: 90px;
+  padding-bottom: 20px;
+  border-style: dashed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.no-event-messages {
+
+}
+
+.top-text {
+  font-size: 24px;
+  margin: 5px 150px;
+}
+
+.no-event-pic {
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  width: 312px;
+  height: 120px;
+  background-size: 312px;
+  margin: 2% auto;
+  background-repeat: no-repeat;
+  background-position: 0px -3674.5px;
+}
+
+.no-event-pic-hover {
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  width: 312px;
+  height: 120px;
+  background-size: 312px;
+  margin: 2% auto;
+  background-repeat: no-repeat;
+  background-position: 0px -3803.5px;
+}
+
+.bottom-text {
+  font-size: 30px;
+  font-weight: 500;
+  color: rgb(156, 156, 156);
+}
+
+.bottom-text-hover {
+  font-size: 30px;
+  font-weight: 500;
+  color: #2DA29D;
 }
 
 #seg-chart {
