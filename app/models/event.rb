@@ -49,13 +49,19 @@ class Event < ActiveRecord::Base
       colors: ['#26a8a6'],
       # colors: ['#C0FFFF'],
       chart: {
+        spacingTop: 30,
+        spacingBottom: 50,
+        spacingLeft: 20,
+        spacingRight: 20,
+        marginTop: 80,
         type: 'area'
       },
       title: {
-        text: 'Average Purchaser Age'
-      },
-      subtitle: {
-        text: 'Actually in the database!'
+        text: 'Average Purchaser Age',
+        style: {
+          fontSize: '12px',
+          color: '#838383'
+        }
       },
       xAxis: {
         categories: ['May 03', 'May 08', 'May 13', 'May 18', 'May 23', 'May 28',
@@ -63,7 +69,7 @@ class Event < ActiveRecord::Base
       },
       yAxis: {
         title: {
-          text: 'Age'
+          enabled: false
         }
       },
       plotOptions: {
@@ -89,6 +95,9 @@ class Event < ActiveRecord::Base
         }
       },
       credits: {
+        enabled: false
+      },
+      legend: {
         enabled: false
       },
       series: [{
@@ -119,19 +128,28 @@ class Event < ActiveRecord::Base
     {
       colors: ['#912520', '#26a8a6'],
       chart: {
-          type: 'column'
+        spacingTop: 30,
+        # spacingBottom: 50,
+        spacingLeft: 20,
+        spacingRight: 20,
+        marginTop: 80,
+        type: 'column'
       },
       title: {
-          text: 'Signup Platform by Gender'
+          text: 'Signup Platform by Gender',
+          style: {
+            fontSize: '12px',
+            color: '#838383'
+          }
       },
       xAxis: {
           categories: ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android']
       },
       yAxis: {
-          min: 0,
-          title: {
-              text: 'Total Signups'
-          }
+        min: 0,
+        title: {
+          enabled: false
+        }
       },
       legend: {
           reversed: true
@@ -172,23 +190,32 @@ class Event < ActiveRecord::Base
     {
       colors: ['#26a8a6'],
       chart: {
-          type: 'bar'
+        spacingTop: 30,
+        spacingBottom: 20,
+        spacingLeft: 20,
+        spacingRight: 20,
+        marginTop: 80,
+        type: 'bar'
       },
       title: {
-          text: 'Signup by Marketing Channel'
+        text: 'Signup by Marketing Channel',
+        style: {
+          fontSize: '12px',
+          color: '#838383'
+        }
       },
       # subtitle: {
       #   enabled: false,
       #   text: 'ActiveRecord is tha Bombdiggity'
       # },
       xAxis: {
-          categories: ['Search', 'Social Media', 'Affiliate', 'Organic']
+        categories: ['Search', 'Social Media', 'Affiliate', 'Organic']
       },
       yAxis: {
-          min: 0,
-          title: {
-              text: 'Signups'
-          }
+        min: 0,
+        title: {
+          text: 'Signups'
+        }
       },
       legend: {
         enabled: false,
@@ -196,9 +223,9 @@ class Event < ActiveRecord::Base
 
       },
       plotOptions: {
-          series: {
-              stacking: 'normal'
-          }
+        series: {
+          stacking: 'normal'
+        }
       },
       credits: {
         enabled: false
@@ -241,13 +268,19 @@ class Event < ActiveRecord::Base
     {
       colors: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
       chart: {
+        spacingTop: 30,
+        # spacingBottom: 50,
+        spacingLeft: 20,
+        spacingRight: 20,
+        marginTop: 80,
         type: 'area'
       },
       title: {
-        text: 'Biweekly Purchases by Session Platform'
-      },
-      subtitle: {
-        text: 'Source: appacademy.io'
+        text: 'Biweekly Purchases by Session Platform',
+        style: {
+          fontSize: '12px',
+          color: '#838383'
+        }
       },
       xAxis: {
         categories: ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28'],

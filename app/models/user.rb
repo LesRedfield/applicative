@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
   validates :session_token, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
 
+  has_many :annotations
+
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)
 
