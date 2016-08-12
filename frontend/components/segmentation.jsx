@@ -62,6 +62,8 @@ const Segmentation = React.createClass({
       query = this.state.options.query;
     }
 
+    let title = 'Untitled';
+
     return(
       <div className="segmentation group">
         <header className="seg-head group">
@@ -72,29 +74,35 @@ const Segmentation = React.createClass({
         <div className='seg-body group'>
           <div className='seg-query-chart group'>
             <div className='seg-query-bar group'>
-              <div className='query-events'>
+
+              <div className="query-header group">
+                <span className="seg-query-icon"></span>
+                <div className="seg-query-title">{title}</div>
+                <div className="query-header-right group">
+                  <div className="reset-icon"></div>
+                  <div className="reset-text">RESET</div>
+                </div>
+              </div>
+
+              <div className="seg-query-events group">
                 {
                   query.events.map( event => {
                     return (
-                      <div>
-                        {event}
-                        <input id="remove" className="event-remove" type="submit" value="Remove" onClick={ this._handleRemoveEvent.bind(this, event) } />
+                      <div className="seg-query-event-line group">
+                        <span className="seg-query-event">
+                          <span className="seg-query-event-icon"></span>
+                          {event}
+                          <div id="remove" className="event-remove" onClick={ this._handleRemoveEvent.bind(this, event) }></div>
+                        </span>
                       </div>
                     );
                   })
                 }
+
               </div>
-              <div className='query-properties'>
-                {
-                  query.properties.map( property => {
-                    return (
-                      <div>
-                        {property}
-                        <input id="remove" className="property-remove" type="submit" value="Remove" onClick={ this._handleRemoveProperty.bind(this, property) } />
-                      </div>
-                    );
-                  })
-                }
+
+              <div className="drop-an-event">
+                
               </div>
 
             </div>
@@ -118,3 +126,16 @@ const Segmentation = React.createClass({
 });
 
 module.exports = DragDropContext(HTML5Backend)(Segmentation);
+
+// <div className='query-properties'>
+//   {
+//     query.properties.map( property => {
+//       return (
+//         <div>
+//           {property}
+//           <input id="remove" className="property-remove" type="submit" value="Remove" onClick={ this._handleRemoveProperty.bind(this, property) } />
+//         </div>
+//       );
+//     })
+//   }
+// </div>
