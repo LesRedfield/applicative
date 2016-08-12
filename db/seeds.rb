@@ -23,7 +23,16 @@ days_agos.each do |days_ago|
   ]
 end
 
-100.times do
+# customer_list << [
+#   days_ago.days.ago,
+#   ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android'].sample,
+#   ['Search', 'Social Media', 'Affiliate', 'Organic'].sample,
+#   ['A', 'B', nil].sample,
+#   rand(18..60),
+#   [true, false].sample
+# ]
+
+50.times do
   customer_list.each do |signup, signup_platform, signup_channel, ab_group, age, gender|
     Customer.create!(
       signup: signup,
@@ -40,7 +49,7 @@ customer_ids = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
 ]
 
-100.times do |num|
+50.times do |num|
   customer_ids.each do |id|
     Event.create!(
       customer_id: id * (num + 1),

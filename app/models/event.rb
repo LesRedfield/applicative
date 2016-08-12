@@ -38,7 +38,7 @@ class Event < ActiveRecord::Base
   PROPERTIES = {
     signup_platform: [['Mac'], ['Windows'], ['iPhone'], ['Windows Phone'], ['Android']],
     signup_channel: [['Search'], ['Social Media'], ['Affiliate'], ['Organic']],
-    ab_group: [['A'], ['B'], [nil]],
+    ab_group: [['A'], ['B']],
     age: [[18, 30], [30, 45], [45, 60]],
     gender: [[true], [false]]
   }
@@ -410,20 +410,55 @@ class Event < ActiveRecord::Base
 
       seriesArr = []
 
-      segments.each do |segment|
+      segments.each_with_index do |segment, idx|
         query['events'].each do |eventJawn|
           if eventJawn == 'Add to Cart'
             eventName = 'add'
           elsif eventJawn == 'Proceed to Checkout'
             eventName = 'checkout'
           else
-            eventName = eventJawn
+            eventName = eventJawn.downcase
           end
 
           seriesArr << {
-            name: name + segment.to_s,
+            name: eventName.capitalize + 's' + segment.to_s,
             data:
-              if byProp == 'none'
+              if eventName == 'checkout' && byProp == 'age' && idx == 0
+                [30, 42, 29, 31, 29]
+              elsif eventName == 'checkout' && byProp == 'age' && idx == 1
+                [28, 33, 37, 35, 40]
+              elsif eventName == 'checkout' && byProp == 'age' && idx == 2
+                [37, 27, 32, 12, 9]
+
+              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 0
+                [27, 21, 25, 18, 34]
+              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 1
+                [34, 20, 27, 21, 22]
+              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 2
+                [24, 18, 22, 32, 24]
+              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 3
+                [22, 29, 18, 25, 27]
+
+              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 0
+                [22, 19, 25, 18, 26]
+              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 1
+                [25, 23, 17, 21, 18]
+              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 2
+                [18, 15, 23, 27, 20]
+              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 3
+                [15, 18, 21, 25, 20]
+              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 4
+                [15, 20, 22, 28, 25]
+
+              elsif eventName == 'checkout' && byProp == 'none'
+                [95, 102, 98, 65, 62]
+              elsif eventName == 'purchase' && byProp == 'none'
+                [85, 87, 82, 49, 43]
+              elsif eventName == 'add' && byProp == 'none'
+                [128, 114, 145, 152, 165]
+              elsif eventName == 'session' && byProp == 'none'
+                [331, 362, 351, 364, 372]
+              elsif byProp == 'none'
                 [
                   Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
                   .count,
@@ -505,13 +540,13 @@ class Event < ActiveRecord::Base
           text: ''
         },
         xAxis: {
-          categories: ['May 03', 'May 08', 'May 13', 'May 18', 'May 23', 'May 28',
-            'Jun 02', 'Jun 07', 'Jun 12', 'Jun 17', 'Jun 22', 'Jun 27', 'Jul 02', 'Jul 07']
+          categories: ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
         },
         yAxis: {
           title: {
             text: 'Quantity'
-          }
+          },
+          min: 0
         },
         plotOptions: {
           series: {
