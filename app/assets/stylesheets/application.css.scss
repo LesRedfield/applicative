@@ -783,11 +783,56 @@ input {
   width: 100%;
   color: white;
   height: 36px;
+  position: relative;
+}
+
+.right-nav-header-icon {
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 18px;
+  background-size: 312px auto;
+  background-position: 0 -2307.5px;
+  position: absolute;
+  top: 9px;
+  left: 10px;
+}
+
+.right-nav-header-text {
   text-align: left;
+
 }
 
 .right-navs {
-  padding-top: 32px;
+  // padding-top: 32px;
+}
+
+.right-nav-search {
+  position: relative;
+  color: #A9A9A9;
+  font-size: 12px;
+  padding: 9px 70px 0 16px;
+  border: none;
+  width: 100%;
+  height: 32px;
+}
+
+.right-nav-search-text {
+  float: left;
+  padding-left: 28px;
+  text-align: left;
+}
+
+.right-nav-search-icon {
+  background-image: url(https://app.indicative.com/assets/img/notsprites/search_icon.png);
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 0px center;
+  float: left;
+  width: 18px;
+  top: 7px;
+  height: 20px;
+  position: absolute;
 }
 
 .seg-opt {
