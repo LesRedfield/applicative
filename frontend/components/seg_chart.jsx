@@ -62,14 +62,24 @@ const SegChart = React.createClass({
           {isOver &&
             <div style={{
               position: 'absolute',
-              top: 100,
+              top: 50,
               left: 50,
-              height: '50%',
-              width: '50%',
+              right: 50,
+              bottom: 50,
               zIndex: 1,
               opacity: 0.5,
-              backgroundColor: 'yellow',
-            }} />
+              backgroundColor: 'white',
+              borderColor: '#2DA29D',
+              borderWidth: '8px',
+              borderStyle: 'dashed',
+              color: '#2DA29D',
+              fontSize: '50px',
+              textAlign: 'center',
+              fontWeight: 400,
+              justifyContent: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+            }}>Segment By...</div>
           }
         </div>
       );
@@ -110,6 +120,15 @@ const SegChart = React.createClass({
 
 module.exports = DropTarget([Draggable.EVENT, Draggable.PROPERTY], segChartTarget, collect)(SegChart);
 
+// background: 'white',
+// borderColor: rgba(207, 207, 207, 0.6),
+// borderWidth: '8px',
+// fontSize: '90px',
+// paddingBottom: '20px',
+// borderStyle: dashed,
+// display: flex,
+// flexDirection: column,
+// justifyContent: center
 
 
 // {isOver &&

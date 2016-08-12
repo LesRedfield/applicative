@@ -502,9 +502,6 @@ class Event < ActiveRecord::Base
           type: 'line'
         },
         title: {
-          text: name + nameP
-        },
-        subtitle: {
           text: ''
         },
         xAxis: {

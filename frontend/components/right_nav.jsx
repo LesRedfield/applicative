@@ -16,7 +16,6 @@ const Menu = React.createClass({
         picKlass += ' selected';
       }
 
-
       return (
         <div
           key={index}
