@@ -33,8 +33,7 @@ const Segmentation = React.createClass({
       newState.plotOptions.series.point = {
         events: {
           click: function() {
-            alert ('Here is where the annotations feature should be!' + this.category + ': ' + this.y);
-            console.log(this);
+            alert (this.category + ': ' + this.y);
           }
         }
       };

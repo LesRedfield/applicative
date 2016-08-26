@@ -14,7 +14,7 @@ const SessionApiUtil = {
 			method: 'delete',
 			success,
 			error: function () {
-			  console.log("Logout error in SessionApiUtil#logout");
+			  alert("Logout failed");
 			}
 		});
 	},
@@ -35,7 +35,7 @@ const SessionApiUtil = {
 			method: 'GET',
 			success,
 			error: function () {
-			  console.log("Error in SessionApiUtil#fetchCurrentUser");
+			  alert("Fetch failed");
 			},
       complete: function(){
 				complete();
