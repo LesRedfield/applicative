@@ -77,12 +77,12 @@ const RightNav = React.createClass({
               </div>
             </div>
             {
-              navList.map( nav => {
+              navList.map( (nav, index) => {
                 if (this.state.selectedNav === 'Events') {
                   return (
                     <div className="seg-opt">
                       <Event
-                        key={nav}
+                        key={index}
                         name={nav}
                         query={this.props.query}
                       />
