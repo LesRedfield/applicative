@@ -14,21 +14,25 @@ React Drag-n-Drop with Highcharts.js for visualization interactivity. User engag
 retention can be quantified at each stage of the purchase funnel, allowing issues to be
 pinpointed and immediately addressed.
 
-#Authentication
+###Authentication
 
 A single page application, Applicative supports new account creation and login, as well
 as a guest/demo login feature. API calls to a Sessions Controller allow for sensitive user
 information to remain on the back-end, while the root page renders content based on a call
 to a Sessions Store on the front-end.
 
-#Dashboard
+![alt tag](docs/log.png)
+
+###Dashboard
 
 Upon login, a call is made to a single Events Controller action, which constructs data and
 options for each of the four Dashboard charts. The HighCharts.js options allow for a variety
 of chart types, and users can interact with the chart legends as well as their layout on
 the page.
 
-#Segmentation
+![alt tag](docs/dash.png)
+
+###Segmentation
 
 The Segmentation feature also utilizes a call to the Events Controller to populate its
 HighCharts.js line chart using options from the request's query string. Users drag and drop
@@ -39,17 +43,19 @@ Listening for changes to the Options Store, the Segmentation chart renders any u
 by the user dragging and dropping the React.js components onto the chart area. Chart options can
 continue to be added or removed with the query bar above the Segmentation Chart.
 
+![alt tag](docs/seg.png)
+
 ##Future Project Features
 
 While the Dashboard and Segmentation features provide excellent insight into all aspects
 of the purchase funnel, I plan to continue adding more features.
 
-#Tags
+###Tags
 
 Clicking specific data points within the Segmentation chart in order to tag other users
 of the application will allow for efficient communication of key insights.
 
-#Funnel
+###Funnel
 
 The Segmentation feature allows users to visually see drop offs within the purchase funnel,
 and the Funnel Chart feature will take this functionality to the next level, providing a more
