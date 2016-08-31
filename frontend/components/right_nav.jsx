@@ -21,7 +21,7 @@ const Menu = React.createClass({
           key={index}
           className={klass}
           onClick={this.props.onNavChosen.bind(null, nav)}>
-          <div className={picKlass}></div>
+          <div key={index} className={picKlass}></div>
         </div>
       );
     });
@@ -92,7 +92,7 @@ const RightNav = React.createClass({
                   return (
                     <div className="seg-opt">
                       <Property
-                        key={nav}
+                        key={index * 10}
                         name={nav}
                         query={this.props.query}
                       />
