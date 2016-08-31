@@ -4,102 +4,53 @@
 
 [heroku]: https://applicative.herokuapp.com
 
-## Minimum Viable Product
+## Features and Implementation
 
-Applicative is a web application inspired by Indicative that will be built using Ruby on Rails and React.js.
+Applicative is a web application inspired by Indicative built using Ruby on Rails and React.js.
 
-By the end of Week 9, this app will, at a minimum, satisfy the following criteria:
+Applicative displays customizable dashboard visualizations of user interactions. The app's
+custom ORM segments consumer events by user demographics, A/B groups, etc, and integrates
+React Drag-n-Drop with Highcharts.js for visualization interactivity. User engagement and
+retention can be quantified at each stage of the purchase funnel, allowing issues to be
+pinpointed and immediately addressed.
 
-- [ ] Hosting on Heroku
-- [ ] New account creation, login, and guest/demo login
-- [ ] A production README, replacing this README
-- [ ] Dashboard
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Segmentation
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Annotations for Segmentation Data Points
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Tagging for annotations
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
-- [ ] Tutorial for using Segmentation
-  - [ ] Smooth, bug-free navigation
-  - [ ] Adequate seed data to demonstrate the site's features
-  - [ ] Adequate CSS styling
+#Authentication
 
-## Design Docs
-* [View Wireframes][views]
-* [DB schema][schema]
+A single page application, Applicative supports new account creation and login, as well
+as a guest/demo login feature. API calls to a Sessions Controller allow for sensitive user
+information to remain on the back-end, while the root page renders content based on a call
+to a Sessions Store on the front-end.
 
-[views]: docs/views.md
-[schema]: docs/schema.md
+#Dashboard
 
-## Implementation Timeline
+Upon login, a call is made to a single Events Controller action, which constructs data and
+options for each of the four Dashboard charts. The HighCharts.js options allow for a variety
+of chart types, and users can interact with the chart legends as well as their layout on
+the page.
 
-### Phase 1: Backend setup and Front End User Authentication (1 days, W1 Tu 6pm)
+#Segmentation
 
-**Objective:** Functioning rails project with front-end Authentication
+The Segmentation feature also utilizes a call to the Events Controller to populate its
+HighCharts.js line chart using options from the request's query string. Users drag and drop
+purchase events and user demographics into the chart, and the Events Controller uses custom
+database queries in the Event model to return the appropriate chart options to the front-end.
 
-- [ ] create new project
-- [ ] create `User` model
-- [ ] authentication backend setup
-- [ ] create `StaticPages` controller and root view
-- [ ] set up webpack & flux scaffold with skeleton files
-- [ ] setup `APIUtil` to interact with the API
-- [ ] set up flux cycle for frontend auth
-- [ ] user signup/signin components
-- [ ] blank landing component after signin
-- [ ] style signin/signup components
-- [ ] seed users
+Listening for changes to the Options Store, the Segmentation chart renders any updates made
+by the user dragging and dropping the React.js components onto the chart area. Chart options can
+continue to be added or removed with the query bar above the Segmentation Chart.
 
-### Phase 2: Dashboard Model, API, and components (3 days, W1 F 6pm)
+##Future Project Features
 
-**Objective:** Dashboard displays four charts of demo data
+While the Dashboard and Segmentation features provide excellent insight into all aspects
+of the purchase funnel, I plan to continue adding more features.
 
-- [ ] create `Dashboard` component
-- [ ] seed the database with demo data
-- [ ] test out API interaction in the console.
-- [ ] integrate `react-highcharts` (based on HighCharts.js).
-- implement each dashboard component, building out the flux loop as needed.
-  - [ ] Funnel Chart
-  - [ ] Segmentation Charts (2)
-  - [ ] Cohorts Chart
+#Tags
 
-### Phase 3: Segmentation (3 days, W2 W 6pm)
+Clicking specific data points within the Segmentation chart in order to tag other users
+of the application will allow for efficient communication of key insights.
 
-**Objective:** Interactive Segmentation Chart can be altered by dragging/dropping events/properties
+#Funnels
 
-- [ ] create `Segmentation` component
-- [ ] Use CSS to style new components
-
-### Phase 4: Annotations (1 days, W2 Th 6pm)
-
-**Objective:** Segmentation data points can be tagged with annotations.
-
-- [ ] create `Annotation` model and join table
-- build out API, Flux loop, and components for:
-  - [ ] fetching annotations for data point
-  - [ ] adding annotations to data point
-- [ ] Style new elements
-- [ ] Seed annotations and tag the seeded data points
-
-### Phase 5: Tagging for Annotations (1 days, W2 F 6pm)
-
-**objective:** Enable Tagging for Annotations.
-
-- [ ] Allow users to tag one another to allow annotation tracking
-
-### Bonus Features (TBD)
-- [ ] Build out Funnel feature
-- [ ] Build out Cohorts feature
-- [ ] Implement more advanced statistical analyses
-- [ ] Integration of client data
-
-[phase-one]: docs/phases/phase1.md
+The Segmentation feature allows users to visually see drop offs within the purchase funnel,
+and the Funnel Chart feature will take this functionality to the next level, providing a more
+precise quantification of exactly what is going on at each stage of the funnel.
