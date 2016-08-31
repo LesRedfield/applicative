@@ -49,7 +49,7 @@ of the purchase funnel, I plan to continue adding more features.
 Clicking specific data points within the Segmentation chart in order to tag other users
 of the application will allow for efficient communication of key insights.
 
-#Funnels
+#Funnel
 
 The Segmentation feature allows users to visually see drop offs within the purchase funnel,
 and the Funnel Chart feature will take this functionality to the next level, providing a more
