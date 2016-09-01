@@ -67,14 +67,14 @@ const Segmentation = React.createClass({
     if (query.properties.length > 0) {
       eventProperties = query.properties.map( (property, index) => {
         return (
-          <div key={index} className="enclosing">
-            <div key={index} className="by">
+          <div className="enclosing">
+            <div className="by">
               By
             </div>
-            <div key={index} className="seg-query-event-property">
-              <span key={index} className="seg-query-event-property-icon"></span>
+            <div className="seg-query-event-property">
+              <span className="seg-query-event-property-icon"></span>
               {property}
-              <div key={index} id="remove" className="property-remove" onClick={ this._handleRemoveProperty.bind(this, property) }></div>
+              <div id="remove" className="property-remove" onClick={ this._handleRemoveProperty.bind(this, property) }></div>
             </div>
           </div>
         );
