@@ -371,6 +371,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.segment(query)
+
     if query && query['events'] && query['events'].length > 0
       if query['events'][0] == 'Purchase'
         event = 'purchase'
@@ -409,6 +410,24 @@ class Event < ActiveRecord::Base
       end
 
       seriesArr = []
+
+      # segments = []
+      #
+      # if query['properties'].empty?
+      #   segments << ['all']
+      # else
+      #   query['properties'].each do |byProperty|
+      #     if byProperty == 'AB Group'
+      #       byProp = 'ab_group'
+      #     elsif byProperty == 'Marketing Channel'
+      #       byProp = 'signup_channel'
+      #     elsif byProperty == 'Signup Platform'
+      #       byProp = 'signup_platform'
+      #     else
+      #       byProp = byProperty.downcase
+      #     end
+      #
+      #     segments <<
 
       segments.each_with_index do |segment, idx|
         query['events'].each do |eventJawn|

@@ -558,11 +558,31 @@ input {
 }
 
 .seg-query-title {
+  width: 80%;
+  margin: 0;
+  color: white;
+
+  background-color: #29B0AB;
+
   float: left;
   line-height: 22px;
   border: 1px dashed transparent;
   font-weight: normal;
-  padding-left: 7px;
+  // padding-left: 7px;
+  padding: 2px 2px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: text;
+}
+
+.seg-query-title:hover {
+  border: dashed 1px rgba(255,255,255,0.3);
+}
+
+::-webkit-input-placeholder {
+   color: rgba(255,255,255,0.3);
 }
 
 .query-header-right {
@@ -581,11 +601,39 @@ input {
   float: left;
 }
 
+.reset-icon:hover {
+  background-position: 0 -2874.5px;
+}
+
 .reset-text {
   color: rgba(255,255,255,0.3);
   font-size: 10px;
   padding-left: 4px;
   float: left;
+}
+
+.reset-text:hover {
+  color: white;
+}
+
+.reset {
+  margin-top: 5px;
+  margin-right: 5px;
+
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-repeat: no-repeat;
+  background-size: 312px auto;
+  background-position: 0 -2855px;
+
+  color: rgba(255,255,255,0.5);
+  font-size: 10px;
+  padding-left: 20px;
+  float: left;
+}
+
+.reset:hover {
+  background-position: 0 -2874.5px;
+  color: white;
 }
 
 .drop-an-event {

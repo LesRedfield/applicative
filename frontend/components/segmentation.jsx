@@ -10,7 +10,7 @@ const RightNav = require('./right_nav');
 
 const Segmentation = React.createClass({
   getInitialState(){
-    return({options: OptionsStore.all().segmentation});
+    return({options: OptionsStore.all().segmentation, title: "Untitled"});
   },
 
   _optionsChanged() {
@@ -42,6 +42,10 @@ const Segmentation = React.createClass({
     }
   },
 
+  _titleInputHandler(e) {
+		return (e) => this.setState({ title: e.target.value });
+  },
+
   _handleRemoveEvent(event) {
     OptionsStore.removeEvent(event);
 
@@ -60,8 +64,6 @@ const Segmentation = React.createClass({
     if (this.state.options.query) {
       query = this.state.options.query;
     }
-
-    let title = 'Untitled';
 
     let eventProperties = <div className="by">By</div>;
     if (query.properties.length > 0) {
@@ -94,10 +96,15 @@ const Segmentation = React.createClass({
 
               <div className="query-header group">
                 <span className="seg-query-icon"></span>
-                <div className="seg-query-title">{title}</div>
+                <input type="text"
+                  value={this.state.title}
+                  onChange={ this._titleInputHandler() }
+                  placeholder={ "Untitled" }
+                  className="seg-query-title" />
                 <div className="query-header-right group">
-                  <div className="reset-icon"></div>
-                  <div className="reset-text">RESET</div>
+                  <div className="reset group" onClick={ OptionsActions.changeOptions.bind(this, { events: [], properties: [] }) }>
+                    RESET
+                  </div>
                 </div>
               </div>
 
