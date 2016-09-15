@@ -3,7 +3,7 @@ const Link = require('react-router').Link;
 const SessionActions = require('../actions/session_actions');
 const SessionStore = require('../stores/session_store');
 
-const LoginForm = React.createClass({
+const SignupForm = React.createClass({
 
 	contextTypes: {
 		router: React.PropTypes.object.isRequired
@@ -11,6 +11,8 @@ const LoginForm = React.createClass({
 
   getInitialState() {
     return {
+      first_name: "",
+      last_name: "",
       email: "",
       password: ""
     };
@@ -41,17 +43,8 @@ const LoginForm = React.createClass({
     }
 	},
 
-  handleGuest(e) {
-    e.preventDefault();
-
-    SessionActions.logIn({
-      email: "guest",
-      password: "password"
-    });
-  },
-
-  redirectToSignup() {
-    this.context.router.push("/signup");
+  redirectToLogin() {
+    this.context.router.push("/login");
   },
 
   formType() {
@@ -78,12 +71,31 @@ const LoginForm = React.createClass({
 
     			<div className="login-form-container">
             <div className="logo"></div>
-            <h2 className="login-header">Sign In</h2>
+            <h2 className="login-header">Sign Up</h2>
     				<form onSubmit={this.handleSubmit} className="login-form-box">
-              <h3 className="login-message">Enter your email address and password to login.</h3>
+              <h3 className="login-message">Enter your name, email address, and password to sign up.</h3>
 
     					<span className="login-form">
                 <div className="inside-login-form">
+
+                  <br />
+                  <label>
+                    <input type="text"
+                      value={this.state.first_name}
+                      onChange={this.inputHandler("first_name")}
+                      placeholder="First Name"
+                      className="login-input-name" />
+                  </label>
+
+                  <br />
+                  <label>
+                    <input type="text"
+                      value={this.state.last_name}
+                      onChange={this.inputHandler("last_name")}
+                      placeholder="Last Name"
+                      className="login-input-name" />
+                  </label>
+
       		        <br />
       						<label>
       							<input type="text"
@@ -105,17 +117,16 @@ const LoginForm = React.createClass({
       		        <br />
 
                   <button className="login-button">
-                    Sign In
+                    Sign Up
                     <span className="arrow"></span>
                   </button>
                 </div>
     					</span>
+
+              <br />
+
+              <input id="guest" className="demo-button" type="submit" value="Log In Instead" onClick={ this.redirectToLogin } />
     				</form>
-            <input id="guest" className="demo-button" type="submit" value="Create New User" onClick={ this.redirectToSignup } />
-
-            <br />
-
-            <input id="guest" className="demo-button" type="submit" value="Sign In As Guest" onClick={ this.handleGuest } />
     			</div>
         </div>
       </div>
@@ -124,7 +135,7 @@ const LoginForm = React.createClass({
 	}
 });
 
-module.exports = LoginForm;
+module.exports = SignupForm;
 
 
 // Please { this.formType() } or { navLink }

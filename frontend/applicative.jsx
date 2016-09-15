@@ -9,6 +9,7 @@ const hashHistory = ReactRouter.hashHistory;
 
 const App = require('./components/app');
 const LoginForm = require('./components/login_form');
+const SignupForm = require('./components/signup_form');
 const Dashboard = require('./components/dashboard');
 const Segmentation = require('./components/segmentation');
 
@@ -19,7 +20,7 @@ const appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="/login" component={ LoginForm } />
-      <Route path="/signup" component={ LoginForm } />
+      <Route path="/signup" component={ SignupForm } />
       <Route path="/dashboard" component={ Dashboard }/>
       <Route path="/segmentation" component={ Segmentation }/>
     </Route>
@@ -30,6 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const root = document.getElementById('content');
   if (window.currentUser) {
     SessionActions.receiveCurrentUser(window.currentUser);
-  }  
+  }
   ReactDOM.render(appRouter, root);
 });
