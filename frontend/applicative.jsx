@@ -12,6 +12,7 @@ const LoginForm = require('./components/login_form');
 const SignupForm = require('./components/signup_form');
 const Dashboard = require('./components/dashboard');
 const Segmentation = require('./components/segmentation');
+const Bookmarks = require('./components/bookmarks');
 
 const SessionStore = require('./stores/session_store');
 const SessionActions = require('./actions/session_actions');
@@ -23,6 +24,7 @@ const appRouter = (
       <Route path="/signup" component={ SignupForm } />
       <Route path="/dashboard" component={ Dashboard }/>
       <Route path="/segmentation" component={ Segmentation }/>
+      <Route path="/bookmarks" component={ Bookmarks }/>
     </Route>
   </Router>
 );

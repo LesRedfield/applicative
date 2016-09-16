@@ -550,7 +550,8 @@ class Event < ActiveRecord::Base
                         query['properties']
                       else
                         []
-                      end
+                      end,
+          title: query['title']
         },
         chart: {
           type: 'line'

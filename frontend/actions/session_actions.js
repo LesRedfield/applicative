@@ -6,7 +6,6 @@ const hashHistory = require('react-router').hashHistory;
 const SessionActions = {
 
   signUp(formData){
-    debugger
     SessionApiUtil.signUp(
       formData,
       SessionActions.receiveCurrentUser

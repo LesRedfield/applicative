@@ -1,7 +1,11 @@
 const React = require('react');
 const Highchart = require('./highchart');
+
 const OptionsStore = require('../stores/options_store');
+const SessionStore = require('../stores/session_store');
+
 const OptionsActions = require('../actions/options_actions');
+const QueriesActions = require('../actions/queries_actions');
 
 const Dashboard = React.createClass({
   getInitialState(){
@@ -14,6 +18,8 @@ const Dashboard = React.createClass({
 
   componentDidMount() {
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
+
+    QueriesActions.fetchQueries(SessionStore.currentUser().id);
   },
 
   componentWillUnmount() {

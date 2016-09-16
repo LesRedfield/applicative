@@ -4,7 +4,7 @@ class Api::AnnotationsController < ApplicationController
     @annotation = Annotation.new(annotation_params)
 
     if @annotation.save
-      login!(@annotation)
+      
       render json: @annotation
     else
       render json: @annotation.errors.full_messages, status: 422

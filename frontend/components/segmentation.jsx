@@ -3,14 +3,19 @@ const DragDropContext = require('react-dnd').DragDropContext;
 const HTML5Backend = require('react-dnd-html5-backend');
 
 const OptionsStore = require('../stores/options_store');
+const QueriesStore = require('../stores/queries_store');
+const SessionStore = require('../stores/session_store');
+
 const OptionsActions = require('../actions/options_actions');
+const QueriesActions = require('../actions/queries_actions');
+const SessionActions = require('../actions/session_actions');
 
 const SegChart = require('./seg_chart');
 const RightNav = require('./right_nav');
 
 const Segmentation = React.createClass({
   getInitialState(){
-    return({options: OptionsStore.all().segmentation, title: "Untitled"});
+    return({ options: OptionsStore.all().segmentation, title: "Untitled" });
   },
 
   _optionsChanged() {
@@ -20,6 +25,8 @@ const Segmentation = React.createClass({
 
   componentDidMount() {
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
+
+    QueriesActions.fetchQueries(SessionStore.currentUser().id);
   },
 
   componentWillUnmount() {
@@ -58,11 +65,27 @@ const Segmentation = React.createClass({
     OptionsActions.changeOptions(OptionsStore.all().segmentation.query);
   },
 
+  _updateTitle() {
+    if (this.state.options.query) {
+      this.setState({ title: this.state.options.query.title });
+    }
+  },
+
+  _resetQueryBar() {
+    // this.setState({ title: "Untitled" });
+
+    OptionsActions.changeOptions({ events: [], properties: [], title: "Untitled" });
+  },
+
   render(){
-    let query = { events: [], properties: [] };
+    let query = { events: [], properties: [], title: "Untitled" };
 
     if (this.state.options.query) {
       query = this.state.options.query;
+    }
+
+    if (query.title !== this.state.title) {
+      this._updateTitle();
     }
 
     let eventProperties = <div className="by">By</div>;
@@ -102,9 +125,23 @@ const Segmentation = React.createClass({
                   placeholder={ "Untitled" }
                   className="seg-query-title" />
                 <div className="query-header-right group">
-                  <div className="reset group" onClick={ OptionsActions.changeOptions.bind(this, { events: [], properties: [] }) }>
-                    RESET
+
+                  <div
+                    className="save-query group"
+                    onClick={ QueriesActions.saveQuery.bind(this, {
+                      title: this.state.title,
+                      query: OptionsStore.all().segmentation.query,
+                      user_id: SessionStore.currentUser().id }
+                    ) }>
+                    SAVE QUERY
                   </div>
+
+                  <div
+                    className="reset group"
+                    onClick={ this._resetQueryBar }>
+                      RESET
+                  </div>
+
                 </div>
               </div>
 

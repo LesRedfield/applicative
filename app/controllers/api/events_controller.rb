@@ -10,6 +10,7 @@ class Api::EventsController < ApplicationController
       }, segmentation: Event.segment(params[:query])
     }
 
+
     render json: @options
   end
 

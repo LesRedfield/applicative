@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811152523) do
+ActiveRecord::Schema.define(version: 20160915234730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,14 @@ ActiveRecord::Schema.define(version: 20160811152523) do
   add_index "events", ["purchase"], name: "index_events_on_purchase", using: :btree
   add_index "events", ["session"], name: "index_events_on_session", using: :btree
   add_index "events", ["session_platform"], name: "index_events_on_session_platform", using: :btree
+
+  create_table "queries", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "title"
+    t.string  "query"
+  end
+
+  add_index "queries", ["user_id"], name: "index_queries_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           null: false

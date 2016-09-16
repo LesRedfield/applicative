@@ -353,11 +353,31 @@ input {
   background-position: 10px -601px;
   margin-left: auto;
   margin-right: auto;
+
+  border-bottom: rgba(176,182,182,0.2) solid 1px;
 }
 
 #left-nav-segmentation.current {
   background-position: 10px -634px;
 }
+
+#left-nav-bookmarks {
+  background-color: transparent;
+  background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
+  background-repeat: no-repeat;
+  // width: 20px;
+  // height: 23px;
+  background-size: 26px auto;
+  background-position: 10px -214px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#left-nav-bookmarks.current {
+  background-position: 10px -250px;
+}
+
+
 
 .feature {
   float: left;
@@ -565,7 +585,7 @@ input {
 }
 
 .seg-query-title {
-  width: 80%;
+  width: 60%;
   margin: 0;
   color: white;
 
@@ -594,36 +614,31 @@ input {
 
 .query-header-right {
   float: right;
+}
 
+.save-query {
   cursor: pointer;
-}
 
-.reset-icon {
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
-  background-repeat: no-repeat;
-  width: 12px;
-  height: 11px;
-  background-size: 312px auto;
-  background-position: 0 -2894.5px;
-  float: left;
-}
+  margin-top: 5px;
+  margin-right: 10px;
 
-.reset-icon:hover {
-  background-position: 0 -2874.5px;
-}
+  padding-right: 10px;
 
-.reset-text {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.5);
   font-size: 10px;
-  padding-left: 4px;
+  padding-left: 20px;
   float: left;
+
+  border-right: rgba(255,255,255,0.5) solid 1px;
 }
 
-.reset-text:hover {
+.save-query:hover {
   color: white;
 }
 
 .reset {
+  cursor: pointer;
+
   margin-top: 5px;
   margin-right: 5px;
 

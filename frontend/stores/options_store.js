@@ -3,7 +3,7 @@ const OptionsConstants = require('../constants/options_constants');
 const AppDispatcher = require('../dispatcher/dispatcher');
 const OptionsStore = new Store(AppDispatcher);
 
-let _options = { dashboard: { one: {}, two: {}, three: {}, four: {} }, segmentation: { query: { events: [], properties: [] } } };
+let _options = { dashboard: { one: {}, two: {}, three: {}, four: {} }, segmentation: { query: { events: [], properties: [], title: "Untitled" } } };
 
 OptionsStore.all = function(){
   return Object.assign({}, _options);

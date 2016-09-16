@@ -41,6 +41,9 @@ const LeftNav = React.createClass({
         <Link to="/segmentation" id="left-nav-segmentation" className="left-nav-button" activeClassName="current">
         </Link>
 
+        <Link to="/bookmarks" id="left-nav-bookmarks" className="left-nav-button" activeClassName="current">
+        </Link>
+
 
       </div>
     );
