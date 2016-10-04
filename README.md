@@ -1,8 +1,8 @@
 # Applicative
 
-[https://applicative.herokuapp.com][heroku]
+[http://app.licative.com][heroku]
 
-[heroku]: https://applicative.herokuapp.com
+[heroku]: http://app.licative.com
 
 ## Features and Implementation
 
