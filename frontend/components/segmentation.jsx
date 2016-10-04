@@ -16,10 +16,11 @@ const RightNav = require('./right_nav');
 const Segmentation = React.createClass({
   getInitialState(){
     return({ options: OptionsStore.all().segmentation, title: "Untitled" });
+
   },
 
   _optionsChanged() {
-    this.setState({options: OptionsStore.all().segmentation});
+    this.setState({ options: OptionsStore.all().segmentation });
     this._addClickListener();
   },
 
@@ -30,6 +31,8 @@ const Segmentation = React.createClass({
   },
 
   componentWillUnmount() {
+    OptionsStore.removeAllOptions();
+
     this.optionsListener.remove();
   },
 
@@ -50,7 +53,9 @@ const Segmentation = React.createClass({
   },
 
   _titleInputHandler(e) {
-		return (e) => this.setState({ title: e.target.value });
+
+    return (e) => this.setState({ title: e.target.value });
+
   },
 
   _handleRemoveEvent(event) {
@@ -68,6 +73,8 @@ const Segmentation = React.createClass({
   _updateTitle() {
     if (this.state.options.query) {
       this.setState({ title: this.state.options.query.title });
+
+      OptionsStore.disableImport();
     }
   },
 
@@ -78,15 +85,17 @@ const Segmentation = React.createClass({
   },
 
   render(){
-    let query = { events: [], properties: [], title: "Untitled" };
+
+    let query = { events: [], properties: [], title: this.state.title };
 
     if (this.state.options.query) {
       query = this.state.options.query;
     }
 
-    if (query.title !== this.state.title) {
+    if (query.title !== this.state.title && OptionsStore.canImport()) {
       this._updateTitle();
     }
+
 
     let eventProperties = <div className="by">By</div>;
     if (query.properties.length > 0) {

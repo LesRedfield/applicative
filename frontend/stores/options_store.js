@@ -5,6 +5,8 @@ const OptionsStore = new Store(AppDispatcher);
 
 let _options = { dashboard: { one: {}, two: {}, three: {}, four: {} }, segmentation: { query: { events: [], properties: [], title: "Untitled" } } };
 
+let _import = false;
+
 OptionsStore.all = function(){
   return Object.assign({}, _options);
 };
@@ -23,6 +25,22 @@ OptionsStore.removeProperty = function(property){
   if (idx != -1) {
     _options.segmentation.query.properties.splice(idx, 1);
   }
+};
+
+OptionsStore.canImport = function(){
+  return _import;
+};
+
+OptionsStore.enableImport = function(){
+  _import = true;
+};
+
+OptionsStore.disableImport = function(){
+  _import = false;
+};
+
+OptionsStore.removeAllOptions = function(){
+  _options = { dashboard: { one: {}, two: {}, three: {}, four: {} }, segmentation: { query: { events: [], properties: [], title: "Untitled" } } };
 };
 
 function _resetAllOptions(options){

@@ -2,6 +2,8 @@ const AppDispatcher = require('../dispatcher/dispatcher');
 const QueriesConstants = require('../constants/queries_constants');
 const QueriesApiUtil = require('../util/queries_api_util');
 
+const SessionStore = require('../stores/session_store');
+
 const QueriesActions = {
 
   fetchQueries(user_id) {
@@ -10,6 +12,8 @@ const QueriesActions = {
 
   saveQuery(params) {
     QueriesApiUtil.saveQuery(params, QueriesActions.receiveQueries);
+
+    QueriesActions.fetchQueries(SessionStore.currentUser().id);
   },
 
   deleteQuery(id) {

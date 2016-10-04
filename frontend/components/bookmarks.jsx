@@ -4,6 +4,7 @@ const Link = require('react-router').Link;
 
 const SessionStore = require('../stores/session_store');
 const QueriesStore = require('../stores/queries_store');
+const OptionsStore = require('../stores/options_store');
 
 const QueriesActions = require('../actions/queries_actions');
 const OptionsActions = require('../actions/options_actions');
@@ -14,7 +15,9 @@ const Bookmarks = React.createClass({
 	},
 
   getInitialState(){
-    return({ queries: [] });
+    QueriesActions.fetchQueries(SessionStore.currentUser().id);
+
+    return({ queries: QueriesStore.all() });
   },
 
   componentWillMount() {
@@ -31,6 +34,7 @@ const Bookmarks = React.createClass({
 
     OptionsActions.changeOptions(params);
 
+    OptionsStore.enableImport();
 
     this.context.router.push("/segmentation");
   },
