@@ -32,11 +32,19 @@ const Bookmarks = React.createClass({
 
     params.title = query.title;
 
+    debugger
+
     OptionsActions.changeOptions(params);
 
     OptionsStore.enableImport();
 
     this.context.router.push("/segmentation");
+  },
+
+  addToDash(query) {
+    QueriesActions.addQueryToDash(query);
+
+    this.context.router.push("/dashboard");
   },
 
   render(){
@@ -57,8 +65,13 @@ const Bookmarks = React.createClass({
         {
           userQueries.map( query => {
             return(
-              <div className="bookmark" onClick={ this.showBookmark.bind(this, query) }>
-                {query.title}
+              <div>
+                <div className="bookmark" onClick={ this.showBookmark.bind(this, query) }>
+                  {query.title}
+                </div>
+                <div className="add-to-dash" onClick={ this.addToDash.bind(this, query) }>
+                  Add To Dashboard
+                </div>
               </div>
             );
           })

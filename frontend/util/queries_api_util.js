@@ -22,6 +22,28 @@ const QueriesApiUtil = {
 		});
   },
 
+  addQueryToDash(params, success) {
+    $.ajax({
+			url: '/api/queries/' + params.id,
+			type: 'PATCH',
+      data: { query: { dashboard: true } },
+			success: function(queries){
+        success(queries);
+      }
+		});
+  },
+
+  fetchDashQueries(user_id, success) {
+    $.ajax({
+			url: '/api/queries',
+			type: 'GET',
+      data: { query: { user_id: user_id, dashboard: true } },
+			success: function(queries){
+        success(queries);
+      }
+		});
+  },
+
   deleteQuery(id, success) {
     $.ajax({
 			url: '/api/queries/' + id,

@@ -13,14 +13,29 @@ class Api::QueriesController < ApplicationController
   end
 
   def index
-    @queries = Query.where(user_id: query_params[:user_id])
-
+    if query_params[:dashboard]
+      @queries = Query.where(user_id: query_params[:user_id]).where(dashboard: true)
+    else
+      @queries = Query.where(user_id: query_params[:user_id])
+    end
 
     render json: @queries
   end
 
   def show
 
+  end
+
+  def update
+    @query = Query.find(params[:id])
+
+    if @query.update(query_params)
+      @queries = Query.find_by(user_id: query_params[:user_id])
+
+      render json: @queries
+    else
+      render json: @query.errors.full_messages, status: 422
+    end
   end
 
   def destroy

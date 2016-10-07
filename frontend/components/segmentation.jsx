@@ -28,6 +28,7 @@ const Segmentation = React.createClass({
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
 
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
+    // debugger
   },
 
   componentWillUnmount() {
@@ -140,7 +141,8 @@ const Segmentation = React.createClass({
                     onClick={ QueriesActions.saveQuery.bind(this, {
                       title: this.state.title,
                       query: OptionsStore.all().segmentation.query,
-                      user_id: SessionStore.currentUser().id }
+                      user_id: SessionStore.currentUser().id,
+                      dashboard: false}
                     ) }>
                     SAVE QUERY
                   </div>

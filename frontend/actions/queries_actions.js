@@ -10,6 +10,10 @@ const QueriesActions = {
     QueriesApiUtil.fetchQueries(user_id, QueriesActions.receiveQueries);
   },
 
+  fetchDashQueries(user_id) {
+    QueriesApiUtil.fetchDashQueries(user_id, QueriesActions.receiveDashQueries);
+  },
+
   saveQuery(params) {
     QueriesApiUtil.saveQuery(params, QueriesActions.receiveQueries);
 
@@ -25,9 +29,20 @@ const QueriesActions = {
     return queries;
   },
 
+  addQueryToDash(params) {
+    QueriesApiUtil.addQueryToDash(params, QueriesActions.receiveDashQueries);
+  },
+
   receiveQueries(queries) {
     AppDispatcher.dispatch({
       actionType: QueriesConstants.QUERIES_RECEIVED,
+      queries: queries
+    });
+  },
+
+  receiveDashQueries(queries) {
+    AppDispatcher.dispatch({
+      actionType: QueriesConstants.DASH_QUERIES_RECEIVED,
       queries: queries
     });
   }
