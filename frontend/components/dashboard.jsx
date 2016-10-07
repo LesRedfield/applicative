@@ -10,35 +10,57 @@ const QueriesActions = require('../actions/queries_actions');
 
 const Dashboard = React.createClass({
   getInitialState(){
-    return({ options: OptionsStore.all().dashboard, custom: QueriesStore.allDash() });
+    return({ options: OptionsStore.all().dashboard, custom: QueriesStore.allDash(), customOptions: QueriesStore.allDashOptions() });
   },
 
   _optionsChanged() {
-    this.setState({options: OptionsStore.all().dashboard});
+    this.setState({ options: OptionsStore.all().dashboard });
+  },
+
+  _queriesChanged() {
+    this.setState({ customOptions: QueriesStore.allDashOptions() });
+  },
+
+  componentWillMount() {
+    QueriesActions.fetchDashQueries(SessionStore.currentUser().id);
   },
 
   componentDidMount() {
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
+    this.queriesListener = QueriesStore.addListener(this._queriesChanged);
 
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
-    QueriesActions.fetchDashQueries(SessionStore.currentUser().id);
+
+    this._fetchDashQueriesOptions();
   },
 
   componentWillUnmount() {
     this.optionsListener.remove();
+    this.queriesListener.remove();
   },
 
-  render(){
-    const dashNums = ['one', 'two', 'three', 'four'];
-
+  _fetchDashQueriesOptions() {
     const customs = this.state.custom.map( dashQuery => {
+
       let params = JSON.parse(dashQuery.query.split('=>').join(': '));
       params.title = dashQuery.title;
 
       return params;
-    })
+    });
+    if (customs.length > 0) {
+      QueriesActions.fetchDashQueriesOptions(customs);
+    }
+  },
 
-    // debugger
+  render(){
+    const dashNums = ['one', 'two', 'three', 'four'];
+    let custOpts = [];
+
+    if (this.state.customOptions.length > 0) {
+      custOpts = this.state.customOptions;
+    }
+
+    debugger
 
     return(
       <div className="dashboard group">
@@ -64,12 +86,12 @@ const Dashboard = React.createClass({
 
         <div>
           {
-            customs.map( custom => {
+            custOpts.map( custom => {
               return(
-                <div key={custom.title + "-outer"} className="dash-chart">
+                <div key={custom.query.title + "-outer"} className="dash-chart">
                   <Highchart
-                    key={custom.title}
-                    container={"dash-" + custom.title}
+                    key={custom.query.title}
+                    container={"dash-" + custom.query.title}
                     options={custom}
                   />
               </div>

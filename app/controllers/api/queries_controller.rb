@@ -13,10 +13,17 @@ class Api::QueriesController < ApplicationController
   end
 
   def index
-    if query_params[:dashboard]
+    if query_params[:queries]
+      @queries = query_params[:queries].map do |query|
+        Event.segment(query[1])
+      end
+    elsif query_params[:dashboard]
       @queries = Query.where(user_id: query_params[:user_id]).where(dashboard: true)
+
+      # debugger
     else
       @queries = Query.where(user_id: query_params[:user_id])
+
     end
 
     render json: @queries

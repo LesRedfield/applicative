@@ -5,6 +5,7 @@ const QueriesStore = new Store(AppDispatcher);
 
 let _queries = [];
 let _dash_queries = [];
+let _dash_queries_options = [];
 
 QueriesStore.all = function(){
   return _queries;
@@ -12,6 +13,10 @@ QueriesStore.all = function(){
 
 QueriesStore.allDash = function(){
   return _dash_queries;
+};
+
+QueriesStore.allDashOptions = function(){
+  return _dash_queries_options;
 };
 
 function _resetAllQueries(queries){
@@ -24,6 +29,11 @@ function _resetAllDashQueries(queries){
   QueriesStore.__emitChange();
 }
 
+function _resetAllDashQueriesOptions(options){
+  _dash_queries_options = options;
+  QueriesStore.__emitChange();
+}
+
 QueriesStore.__onDispatch = function(payload) {
   switch(payload.actionType) {
     case QueriesConstants.QUERIES_RECEIVED:
@@ -31,6 +41,9 @@ QueriesStore.__onDispatch = function(payload) {
       break;
     case QueriesConstants.DASH_QUERIES_RECEIVED:
       _resetAllDashQueries(payload.queries);
+      break;
+    case QueriesConstants.DASH_QUERIES_OPTIONS_RECEIVED:
+      _resetAllDashQueriesOptions(payload.queries);
       break;
   }
 };

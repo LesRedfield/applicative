@@ -14,6 +14,10 @@ const QueriesActions = {
     QueriesApiUtil.fetchDashQueries(user_id, QueriesActions.receiveDashQueries);
   },
 
+  fetchDashQueriesOptions(queries) {
+    QueriesApiUtil.fetchDashQueriesOptions(queries, QueriesActions.receiveDashQueriesOptions);
+  },
+
   saveQuery(params) {
     QueriesApiUtil.saveQuery(params, QueriesActions.receiveQueries);
 
@@ -43,6 +47,13 @@ const QueriesActions = {
   receiveDashQueries(queries) {
     AppDispatcher.dispatch({
       actionType: QueriesConstants.DASH_QUERIES_RECEIVED,
+      queries: queries
+    });
+  },
+
+  receiveDashQueriesOptions(queries) {
+    AppDispatcher.dispatch({
+      actionType: QueriesConstants.DASH_QUERIES_OPTIONS_RECEIVED,
       queries: queries
     });
   }

@@ -44,6 +44,17 @@ const QueriesApiUtil = {
 		});
   },
 
+  fetchDashQueriesOptions(queries, success) {
+    $.ajax({
+			url: '/api/queries',
+			type: 'GET',
+      data: { query: { queries: queries, dashboard: true } },
+			success: function(queries){
+        success(queries);
+      }
+		});
+  },
+
   deleteQuery(id, success) {
     $.ajax({
 			url: '/api/queries/' + id,

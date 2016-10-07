@@ -372,6 +372,8 @@ class Event < ActiveRecord::Base
 
   def self.segment(query)
 
+    # debugger
+
     if query && query['events'] && query['events'].length > 0
       if query['events'][0] == 'Purchase'
         event = 'purchase'

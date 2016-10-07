@@ -32,8 +32,6 @@ const Bookmarks = React.createClass({
 
     params.title = query.title;
 
-    debugger
-
     OptionsActions.changeOptions(params);
 
     OptionsStore.enableImport();
