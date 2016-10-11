@@ -370,6 +370,208 @@ class Event < ActiveRecord::Base
     }
   end
 
+  def self.dashSeg(query)
+    if query && query['events'] && query['events'].length > 0
+      if query['events'][0] == 'Purchase'
+        event = 'purchase'
+        name = 'Purchases'
+      elsif query['events'][0] == 'Session'
+        event = 'session'
+        name = 'Sessions'
+      elsif query['events'][0] == 'Add to Cart'
+        event = 'add'
+        name = 'Cart Adds'
+      elsif query['events'][0] == 'Proceed to Checkout'
+        event = 'checkout'
+        name = 'Checkouts'
+      end
+
+      if query['properties'] && query['properties'][0] == 'AB Group'
+        byProp = 'ab_group'
+        segments = PROPERTIES[byProp.to_sym]
+        nameP = ' by ' + query['properties'][0]
+      elsif query['properties'] && query['properties'][0] == 'Marketing Channel'
+        byProp = 'signup_channel'
+        segments = PROPERTIES[byProp.to_sym]
+        nameP = ' by ' + query['properties'][0]
+      elsif query['properties'] && query['properties'][0] == 'Signup Platform'
+        byProp = 'signup_platform'
+        segments = PROPERTIES[byProp.to_sym]
+        nameP = ' by ' + query['properties'][0]
+      elsif query['properties']
+        byProp = query['properties'][0].downcase
+        segments = PROPERTIES[query['properties'][0].downcase.to_sym]
+        nameP = ' by ' + query['properties'][0]
+      else
+        byProp = 'none'
+        segments = [['all']]
+        nameP = ''
+      end
+
+      seriesArr = []
+
+      # segments = []
+      #
+      # if query['properties'].empty?
+      #   segments << ['all']
+      # else
+      #   query['properties'].each do |byProperty|
+      #     if byProperty == 'AB Group'
+      #       byProp = 'ab_group'
+      #     elsif byProperty == 'Marketing Channel'
+      #       byProp = 'signup_channel'
+      #     elsif byProperty == 'Signup Platform'
+      #       byProp = 'signup_platform'
+      #     else
+      #       byProp = byProperty.downcase
+      #     end
+      #
+      #     segments <<
+
+      segments.each_with_index do |segment, idx|
+        query['events'].each do |eventJawn|
+          if eventJawn == 'Add to Cart'
+            eventName = 'add'
+          elsif eventJawn == 'Proceed to Checkout'
+            eventName = 'checkout'
+          else
+            eventName = eventJawn.downcase
+          end
+
+          seriesArr << {
+            name: eventName.capitalize + 's' + segment.to_s,
+            data:
+              if byProp == 'none'
+                [
+                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                  .count
+                ]
+              elsif segment.length < 2
+                [
+                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                  .select{|event| event.customer.send(byProp) == segment[0]}
+                  .count
+                ]
+              else
+                [
+                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                  .count,
+
+                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                  .count
+                ]
+              end
+          }
+        end
+      end
+
+      {
+        query: {
+          events: query['events'],
+          properties: if query['properties']
+                        query['properties']
+                      else
+                        []
+                      end,
+          title: query['title']
+        },
+        colors: ['#26a8a6', '#5C120C', '#C0FFFF', '#C76C61', '#912520'],
+        chart: {
+          spacingTop: 30,
+          # spacingBottom: 50,
+          spacingLeft: 20,
+          spacingRight: 20,
+          marginTop: 80,
+          type: 'line'
+        },
+        title: {
+          text: query['title'],
+          style: {
+            fontSize: '12px',
+            color: '#838383'
+          }
+        },
+        xAxis: {
+          categories: ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
+        },
+        yAxis: {
+          title: {
+            text: 'Quantity'
+          },
+          min: 0
+        },
+        plotOptions: {
+          series: {
+            marker: {
+              enabled: true,
+              symbol: 'circle',
+              radius: 4,
+              states: {
+                hover: {
+                  enabled: true
+                }
+              }
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        },
+        series: seriesArr
+
+      }
+
+    else
+      {
+        credits: {
+          enabled: false
+        }
+      }
+    end
+  end
+
   def self.segment(query)
 
     # debugger
@@ -556,6 +758,8 @@ class Event < ActiveRecord::Base
           title: query['title']
         },
         chart: {
+          spacingRight: 40,
+          marginTop: 40,
           type: 'line'
         },
         title: {

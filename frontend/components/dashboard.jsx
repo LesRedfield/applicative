@@ -60,8 +60,6 @@ const Dashboard = React.createClass({
       custOpts = this.state.customOptions;
     }
 
-    debugger
-
     return(
       <div className="dashboard group">
         <header className="dash-head group">
@@ -82,9 +80,7 @@ const Dashboard = React.createClass({
               );
             })
           }
-        </div>
 
-        <div>
           {
             custOpts.map( custom => {
               return(
@@ -92,12 +88,16 @@ const Dashboard = React.createClass({
                   <Highchart
                     key={custom.query.title}
                     container={"dash-" + custom.query.title}
+                    dashSeg={" dash-seg"}
                     options={custom}
-                  />
-              </div>
+                    />
+                </div>
               );
             })
           }
+        </div>
+
+        <div>
         </div>
       </div>
     );

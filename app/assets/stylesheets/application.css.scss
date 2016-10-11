@@ -392,7 +392,11 @@ input {
   margin-bottom: 15px;
   margin-right: 15px;
   /*float: left;*/
-  flex-grow: 1;
+  // flex-grow: 1;
+}
+
+.dash-seg {
+  height: 265px;
 }
 
 .highcharts-container {
@@ -874,7 +878,7 @@ input {
 }
 
 .right-navs {
-  // padding-top: 32px;
+  padding-top: 10px;
 }
 
 .right-nav-search {

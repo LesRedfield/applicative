@@ -30,8 +30,14 @@ const Highchart = React.createClass({
 
   //Create the div which the chart will be rendered to.
   render() {
+    let klass = "chart"
+
+    if (this.props.dashSeg) {
+      klass += this.props.dashSeg
+    }
+
     return(
-      <div id={this.props.container} className='chart'></div>
+      <div id={this.props.container} className={klass}></div>
     );
   }
 });

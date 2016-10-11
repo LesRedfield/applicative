@@ -70,12 +70,7 @@ const RightNav = React.createClass({
 
         <div className="right-nav-data">
           <div className="right-navs">
-            <div className="right-nav-search group">
-              <div className="right-nav-search-icon"></div>
-              <div className="right-nav-search-text">
-                {"search " + this.state.selectedNav}
-              </div>
-            </div>
+            
             {
               navList.map( (nav, index) => {
                 if (this.state.selectedNav === 'Events') {

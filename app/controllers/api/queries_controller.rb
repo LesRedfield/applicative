@@ -15,7 +15,7 @@ class Api::QueriesController < ApplicationController
   def index
     if query_params[:queries]
       @queries = query_params[:queries].map do |query|
-        Event.segment(query[1])
+        Event.dashSeg(query[1])
       end
     elsif query_params[:dashboard]
       @queries = Query.where(user_id: query_params[:user_id]).where(dashboard: true)
