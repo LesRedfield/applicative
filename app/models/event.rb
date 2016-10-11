@@ -370,142 +370,135 @@ class Event < ActiveRecord::Base
     }
   end
 
+  def self.segSeriesArr(query)
+    if query['events'][0] == 'Purchase'
+      event = 'purchase'
+      name = 'Purchases'
+    elsif query['events'][0] == 'Session'
+      event = 'session'
+      name = 'Sessions'
+    elsif query['events'][0] == 'Add to Cart'
+      event = 'add'
+      name = 'Cart Adds'
+    elsif query['events'][0] == 'Proceed to Checkout'
+      event = 'checkout'
+      name = 'Checkouts'
+    end
+
+    if query['properties'] && query['properties'][0] == 'AB Group'
+      byProp = 'ab_group'
+      segments = PROPERTIES[byProp.to_sym]
+      nameP = ' by ' + query['properties'][0]
+    elsif query['properties'] && query['properties'][0] == 'Marketing Channel'
+      byProp = 'signup_channel'
+      segments = PROPERTIES[byProp.to_sym]
+      nameP = ' by ' + query['properties'][0]
+    elsif query['properties'] && query['properties'][0] == 'Signup Platform'
+      byProp = 'signup_platform'
+      segments = PROPERTIES[byProp.to_sym]
+      nameP = ' by ' + query['properties'][0]
+    elsif query['properties']
+      byProp = query['properties'][0].downcase
+      segments = PROPERTIES[query['properties'][0].downcase.to_sym]
+      nameP = ' by ' + query['properties'][0]
+    else
+      byProp = 'none'
+      segments = [['all']]
+      nameP = ''
+    end
+
+    seriesArr = []
+
+    segments.each_with_index do |segment, idx|
+      if segment[0] == "all"
+        segName = ""
+      else
+        segName = segment.to_s
+      end
+
+      query['events'].each do |eventJawn|
+        if eventJawn == 'Add to Cart'
+          eventName = 'add'
+        elsif eventJawn == 'Proceed to Checkout'
+          eventName = 'checkout'
+        else
+          eventName = eventJawn.downcase
+        end
+
+        seriesArr << {
+          name: eventName.capitalize + 's' + segName,
+          data:
+            if byProp == 'none'
+              [
+                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                .count,
+
+                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                .count,
+
+                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                .count,
+
+                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                .count,
+
+                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                .count
+              ]
+            elsif segment.length < 2
+              [
+                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                .select{|event| event.customer.send(byProp) == segment[0]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                .select{|event| event.customer.send(byProp) == segment[0]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                .select{|event| event.customer.send(byProp) == segment[0]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                .select{|event| event.customer.send(byProp) == segment[0]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                .select{|event| event.customer.send(byProp) == segment[0]}
+                .count
+              ]
+            else
+              [
+                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
+                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
+                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
+                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
+                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                .count,
+
+                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
+                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
+                .count
+              ]
+            end
+        }
+      end
+    end
+
+    seriesArr
+  end
+
   def self.dashSeg(query)
     if query && query['events'] && query['events'].length > 0
-      if query['events'][0] == 'Purchase'
-        event = 'purchase'
-        name = 'Purchases'
-      elsif query['events'][0] == 'Session'
-        event = 'session'
-        name = 'Sessions'
-      elsif query['events'][0] == 'Add to Cart'
-        event = 'add'
-        name = 'Cart Adds'
-      elsif query['events'][0] == 'Proceed to Checkout'
-        event = 'checkout'
-        name = 'Checkouts'
-      end
-
-      if query['properties'] && query['properties'][0] == 'AB Group'
-        byProp = 'ab_group'
-        segments = PROPERTIES[byProp.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      elsif query['properties'] && query['properties'][0] == 'Marketing Channel'
-        byProp = 'signup_channel'
-        segments = PROPERTIES[byProp.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      elsif query['properties'] && query['properties'][0] == 'Signup Platform'
-        byProp = 'signup_platform'
-        segments = PROPERTIES[byProp.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      elsif query['properties']
-        byProp = query['properties'][0].downcase
-        segments = PROPERTIES[query['properties'][0].downcase.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      else
-        byProp = 'none'
-        segments = [['all']]
-        nameP = ''
-      end
-
-      seriesArr = []
-
-      # segments = []
-      #
-      # if query['properties'].empty?
-      #   segments << ['all']
-      # else
-      #   query['properties'].each do |byProperty|
-      #     if byProperty == 'AB Group'
-      #       byProp = 'ab_group'
-      #     elsif byProperty == 'Marketing Channel'
-      #       byProp = 'signup_channel'
-      #     elsif byProperty == 'Signup Platform'
-      #       byProp = 'signup_platform'
-      #     else
-      #       byProp = byProperty.downcase
-      #     end
-      #
-      #     segments <<
-
-      segments.each_with_index do |segment, idx|
-        query['events'].each do |eventJawn|
-          if eventJawn == 'Add to Cart'
-            eventName = 'add'
-          elsif eventJawn == 'Proceed to Checkout'
-            eventName = 'checkout'
-          else
-            eventName = eventJawn.downcase
-          end
-
-          seriesArr << {
-            name: eventName.capitalize + 's' + segment.to_s,
-            data:
-              if byProp == 'none'
-                [
-                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                  .count
-                ]
-              elsif segment.length < 2
-                [
-                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count
-                ]
-              else
-                [
-                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count
-                ]
-              end
-          }
-        end
-      end
 
       {
         query: {
@@ -559,8 +552,7 @@ class Event < ActiveRecord::Base
         credits: {
           enabled: false
         },
-        series: seriesArr
-
+        series: Event.segSeriesArr(query)
       }
 
     else
@@ -577,175 +569,6 @@ class Event < ActiveRecord::Base
     # debugger
 
     if query && query['events'] && query['events'].length > 0
-      if query['events'][0] == 'Purchase'
-        event = 'purchase'
-        name = 'Purchases'
-      elsif query['events'][0] == 'Session'
-        event = 'session'
-        name = 'Sessions'
-      elsif query['events'][0] == 'Add to Cart'
-        event = 'add'
-        name = 'Cart Adds'
-      elsif query['events'][0] == 'Proceed to Checkout'
-        event = 'checkout'
-        name = 'Checkouts'
-      end
-
-      if query['properties'] && query['properties'][0] == 'AB Group'
-        byProp = 'ab_group'
-        segments = PROPERTIES[byProp.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      elsif query['properties'] && query['properties'][0] == 'Marketing Channel'
-        byProp = 'signup_channel'
-        segments = PROPERTIES[byProp.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      elsif query['properties'] && query['properties'][0] == 'Signup Platform'
-        byProp = 'signup_platform'
-        segments = PROPERTIES[byProp.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      elsif query['properties']
-        byProp = query['properties'][0].downcase
-        segments = PROPERTIES[query['properties'][0].downcase.to_sym]
-        nameP = ' by ' + query['properties'][0]
-      else
-        byProp = 'none'
-        segments = [['all']]
-        nameP = ''
-      end
-
-      seriesArr = []
-
-      # segments = []
-      #
-      # if query['properties'].empty?
-      #   segments << ['all']
-      # else
-      #   query['properties'].each do |byProperty|
-      #     if byProperty == 'AB Group'
-      #       byProp = 'ab_group'
-      #     elsif byProperty == 'Marketing Channel'
-      #       byProp = 'signup_channel'
-      #     elsif byProperty == 'Signup Platform'
-      #       byProp = 'signup_platform'
-      #     else
-      #       byProp = byProperty.downcase
-      #     end
-      #
-      #     segments <<
-
-      segments.each_with_index do |segment, idx|
-        query['events'].each do |eventJawn|
-          if eventJawn == 'Add to Cart'
-            eventName = 'add'
-          elsif eventJawn == 'Proceed to Checkout'
-            eventName = 'checkout'
-          else
-            eventName = eventJawn.downcase
-          end
-
-          seriesArr << {
-            name: eventName.capitalize + 's' + segment.to_s,
-            data:
-              if eventName == 'checkout' && byProp == 'age' && idx == 0
-                [30, 42, 29, 31, 29]
-              elsif eventName == 'checkout' && byProp == 'age' && idx == 1
-                [28, 33, 37, 35, 40]
-              elsif eventName == 'checkout' && byProp == 'age' && idx == 2
-                [37, 27, 32, 12, 9]
-
-              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 0
-                [27, 21, 25, 18, 34]
-              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 1
-                [34, 20, 27, 21, 22]
-              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 2
-                [24, 18, 22, 32, 24]
-              elsif eventName == 'checkout' && byProp == 'signup_channel' && idx == 3
-                [22, 29, 18, 25, 27]
-
-              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 0
-                [22, 19, 25, 18, 26]
-              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 1
-                [25, 23, 17, 21, 18]
-              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 2
-                [18, 15, 23, 27, 20]
-              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 3
-                [15, 18, 21, 25, 20]
-              elsif eventName == 'checkout' && byProp == 'signup_platform' && idx == 4
-                [15, 20, 22, 28, 25]
-
-              elsif eventName == 'checkout' && byProp == 'none'
-                [95, 102, 98, 65, 62]
-              elsif eventName == 'purchase' && byProp == 'none'
-                [85, 87, 82, 49, 43]
-              elsif eventName == 'add' && byProp == 'none'
-                [128, 114, 145, 152, 165]
-              elsif eventName == 'session' && byProp == 'none'
-                [331, 362, 351, 364, 372]
-              elsif byProp == 'none'
-                [
-                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                  .count
-                ]
-              elsif segment.length < 2
-                [
-                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                  .select{|event| event.customer.send(byProp) == segment[0]}
-                  .count
-                ]
-              else
-                [
-                  Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count,
-
-                  Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                  .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                  .count
-                ]
-              end
-          }
-        end
-      end
 
       {
         query: {
@@ -757,6 +580,7 @@ class Event < ActiveRecord::Base
                       end,
           title: query['title']
         },
+        # colors: ['#26a8a6', '#5C120C', '#C0FFFF', '#C76C61', '#912520'],
         chart: {
           spacingRight: 40,
           marginTop: 40,
@@ -791,7 +615,7 @@ class Event < ActiveRecord::Base
         credits: {
           enabled: false
         },
-        series: seriesArr
+        series: Event.segSeriesArr(query)
 
       }
 
@@ -806,6 +630,3 @@ class Event < ActiveRecord::Base
   end
 
 end
-
-
-# Event.send(event + '_between', 90.days.ago, 76.days.ago).map { |event| event.customer.age}.mean.to_i
