@@ -3,6 +3,8 @@ const QueriesConstants = require('../constants/queries_constants');
 const QueriesApiUtil = require('../util/queries_api_util');
 
 const SessionStore = require('../stores/session_store');
+const QueriesStore = require('../stores/queries_store');
+
 
 const QueriesActions = {
 

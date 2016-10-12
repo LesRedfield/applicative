@@ -12,9 +12,8 @@ const SessionActions = require('../actions/session_actions');
 
 const SegChart = require('./seg_chart');
 const RightNav = require('./right_nav');
-const SegQueryBar = require('./seg_query_bar');
 
-const Segmentation = React.createClass({
+const SegQueryBar = React.createClass({
   getInitialState(){
     return({ options: OptionsStore.all().segmentation, title: "Untitled" });
 
@@ -22,7 +21,6 @@ const Segmentation = React.createClass({
 
   _optionsChanged() {
     this.setState({ options: OptionsStore.all().segmentation });
-    this._addClickListener();
   },
 
   componentDidMount() {
@@ -36,22 +34,6 @@ const Segmentation = React.createClass({
     OptionsStore.removeAllOptions();
 
     this.optionsListener.remove();
-  },
-
-  _addClickListener() {
-
-    if (this.state.options.plotOptions) {
-      let newState = this.state.options;
-      newState.plotOptions.series.point = {
-        events: {
-          click: function() {
-            alert (this.category + ': ' + this.y);
-          }
-        }
-      };
-
-      this.setState({ options: newState });
-    }
   },
 
   _titleInputHandler(e) {
@@ -118,36 +100,62 @@ const Segmentation = React.createClass({
     }
 
     return(
-      <div className="segmentation group">
-        <header className="seg-head group">
-          <h1 id="seg-head-title">Segmentation</h1>
-          <span id="seg-head-right">You are exploring Applicative on your own</span>
-        </header>
+      <div>
+        <div className="query-header group">
+          <span className="seg-query-icon"></span>
+          <input type="text"
+            value={this.state.title}
+            onChange={ this._titleInputHandler() }
+            placeholder={ "Untitled" }
+            className="seg-query-title" />
+          <div className="query-header-right group">
 
-        <div className='seg-body group'>
-          <div className='seg-query-chart group'>
-            <div className='seg-query-bar group'>
-
-              <SegQueryBar/>
-
+            <div
+              className="save-query group"
+              onClick={ QueriesActions.saveQuery.bind(this, {
+                title: this.state.title,
+                query: OptionsStore.all().segmentation.query,
+                user_id: SessionStore.currentUser().id,
+                dashboard: false}
+              ) }>
+              SAVE QUERY
             </div>
-            <div className='seg-chart-outer'>
-                <SegChart
-                  options={this.state.options}
-                />
+
+            <div
+              className="reset group"
+              onClick={ this._resetQueryBar }>
+                RESET
             </div>
-          </div>
-          <div className="seg-options">
-            <RightNav
-              query={query}
-            />
+
           </div>
         </div>
 
+        <div className="seg-query-events group">
+          {
+            query.events.map( event => {
+              return (
+                <div className="seg-query-event-line group">
+                  <span className="seg-query-event">
+                    <span className="seg-query-event-icon"></span>
+                    {event}
+                    <div id="remove" className="event-remove" onClick={ this._handleRemoveEvent.bind(this, event) }></div>
+                  </span>
+                  <div className="seg-query-event-properties">
+                    {eventProperties}
+                  </div>
+                </div>
+              );
+            })
+          }
+
+        </div>
+
+        <div className="drop-an-event">
+
+        </div>
       </div>
     );
   }
-
 });
 
-module.exports = DragDropContext(HTML5Backend)(Segmentation);
+module.exports = SegQueryBar;

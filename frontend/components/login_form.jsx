@@ -3,6 +3,8 @@ const Link = require('react-router').Link;
 const SessionActions = require('../actions/session_actions');
 const SessionStore = require('../stores/session_store');
 
+const QueriesActions = require('../actions/queries_actions');
+
 const LoginForm = React.createClass({
 
 	contextTypes: {
@@ -125,6 +127,3 @@ const LoginForm = React.createClass({
 });
 
 module.exports = LoginForm;
-
-
-// Please { this.formType() } or { navLink }

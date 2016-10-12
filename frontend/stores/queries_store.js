@@ -3,6 +3,9 @@ const QueriesConstants = require('../constants/queries_constants');
 const AppDispatcher = require('../dispatcher/dispatcher');
 const QueriesStore = new Store(AppDispatcher);
 
+const QueriesActions = require('../actions/queries_actions');
+
+
 let _queries = [];
 let _dash_queries = [];
 let _dash_queries_options = [];
@@ -27,6 +30,18 @@ function _resetAllQueries(queries){
 function _resetAllDashQueries(queries){
   _dash_queries = queries;
   QueriesStore.__emitChange();
+
+  const customs = _dash_queries.map( dashQuery => {
+
+    let params = JSON.parse(dashQuery.query.split('=>').join(': '));
+    params.title = dashQuery.title;
+
+    return params;
+  });
+
+  if (customs.length > 0) {
+    QueriesActions.fetchDashQueriesOptions(customs);
+  }
 }
 
 function _resetAllDashQueriesOptions(options){

@@ -1,4 +1,6 @@
 const React = require('react');
+const ReactRouter = require('react-router');
+const Link = require('react-router').Link;
 const Highchart = require('./highchart');
 
 const OptionsStore = require('../stores/options_store');
@@ -9,6 +11,10 @@ const OptionsActions = require('../actions/options_actions');
 const QueriesActions = require('../actions/queries_actions');
 
 const Dashboard = React.createClass({
+  contextTypes: {
+		router: React.PropTypes.object.isRequired
+	},
+
   getInitialState(){
     return({ options: OptionsStore.all().dashboard, custom: QueriesStore.allDash(), customOptions: QueriesStore.allDashOptions() });
   },
@@ -22,16 +28,13 @@ const Dashboard = React.createClass({
   },
 
   componentWillMount() {
+    QueriesActions.fetchQueries(SessionStore.currentUser().id);
     QueriesActions.fetchDashQueries(SessionStore.currentUser().id);
+    this.optionsListener = OptionsStore.addListener(this._optionsChanged);
+    this.queriesListener = QueriesStore.addListener(this._queriesChanged);
   },
 
   componentDidMount() {
-    this.optionsListener = OptionsStore.addListener(this._optionsChanged);
-    this.queriesListener = QueriesStore.addListener(this._queriesChanged);
-
-    QueriesActions.fetchQueries(SessionStore.currentUser().id);
-
-    this._fetchDashQueriesOptions();
   },
 
   componentWillUnmount() {
@@ -39,22 +42,22 @@ const Dashboard = React.createClass({
     this.queriesListener.remove();
   },
 
-  _fetchDashQueriesOptions() {
-    const customs = this.state.custom.map( dashQuery => {
+  showInSeg(options) {
+    OptionsActions.changeOptions(options);
 
-      let params = JSON.parse(dashQuery.query.split('=>').join(': '));
-      params.title = dashQuery.title;
+    OptionsStore.enableImport();
 
-      return params;
-    });
-    if (customs.length > 0) {
-      QueriesActions.fetchDashQueriesOptions(customs);
-    }
+    this.context.router.push("/segmentation");
   },
 
   render(){
-    const dashNums = ['one', 'two', 'three', 'four'];
+    let dashNums = [];
     let custOpts = [];
+    let dCharts = {};
+
+    if (this.state.options.four.title) {
+      dashNums = ['one', 'two', 'three', 'four'];
+    }
 
     if (this.state.customOptions.length > 0) {
       custOpts = this.state.customOptions;
@@ -67,6 +70,25 @@ const Dashboard = React.createClass({
           <span id="dash-head-right">You are exploring Applicative on your own</span>
         </header>
         <div className='dash-charts'>
+
+          {
+            custOpts.map( custom => {
+              return(
+                <div key={custom.query.title + "-outer"} className="dash-chart">
+                  <Highchart
+                    key={custom.query.title}
+                    container={"dash-" + custom.query.title}
+                    dashSeg={" dash-seg"}
+                    options={custom}
+                    />
+                  <div className="view-seg" onClick={ this.showInSeg.bind(this, custom.query) }>
+                    View In Segmentation
+                  </div>
+                </div>
+              );
+            })
+          }
+          
           {
             dashNums.map( dashNum => {
               return(
@@ -81,26 +103,10 @@ const Dashboard = React.createClass({
             })
           }
 
-          {
-            custOpts.map( custom => {
-              return(
-                <div key={custom.query.title + "-outer"} className="dash-chart">
-                  <Highchart
-                    key={custom.query.title}
-                    container={"dash-" + custom.query.title}
-                    dashSeg={" dash-seg"}
-                    options={custom}
-                    />
-                </div>
-              );
-            })
-          }
-        </div>
-
-        <div>
         </div>
       </div>
     );
+
   }
 
 });

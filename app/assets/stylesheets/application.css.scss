@@ -83,7 +83,7 @@ body, h1, h2, h3 {
 }
 
 .home-page {
-  background: url(https://app.indicative.com/login/images/home_backgrounds_01.jpg) top center no-repeat;
+  background: image-url("home_backgrounds_01.jpg") top center no-repeat;
   background-size: cover;
   position: relative;
 }
@@ -153,21 +153,21 @@ body, h1, h2, h3 {
 }
 
 .login-input-email {
-  background-image: url(https://app.indicative.com/login/images/generated/icons/reg-sa989232d16.png);
+  background-image: image-url("reg-sa989232d16.png");
   background-repeat: no-repeat;
   background-size: 21px auto;
   background-position: 7.5px -143.5px;
 }
 
 .login-input-password {
-  background-image: url(https://app.indicative.com/login/images/generated/icons/reg-sa989232d16.png);
+  background-image: image-url("reg-sa989232d16.png");
   background-repeat: no-repeat;
   background-size: 21px auto;
   background-position: 7.5px -242.5px;
 }
 
 .login-input-name {
-  background-image: url(https://app.indicative.com/login/images/generated/icons/reg-sa989232d16.png);
+  background-image: image-url("reg-sa989232d16.png");
   background-repeat: no-repeat;
   background-size: 21px auto;
   background-position: 7.5px -539.5px;
@@ -180,7 +180,8 @@ body, h1, h2, h3 {
   background-position: 0 0;
   display: inline-block;
   vertical-align: middle;
-  background-image: url(https://app.indicative.com/login/images/generated/icons/login-s97928a4df8.png);
+  background-image: image-url("login-s97928a4df8.png");
+
   background-repeat: no-repeat;
   background-size: 190px auto;
 }
@@ -326,7 +327,7 @@ input {
 
 #left-nav-dashboard {
   background-color: transparent;
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
+  background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
   // width: 20px;
   // height: 20px;
@@ -345,7 +346,7 @@ input {
 
 #left-nav-segmentation {
   background-color: transparent;
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
+  background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
   // width: 20px;
   // height: 23px;
@@ -363,7 +364,7 @@ input {
 
 #left-nav-bookmarks {
   background-color: transparent;
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
+  background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
   // width: 20px;
   // height: 23px;
@@ -393,10 +394,25 @@ input {
   margin-right: 15px;
   /*float: left;*/
   // flex-grow: 1;
+
+  position: relative;
 }
 
 .dash-seg {
   height: 265px;
+}
+
+.view-seg {
+  position: absolute;
+  right: 10px;
+  bottom: 245px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #838383;
+}
+
+.view-seg:hover {
+  color: black;
 }
 
 .highcharts-container {
@@ -519,7 +535,7 @@ input {
   position: absolute;
   left: 5px;
   margin-top: 0px;
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   background-repeat: no-repeat;
   width: 18px;
   height: 17px;
@@ -531,7 +547,7 @@ input {
   position: absolute;
   width: 16px;
   height: 18px;
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   background-repeat: no-repeat;
   background-size: 312px auto;
   background-position: 0px -943px;
@@ -546,7 +562,7 @@ input {
   margin: 0;
   padding: 0;
   width: 9px;
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   background-repeat: no-repeat;
   background-size: 312px auto;
   background-position: 0 -684px;
@@ -579,7 +595,7 @@ input {
 .seg-query-icon {
   margin-right: 10px;
   margin-bottom: 4px;
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/nav-sa86d591523.png);
+  background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
   width: 20px;
   height: 23px;
@@ -646,7 +662,8 @@ input {
   margin-top: 5px;
   margin-right: 5px;
 
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
+
   background-repeat: no-repeat;
   background-size: 312px auto;
   background-position: 0 -2855px;
@@ -739,7 +756,7 @@ input {
 }
 
 .no-event-pic {
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   width: 312px;
   height: 120px;
   background-size: 312px;
@@ -749,7 +766,7 @@ input {
 }
 
 .no-event-pic-hover {
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   width: 312px;
   height: 120px;
   background-size: 312px;
@@ -821,7 +838,7 @@ input {
 }
 
 .menu-tab-pic {
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   background-size: 312px;
   background-repeat: no-repeat;
   margin: auto;
@@ -861,7 +878,7 @@ input {
 }
 
 .right-nav-header-icon {
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   background-repeat: no-repeat;
   width: 16px;
   height: 18px;
@@ -881,34 +898,6 @@ input {
   padding-top: 10px;
 }
 
-.right-nav-search {
-  position: relative;
-  color: #A9A9A9;
-  font-size: 12px;
-  padding: 9px 70px 0 16px;
-  border: none;
-  width: 100%;
-  height: 32px;
-}
-
-.right-nav-search-text {
-  float: left;
-  padding-left: 28px;
-  text-align: left;
-}
-
-.right-nav-search-icon {
-  background-image: url(https://app.indicative.com/assets/img/notsprites/search_icon.png);
-  background-repeat: no-repeat;
-  background-size: 18px 18px;
-  background-position: 0px center;
-  float: left;
-  width: 18px;
-  top: 7px;
-  height: 20px;
-  position: absolute;
-}
-
 .seg-opt {
   border-radius: 2px 2px 2px 2px;
   position: relative;
@@ -924,7 +913,7 @@ input {
   text-align: left;
   padding-left: 28px;
 
-  background-image: url(https://app.indicative.com/assets/img/sprites/icons/query-s4ab1fdab27.png);
+  background-image: image-url("query-s4ab1fdab27.png");
   background-repeat: no-repeat;
   background-size: 312px auto;
   background-position: 4px -940px;

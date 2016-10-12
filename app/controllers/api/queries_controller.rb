@@ -19,8 +19,6 @@ class Api::QueriesController < ApplicationController
       end
     elsif query_params[:dashboard]
       @queries = Query.where(user_id: query_params[:user_id]).where(dashboard: true)
-
-      # debugger
     else
       @queries = Query.where(user_id: query_params[:user_id])
 
