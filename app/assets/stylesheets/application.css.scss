@@ -484,9 +484,14 @@ input {
 .seg-query-bar {
   min-height: 67px;
   color: white;
+  // display: flex;
+  // flex-direction: column;
+  // position: relative;
+}
+
+.seg-query-bar-inner {
   display: flex;
   flex-direction: column;
-  // position: relative;
 }
 
 .seg-query-event-line {

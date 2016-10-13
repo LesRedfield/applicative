@@ -100,7 +100,7 @@ const SegQueryBar = React.createClass({
     }
 
     return(
-      <div>
+      <div className="seg-query-bar-inner group">
         <div className="query-header group">
           <span className="seg-query-icon"></span>
           <input type="text"
