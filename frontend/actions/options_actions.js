@@ -4,8 +4,8 @@ const OptionsApiUtil = require('../util/options_api_util');
 
 const OptionsActions = {
 
-  fetchOptions() {
-    OptionsApiUtil.fetchOptions(OptionsActions.receiveOptions);
+  fetchOptions(id) {
+    OptionsApiUtil.fetchOptions(id, OptionsActions.receiveOptions);
   },
 
   changeOptions(params) {

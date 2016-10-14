@@ -1,9 +1,10 @@
 const OptionsApiUtil = {
 
-  fetchOptions(success) {
+  fetchOptions(id, success) {
 		$.ajax({
 			url: '/api/events',
 			type: 'GET',
+			data: { user_id: id },
 			success: function(options){
         success(options);
       }

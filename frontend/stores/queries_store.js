@@ -8,7 +8,7 @@ const QueriesActions = require('../actions/queries_actions');
 
 let _queries = [];
 let _dash_queries = [];
-let _dash_queries_options = [];
+let _dash_queries_options = {};
 
 QueriesStore.all = function(){
   return _queries;
@@ -45,7 +45,12 @@ function _resetAllDashQueries(queries){
 }
 
 function _resetAllDashQueriesOptions(options){
-  _dash_queries_options = options;
+
+  options.forEach( option => {
+    _dash_queries_options[option.query.title] = option;
+  });
+
+  // _dash_queries_options = options;
   QueriesStore.__emitChange();
 }
 

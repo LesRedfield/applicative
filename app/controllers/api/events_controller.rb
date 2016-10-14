@@ -1,6 +1,8 @@
 class Api::EventsController < ApplicationController
 
   def index
+    @dashQueries = Query.where(user_id: params[:user_id]).where(dashboard: true)
+
     @options = {
       dashboard: {
         one: Event.dashOne,
@@ -10,6 +12,11 @@ class Api::EventsController < ApplicationController
       }, segmentation: Event.segment(params[:query])
     }
 
+    @dashQueries.each do |dashQuery|
+      query = JSON.parse(dashQuery.query.split('=>').join(': '))
+
+      @options[:dashboard][dashQuery.title] = Event.dashSeg(query)
+    end
 
     render json: @options
   end

@@ -5,16 +5,16 @@ const OptionsActions = require('../actions/options_actions');
 const Highchart = React.createClass({
 
   componentDidMount() {
-    if (this.props.container === "seg-chart") {
-      return;
-    } else if (
-      this.props.container === "dash-four" ||
-      this.props.container === "dash-three"
-    ) {
-      return;
-    } else {
-    OptionsActions.fetchOptions();
-    }
+    // if (this.props.container === "seg-chart") {
+    //   return;
+    // } else if (
+    //   this.props.container === "dash-four" ||
+    //   this.props.container === "dash-three"
+    // ) {
+    //   return;
+    // } else {
+    // OptionsActions.fetchOptions();
+    // }
   },
 
   componentWillUpdate() {

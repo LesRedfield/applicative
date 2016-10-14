@@ -1,14 +1,19 @@
 const Store = require('flux/utils').Store;
 const OptionsConstants = require('../constants/options_constants');
+const OptionsActions = require('../actions/options_actions');
 const AppDispatcher = require('../dispatcher/dispatcher');
+
 const OptionsStore = new Store(AppDispatcher);
 
 let _options = { dashboard: { one: {}, two: {}, three: {}, four: {} }, segmentation: { query: { events: [], properties: [], title: "Untitled" } } };
-
 let _import = false;
 
 OptionsStore.all = function(){
   return Object.assign({}, _options);
+};
+
+OptionsStore.allDashOptions = function(){
+  // OptionsActions.fetchOptions();
 };
 
 OptionsStore.removeEvent = function(event){

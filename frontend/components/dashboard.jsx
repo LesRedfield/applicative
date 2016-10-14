@@ -2,6 +2,7 @@ const React = require('react');
 const ReactRouter = require('react-router');
 const Link = require('react-router').Link;
 const Highchart = require('./highchart');
+const DashHighchart = require('./dash_highchart');
 
 const OptionsStore = require('../stores/options_store');
 const SessionStore = require('../stores/session_store');
@@ -16,22 +17,34 @@ const Dashboard = React.createClass({
 	},
 
   getInitialState(){
-    return({ options: OptionsStore.all().dashboard, custom: QueriesStore.allDash(), customOptions: QueriesStore.allDashOptions() });
+  //   return({ options: OptionsStore.all().dashboard, customOptions: QueriesStore.allDashOptions(SessionStore.currentUser().id) });
+
+    return( { dashNums: [] } );
   },
 
   _optionsChanged() {
-    this.setState({ options: OptionsStore.all().dashboard });
+    // this.setState({ options: OptionsStore.all().dashboard });
+
+    this.setState({ dashNums: Object.keys(OptionsStore.all().dashboard) });
   },
 
   _queriesChanged() {
-    this.setState({ customOptions: QueriesStore.allDashOptions() });
+    // this.setState({ queries: QueriesStore.allDash() });
+
+    // this.setState({ num: this.state.num + 1 });
+
+    // QueriesActions.fetchDashQueriesOptions
   },
 
   componentWillMount() {
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
-    QueriesActions.fetchDashQueries(SessionStore.currentUser().id);
+
+    OptionsActions.fetchOptions(SessionStore.currentUser().id);
+
+    // QueriesActions.fetchDashQueries(SessionStore.currentUser().id);
+
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
-    this.queriesListener = QueriesStore.addListener(this._queriesChanged);
+    // this.queriesListener = QueriesStore.addListener(this._queriesChanged);
   },
 
   componentDidMount() {
@@ -39,11 +52,17 @@ const Dashboard = React.createClass({
 
   componentWillUnmount() {
     this.optionsListener.remove();
-    this.queriesListener.remove();
+    // this.queriesListener.remove();
+
+
   },
 
   showInSeg(options) {
-    OptionsActions.changeOptions(options);
+    let params = JSON.parse(options.query.split('=>').join(': '));
+    params.title = options.title;
+
+    // debugger
+    OptionsActions.changeOptions(params);
 
     OptionsStore.enableImport();
 
@@ -51,17 +70,22 @@ const Dashboard = React.createClass({
   },
 
   render(){
-    let dashNums = [];
+    let dashNums = this.state.dashNums;
     let custOpts = [];
-    let dCharts = {};
+    // let dCharts = {};
 
-    if (this.state.options.four.title) {
-      dashNums = ['one', 'two', 'three', 'four'];
-    }
+    // let dashOptions = OptionsStore.all().dashboard;
+    let custDashOptions = [];
 
-    if (this.state.customOptions.length > 0) {
-      custOpts = this.state.customOptions;
-    }
+
+    // if (this.state.options.four.title) {
+    //   dashNums = ['one', 'two', 'three', 'four'];
+    // }
+    //
+    // if (this.state.customOptions.length > 0) {
+    //   custOpts = this.state.customOptions;
+    // }
+
 
     return(
       <div className="dashboard group">
@@ -70,39 +94,37 @@ const Dashboard = React.createClass({
           <span id="dash-head-right">You are exploring Applicative on your own</span>
         </header>
         <div className='dash-charts'>
+          {
+            dashNums.map( dashNum => {
+              return(
+                <div key={dashNum + "-outer"} className="dash-chart">
+                  <DashHighchart
+                    key={dashNum}
+                    dashNum={dashNum}
+                    container={"dash-" + dashNum}
+                    />
+                </div>
+              );
+            })
+          }
 
           {
-            custOpts.map( custom => {
+            custDashOptions.map( custom => {
               return(
-                <div key={custom.query.title + "-outer"} className="dash-chart">
-                  <Highchart
-                    key={custom.query.title}
-                    container={"dash-" + custom.query.title}
+                <div key={custom.title + "-outer"} className="dash-chart">
+                  <DashHighchart
+                    key={custom.title}
+                    dashNum={custom.title}
+                    container={"dash-" + custom.title}
                     dashSeg={" dash-seg"}
-                    options={custom}
                     />
-                  <div className="view-seg" onClick={ this.showInSeg.bind(this, custom.query) }>
+                  <div className="view-seg" onClick={ this.showInSeg.bind(this, custom) }>
                     View In Segmentation
                   </div>
                 </div>
               );
             })
           }
-          
-          {
-            dashNums.map( dashNum => {
-              return(
-                <div key={dashNum + "-outer"} className="dash-chart">
-                  <Highchart
-                    key={dashNum}
-                    container={"dash-" + dashNum}
-                    options={this.state.options[dashNum]}
-                  />
-              </div>
-              );
-            })
-          }
-
         </div>
       </div>
     );
@@ -112,3 +134,6 @@ const Dashboard = React.createClass({
 });
 
 module.exports = Dashboard;
+// <div className='dash-charts'>
+//
+// </div>
