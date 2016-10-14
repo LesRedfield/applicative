@@ -26,7 +26,6 @@ const DashHighchart = React.createClass({
     //   this.props.container,
     //   OptionsStore.all().dashboard[this.props.dashNum]
     // );
-
     let title = this.props.dashNum;
 
     // if (title === "one" || title === "two" || title === "three" || title === "four") {
@@ -69,15 +68,20 @@ const DashHighchart = React.createClass({
 
   //Create the div which the chart will be rendered to.
   render() {
-    let klass = "chart"
+    let klass = ""
 
-    if (this.props.dashSeg) {
-      klass += this.props.dashSeg
+    let title = this.props.dashNum;
+
+    if (title === "one" || title === "two" || title === "three" || title === "four") {
+      klass = "chart";
+    } else {
+      klass = "chart dash-seg"
     }
 
     return(
       <div id={this.props.container} className={klass}></div>
     );
+
   }
 });
 

@@ -29,11 +29,7 @@ const Dashboard = React.createClass({
   },
 
   _queriesChanged() {
-    // this.setState({ queries: QueriesStore.allDash() });
 
-    // this.setState({ num: this.state.num + 1 });
-
-    // QueriesActions.fetchDashQueriesOptions
   },
 
   componentWillMount() {
@@ -41,7 +37,6 @@ const Dashboard = React.createClass({
 
     OptionsActions.fetchOptions(SessionStore.currentUser().id);
 
-    // QueriesActions.fetchDashQueries(SessionStore.currentUser().id);
 
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
     // this.queriesListener = QueriesStore.addListener(this._queriesChanged);
@@ -57,12 +52,12 @@ const Dashboard = React.createClass({
 
   },
 
-  showInSeg(options) {
-    let params = JSON.parse(options.query.split('=>').join(': '));
-    params.title = options.title;
+  showInSeg(title) {
+    // let params = JSON.parse(options.query.split('=>').join(': '));
+    // params.title = options.title;
 
     // debugger
-    OptionsActions.changeOptions(params);
+    OptionsActions.changeOptions(OptionsStore.all().dashboard[title].query);
 
     OptionsStore.enableImport();
 
@@ -96,33 +91,31 @@ const Dashboard = React.createClass({
         <div className='dash-charts'>
           {
             dashNums.map( dashNum => {
-              return(
-                <div key={dashNum + "-outer"} className="dash-chart">
-                  <DashHighchart
-                    key={dashNum}
-                    dashNum={dashNum}
-                    container={"dash-" + dashNum}
-                    />
-                </div>
-              );
-            })
-          }
-
-          {
-            custDashOptions.map( custom => {
-              return(
-                <div key={custom.title + "-outer"} className="dash-chart">
-                  <DashHighchart
-                    key={custom.title}
-                    dashNum={custom.title}
-                    container={"dash-" + custom.title}
-                    dashSeg={" dash-seg"}
-                    />
-                  <div className="view-seg" onClick={ this.showInSeg.bind(this, custom) }>
-                    View In Segmentation
+              if (dashNum === "one" || dashNum === "two" || dashNum === "three" || dashNum === "four") {
+                return(
+                  <div key={dashNum + "-outer"} className="dash-chart">
+                    <DashHighchart
+                      key={dashNum}
+                      dashNum={dashNum}
+                      container={"dash-" + dashNum}
+                      />
                   </div>
-                </div>
-              );
+                );
+              } else {
+                return(
+                  <div key={dashNum + "-outer"} className="dash-chart">
+                    <DashHighchart
+                      key={dashNum}
+                      dashNum={dashNum}
+                      container={"dash-" + dashNum}
+                      />
+
+                    <div className="view-seg" onClick={ this.showInSeg.bind(this, dashNum) }>
+                      View In Segmentation
+                    </div>
+                  </div>
+                );
+              }
             })
           }
         </div>

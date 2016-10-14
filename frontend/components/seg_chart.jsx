@@ -119,27 +119,3 @@ const SegChart = React.createClass({
 });
 
 module.exports = DropTarget([Draggable.EVENT, Draggable.PROPERTY], segChartTarget, collect)(SegChart);
-
-// background: 'white',
-// borderColor: rgba(207, 207, 207, 0.6),
-// borderWidth: '8px',
-// fontSize: '90px',
-// paddingBottom: '20px',
-// borderStyle: dashed,
-// display: flex,
-// flexDirection: column,
-// justifyContent: center
-
-
-// {isOver &&
-//   <div style={{
-//     position: 'absolute',
-//     top: 100,
-//     left: 50,
-//     height: '50%',
-//     width: '50%',
-//     zIndex: 1,
-//     opacity: 0.5,
-//     backgroundColor: 'yellow',
-//   }} />
-// }

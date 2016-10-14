@@ -15,6 +15,8 @@ class Api::EventsController < ApplicationController
     @dashQueries.each do |dashQuery|
       query = JSON.parse(dashQuery.query.split('=>').join(': '))
 
+      query['title'] = dashQuery.title
+
       @options[:dashboard][dashQuery.title] = Event.dashSeg(query)
     end
 
