@@ -15,7 +15,7 @@ const segChartTarget = {
     if (itemType == "EVENT") {
       item.query.events.push(item.name);
     } else if (itemType == "PROPERTY") {
-      item.query.properties.push(item.name);
+      item.query.properties = [item.name];
     }
 
     OptionsActions.changeOptions(item.query);
