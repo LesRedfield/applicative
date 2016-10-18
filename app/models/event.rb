@@ -33,8 +33,6 @@ class Event < ActiveRecord::Base
 
   scope :checkout_between, lambda {|start_date, end_date| where("checkout >= ? AND checkout <= ?", start_date, end_date )}
 
-  # lots of class methods that take event params and return properly formatted data
-
   PROPERTIES = {
     signup_platform: [['Mac'], ['Windows'], ['iPhone'], ['Windows Phone'], ['Android']],
     signup_channel: [['Search'], ['Social Media'], ['Affiliate'], ['Organic']],
@@ -43,331 +41,240 @@ class Event < ActiveRecord::Base
     gender: [[true], [false]]
   }
 
+  DATES = ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
 
-  def self.dashOne
+  def self.options
     {
       colors: ['#26a8a6'],
-      # colors: ['#C0FFFF'],
       chart: {
         spacingTop: 30,
-        spacingBottom: 50,
         spacingLeft: 20,
         spacingRight: 20,
         marginTop: 80,
         type: 'area'
       },
       title: {
-        text: 'Average Purchaser Age',
         style: {
           fontSize: '12px',
           color: '#838383'
         }
       },
       xAxis: {
-        categories: ['May 03', 'May 08', 'May 13', 'May 18', 'May 23', 'May 28',
-          'Jun 02', 'Jun 07', 'Jun 12', 'Jun 17', 'Jun 22', 'Jun 27', 'Jul 02', 'Jul 07']
+        categories: []
       },
       yAxis: {
         title: {
-          enabled: false
-        }
-      },
-      plotOptions: {
-        series: {
-          fillColor: {
-              linearGradient: [0, 0, 0, 300],
-              stops: [
-                [0, '#C0FFFF']
-              ]
-            }
-        },
-        area: {
-          marker: {
-            enabled: false,
-            symbol: 'circle',
-            radius: 2,
-            states: {
-              hover: {
-                enabled: true
-              }
-            }
-          }
+          text: ''
         }
       },
       credits: {
         enabled: false
-      },
-      legend: {
-        enabled: false
-      },
-      series: [{
-        name: 'Age',
-        data: [
-          Event.purchase_between(90.days.ago, 76.days.ago).map do |event|
-            event.customer.age
-          end.mean.to_i,
-          Event.purchase_between(76.days.ago, 62.days.ago).map do |event|
-            event.customer.age
-          end.mean.to_i,
-          Event.purchase_between(62.days.ago, 48.days.ago).map do |event|
-            event.customer.age
-          end.mean.to_i,
-          Event.purchase_between(48.days.ago, 34.days.ago).map do |event|
-            event.customer.age
-          end.mean.to_i,
-          Event.purchase_between(34.days.ago, 20.days.ago).map do |event|
-            event.customer.age
-          end.mean.to_i
-        ],
-        lineWidth: 1
-      }]
+      }
     }
+  end
+
+
+  def self.dashOne
+    options = Event.options
+
+    options[:chart][:spacingBottom] = 50
+    options[:title][:text] = 'Average Purchaser Age'
+    options[:xAxis][:categories] = DATES
+    options[:yAxis][:title][:enabled] = false
+    options[:legend] = {
+      enabled: false
+    }
+    options[:plotOptions] = {
+      series: {
+        fillColor: {
+            linearGradient: [0, 0, 0, 300],
+            stops: [
+              [0, '#C0FFFF']
+            ]
+          }
+      },
+      area: {
+        marker: {
+          enabled: false,
+          symbol: 'circle',
+          radius: 2,
+          states: {
+            hover: {
+              enabled: true
+            }
+          }
+        }
+      }
+    }
+    options[:series] = [{
+      name: 'Age',
+      data: [
+        Event.purchase_between(90.days.ago, 76.days.ago).map do |event|
+          event.customer.age
+        end.mean.to_i,
+        Event.purchase_between(76.days.ago, 62.days.ago).map do |event|
+          event.customer.age
+        end.mean.to_i,
+        Event.purchase_between(62.days.ago, 48.days.ago).map do |event|
+          event.customer.age
+        end.mean.to_i,
+        Event.purchase_between(48.days.ago, 34.days.ago).map do |event|
+          event.customer.age
+        end.mean.to_i,
+        Event.purchase_between(34.days.ago, 20.days.ago).map do |event|
+          event.customer.age
+        end.mean.to_i
+      ],
+      lineWidth: 1
+    }]
+
+    options
   end
 
   def self.dashTwo
-    {
-      colors: ['#912520', '#26a8a6'],
-      chart: {
-        spacingTop: 30,
-        # spacingBottom: 50,
-        spacingLeft: 20,
-        spacingRight: 20,
-        marginTop: 80,
-        type: 'column'
-      },
-      title: {
-          text: 'Signup Platform by Gender',
-          style: {
-            fontSize: '12px',
-            color: '#838383'
-          }
-      },
-      xAxis: {
-          categories: ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android']
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          enabled: false
-        }
-      },
-      legend: {
-          reversed: true
+    options = Event.options
 
-      },
-      plotOptions: {
-          series: {
-              stacking: 'normal',
-              pointWidth: 20
-          }
-      },
-      credits: {
-        enabled: false
-      },
-      series: [{
-        name: 'Male',
-        data: [
-          Customer.where(gender: true, signup_platform: 'Mac').count,
-          Customer.where(gender: true, signup_platform: 'Windows').count,
-          Customer.where(gender: true, signup_platform: 'iPhone').count,
-          Customer.where(gender: true, signup_platform: 'Windows Phone').count,
-          Customer.where(gender: true, signup_platform: 'Android').count
-        ]
-      }, {
-        name: 'Female',
-        data: [
-          Customer.where(gender: false, signup_platform: 'Mac').count,
-          Customer.where(gender: false, signup_platform: 'Windows').count,
-          Customer.where(gender: false, signup_platform: 'iPhone').count,
-          Customer.where(gender: false, signup_platform: 'Windows Phone').count,
-          Customer.where(gender: false, signup_platform: 'Android').count
-        ]
-      }]
+    options[:colors] = ['#912520', '#26a8a6']
+    options[:chart][:type] = 'column'
+    options[:title][:text] = 'Signup Platform by Gender'
+    options[:xAxis] = {
+        categories: ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android']
     }
+    options[:yAxis][:title][:enabled] = false
+    options[:legend] = {
+        reversed: true
+    }
+    options[:plotOptions] = {
+        series: {
+            pointWidth: 20
+        }
+    }
+    options[:series] = [{
+      name: 'Male',
+      data: [
+        Customer.where(gender: true, signup_platform: 'Mac').count,
+        Customer.where(gender: true, signup_platform: 'Windows').count,
+        Customer.where(gender: true, signup_platform: 'iPhone').count,
+        Customer.where(gender: true, signup_platform: 'Windows Phone').count,
+        Customer.where(gender: true, signup_platform: 'Android').count
+      ]
+    }, {
+      name: 'Female',
+      data: [
+        Customer.where(gender: false, signup_platform: 'Mac').count,
+        Customer.where(gender: false, signup_platform: 'Windows').count,
+        Customer.where(gender: false, signup_platform: 'iPhone').count,
+        Customer.where(gender: false, signup_platform: 'Windows Phone').count,
+        Customer.where(gender: false, signup_platform: 'Android').count
+      ]
+    }]
+
+    options
   end
 
   def self.dashThree
-    {
-      colors: ['#26a8a6'],
-      chart: {
-        spacingTop: 30,
-        spacingBottom: 20,
-        spacingLeft: 20,
-        spacingRight: 20,
-        marginTop: 80,
-        type: 'bar'
-      },
-      title: {
-        text: 'Signup by Marketing Channel',
-        style: {
-          fontSize: '12px',
-          color: '#838383'
-        }
-      },
-      # subtitle: {
-      #   enabled: false,
-      #   text: 'ActiveRecord is tha Bombdiggity'
-      # },
-      xAxis: {
-        categories: ['Search', 'Social Media', 'Affiliate', 'Organic']
-      },
-      yAxis: {
-        min: 0,
-        title: {
-          text: 'Signups'
-        }
-      },
-      legend: {
-        enabled: false,
-        reversed: true
+    options = Event.options
 
-      },
-      plotOptions: {
-        series: {
-          stacking: 'normal'
-        }
-      },
-      credits: {
-        enabled: false
-      },
-      series: [{
-        name: 'Signups',
-        data: [
-          Customer.where(signup_channel: 'Search').count,
-          Customer.where(signup_channel: 'Social Media').count,
-          Customer.where(signup_channel: 'Affiliate').count,
-          Customer.where(signup_channel: 'Organic').count
-        ]
-      }
-
-      # , {
-      #   name: 'Group B',
-      #   data: [
-      #     Customer.where(ab_group: 'B', signup_channel: 'Search').average(:age).to_i,
-      #     Customer.where(ab_group: 'B', signup_channel: 'Social Media').average(:age).to_i,
-      #     Customer.where(ab_group: 'B', signup_channel: 'Affiliate').average(:age).to_i,
-      #     Customer.where(ab_group: 'B', signup_channel: 'Organic').average(:age).to_i,
-      #   ]
-      # }
-
-      # , {
-      #   name: 'Neither',
-      #   data: [
-      #     Customer.where(ab_group: nil, signup_channel: 'Search').average(:age).to_i,
-      #     Customer.where(ab_group: nil, signup_channel: 'Social Media').average(:age).to_i,
-      #     Customer.where(ab_group: nil, signup_channel: 'Affiliate').average(:age).to_i,
-      #     Customer.where(ab_group: nil, signup_channel: 'Organic').average(:age).to_i,
-      #   ]
-      # }
-
-      ]
+    options[:chart][:spacingBottom] = 20
+    options[:chart][:type] = 'bar'
+    options[:title][:text] = 'Signups by Marketing Channel'
+    options[:xAxis][:categories] = ['Search', 'Social Media', 'Affiliate', 'Organic']
+    options[:yAxis][:title][:text] = 'Signups'
+    options[:legend] = {
+      enabled: false
     }
+    options[:series] = [{
+      name: 'Signups',
+      data: [
+        Customer.where(signup_channel: 'Search').count,
+        Customer.where(signup_channel: 'Social Media').count,
+        Customer.where(signup_channel: 'Affiliate').count,
+        Customer.where(signup_channel: 'Organic').count
+      ]
+    }]
+
+    options
   end
 
   def self.dashFour
-    {
-      colors: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
-      chart: {
-        spacingTop: 30,
-        # spacingBottom: 50,
-        spacingLeft: 20,
-        spacingRight: 20,
-        marginTop: 80,
-        type: 'area'
-      },
-      title: {
-        text: 'Biweekly Purchases by Session Platform',
-        style: {
-          fontSize: '12px',
-          color: '#838383'
-        }
-      },
-      xAxis: {
-        categories: ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28'],
-        tickmarkPlacement: 'on',
-        title: {
-          enabled: false
-        }
-      },
-      yAxis: {
-        title: {
-          text: 'Percent of Purchases'
-        }
-      },
-      tooltip: {
-        shared: true,
-        valueSuffix: ' purchases'
-      },
-      plotOptions: {
-        area: {
-          stacking: 'percent',
+    options = Event.options
+
+    options[:colors] = ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61']
+    options[:title][:text] = 'Biweekly Purchases by Session Platform'
+    options[:xAxis][:categories] = DATES
+    options[:yAxis][:title][:text] = 'Percent of Purchases'
+    options[:tooltip] = {
+      shared: true,
+      valueSuffix: ' purchases'
+    }
+    options[:plotOptions] = {
+      area: {
+        stacking: 'percent',
+        lineColor: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
+        lineWidth: 2,
+        marker: {
           lineColor: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
-          lineWidth: 2,
-          marker: {
-            lineColor: ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61'],
-            symbol: 'circle',
-            radius: 2,
-            enabled: false,
-            states: {
-              hover: {
-                halo: {
-                  size: 1
-                }
+          symbol: 'circle',
+          radius: 2,
+          enabled: false,
+          states: {
+            hover: {
+              halo: {
+                size: 1
               }
             }
           }
         }
-      },
-      credits: {
-        enabled: false
-      },
-      series: [{
-        name: 'Mac',
-        data: [
-          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Mac').count,
-          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Mac').count,
-          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Mac').count,
-          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Mac').count,
-          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Mac').count
-        ]
-      }, {
-        name: 'Windows',
-        data: [
-          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows').count,
-          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows').count,
-          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows').count,
-          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows').count,
-          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows').count
-        ]
-      }, {
-        name: 'iPhone',
-        data: [
-          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'iPhone').count,
-          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'iPhone').count
-        ]
-      }, {
-        name: 'Windows Phone',
-        data: [
-          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows Phone').count,
-          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows Phone').count
-        ]
-      }, {
-        name: 'Android',
-        data: [
-          Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Android').count,
-          Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Android').count,
-          Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Android').count,
-          Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Android').count,
-          Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Android').count
-        ]
-      }]
+      }
     }
+    options[:series] = [{
+      name: 'Mac',
+      data: [
+        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Mac').count,
+        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Mac').count,
+        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Mac').count,
+        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Mac').count,
+        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Mac').count
+      ]
+    }, {
+      name: 'Windows',
+      data: [
+        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows').count,
+        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows').count,
+        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows').count,
+        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows').count,
+        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows').count
+      ]
+    }, {
+      name: 'iPhone',
+      data: [
+        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'iPhone').count,
+        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'iPhone').count,
+        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'iPhone').count,
+        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'iPhone').count,
+        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'iPhone').count
+      ]
+    }, {
+      name: 'Windows Phone',
+      data: [
+        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows Phone').count,
+        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows Phone').count,
+        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows Phone').count,
+        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows Phone').count,
+        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows Phone').count
+      ]
+    }, {
+      name: 'Android',
+      data: [
+        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Android').count,
+        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Android').count,
+        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Android').count,
+        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Android').count,
+        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Android').count
+      ]
+    }]
+
+    options
   end
 
   def self.segSeriesArr(query)
@@ -499,62 +406,37 @@ class Event < ActiveRecord::Base
 
   def self.dashSeg(query)
     if query && query['events'] && query['events'].length > 0
+      options = Event.options
 
-      {
-        query: {
-          events: query['events'],
-          properties: if query['properties']
-                        query['properties']
-                      else
-                        []
-                      end,
-          title: query['title']
-        },
-        colors: ['#26a8a6', '#5C120C', '#C0FFFF', '#C76C61', '#912520'],
-        chart: {
-          spacingTop: 30,
-          # spacingBottom: 50,
-          spacingLeft: 20,
-          spacingRight: 20,
-          marginTop: 80,
-          type: 'line'
-        },
-        title: {
-          text: query['title'],
-          style: {
-            fontSize: '12px',
-            color: '#838383'
-          }
-        },
-        xAxis: {
-          categories: ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
-        },
-        yAxis: {
-          title: {
-            text: 'Quantity'
-          },
-          min: 0
-        },
-        plotOptions: {
-          series: {
-            marker: {
-              enabled: true,
-              symbol: 'circle',
-              radius: 4,
-              states: {
-                hover: {
-                  enabled: true
-                }
-              }
-            }
-          }
-        },
-        credits: {
-          enabled: false
-        },
-        series: Event.segSeriesArr(query)
+      options[:query] = {
+        events: query['events'],
+        properties: if query['properties']
+                      query['properties']
+                    else
+                      []
+                    end,
+        title: query['title']
       }
+      options[:colors] = ['#26a8a6', '#5C120C', '#6B71D1', '#6BD198', '#D16BA4', '#D1CB6B']
+      options[:chart][:type] = 'line'
+      options[:title][:text] = query['title']
+      options[:xAxis][:categories] = DATES
+      options[:yAxis] = {
+        title: {
+          text: 'Quantity'
+        },
+        min: 0
+      }
+      options[:plotOptions] = {
+        series: {
+          marker: {
+            symbol: 'circle'
+          }
+        }
+      }
+      options[:series] = Event.segSeriesArr(query)
 
+      options
     else
       {
         credits: {
@@ -565,11 +447,7 @@ class Event < ActiveRecord::Base
   end
 
   def self.segment(query)
-
-    # debugger
-
     if query && query['events'] && query['events'].length > 0
-
       {
         query: {
           events: query['events'],
@@ -580,7 +458,7 @@ class Event < ActiveRecord::Base
                       end,
           title: query['title']
         },
-        # colors: ['#26a8a6', '#5C120C', '#C0FFFF', '#C76C61', '#912520'],
+        colors: ['#26a8a6', '#5C120C', '#6B71D1', '#6BD198', '#D16BA4', '#D1CB6B'],
         chart: {
           spacingRight: 40,
           marginTop: 40,
@@ -590,7 +468,7 @@ class Event < ActiveRecord::Base
           text: ''
         },
         xAxis: {
-          categories: ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
+          categories: DATES
         },
         yAxis: {
           title: {
@@ -601,14 +479,7 @@ class Event < ActiveRecord::Base
         plotOptions: {
           series: {
             marker: {
-              enabled: true,
-              symbol: 'circle',
-              radius: 4,
-              states: {
-                hover: {
-                  enabled: true
-                }
-              }
+              symbol: 'circle'
             }
           }
         },
@@ -616,9 +487,7 @@ class Event < ActiveRecord::Base
           enabled: false
         },
         series: Event.segSeriesArr(query)
-
       }
-
     else
       {
         credits: {
@@ -626,7 +495,6 @@ class Event < ActiveRecord::Base
         }
       }
     end
-
   end
 
 end
