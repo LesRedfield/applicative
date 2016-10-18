@@ -33,15 +33,38 @@ class Event < ActiveRecord::Base
 
   scope :checkout_between, lambda {|start_date, end_date| where("checkout >= ? AND checkout <= ?", start_date, end_date )}
 
+  EVENTS = {
+    'Purchase' => ['purchase', 'Purchases'],
+    'Session' => ['session', 'Sessions'],
+    'Add to Cart' => ['add', 'Cart Adds'],
+    'Proceed to Checkout' => ['checkout', 'Checkouts']
+  }
+
+  PROP_NAMES = {
+    'AB Group' => 'ab_group',
+    'Marketing Channel' => 'signup_channel',
+    'Signup Platform' => 'signup_platform',
+    'Age' => 'age',
+    'Gender' => 'gender'
+  }
+
   PROPERTIES = {
     signup_platform: [['Mac'], ['Windows'], ['iPhone'], ['Windows Phone'], ['Android']],
     signup_channel: [['Search'], ['Social Media'], ['Affiliate'], ['Organic']],
     ab_group: [['A'], ['B']],
     age: [[18, 30], [30, 45], [45, 60]],
-    gender: [[true], [false]]
+    gender: [[false], [true]]
   }
 
   DATES = ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
+
+  INTERVALS = [
+    [90.days.ago, 76.days.ago],
+    [76.days.ago, 62.days.ago],
+    [62.days.ago, 48.days.ago],
+    [48.days.ago, 34.days.ago],
+    [34.days.ago, 20.days.ago]
+  ]
 
   def self.options
     {
@@ -72,7 +95,6 @@ class Event < ActiveRecord::Base
       }
     }
   end
-
 
   def self.dashOne
     options = Event.options
@@ -108,23 +130,11 @@ class Event < ActiveRecord::Base
     }
     options[:series] = [{
       name: 'Age',
-      data: [
-        Event.purchase_between(90.days.ago, 76.days.ago).map do |event|
-          event.customer.age
-        end.mean.to_i,
-        Event.purchase_between(76.days.ago, 62.days.ago).map do |event|
-          event.customer.age
-        end.mean.to_i,
-        Event.purchase_between(62.days.ago, 48.days.ago).map do |event|
-          event.customer.age
-        end.mean.to_i,
-        Event.purchase_between(48.days.ago, 34.days.ago).map do |event|
-          event.customer.age
-        end.mean.to_i,
-        Event.purchase_between(34.days.ago, 20.days.ago).map do |event|
+      data: INTERVALS.map do |interval|
+        Event.purchase_between(interval[0], interval[1]).map do |event|
           event.customer.age
         end.mean.to_i
-      ],
+      end,
       lineWidth: 1
     }]
 
@@ -134,40 +144,26 @@ class Event < ActiveRecord::Base
   def self.dashTwo
     options = Event.options
 
-    options[:colors] = ['#912520', '#26a8a6']
+    options[:colors] = ['#26a8a6', '#912520']
     options[:chart][:type] = 'column'
     options[:title][:text] = 'Signup Platform by Gender'
     options[:xAxis] = {
         categories: ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android']
     }
     options[:yAxis][:title][:enabled] = false
-    options[:legend] = {
-        reversed: true
-    }
     options[:plotOptions] = {
         series: {
             pointWidth: 20
         }
     }
-    options[:series] = [{
-      name: 'Male',
-      data: [
-        Customer.where(gender: true, signup_platform: 'Mac').count,
-        Customer.where(gender: true, signup_platform: 'Windows').count,
-        Customer.where(gender: true, signup_platform: 'iPhone').count,
-        Customer.where(gender: true, signup_platform: 'Windows Phone').count,
-        Customer.where(gender: true, signup_platform: 'Android').count
-      ]
-    }, {
-      name: 'Female',
-      data: [
-        Customer.where(gender: false, signup_platform: 'Mac').count,
-        Customer.where(gender: false, signup_platform: 'Windows').count,
-        Customer.where(gender: false, signup_platform: 'iPhone').count,
-        Customer.where(gender: false, signup_platform: 'Windows Phone').count,
-        Customer.where(gender: false, signup_platform: 'Android').count
-      ]
-    }]
+    options[:series] = PROPERTIES[:gender].map do |gender|
+      {
+        name: gender[0] ? 'Female' : 'Male',
+        data: PROPERTIES[:signup_platform].map do |platform|
+            Customer.where(gender: gender[0], signup_platform: platform[0]).count
+        end
+      }
+    end
 
     options
   end
@@ -185,12 +181,9 @@ class Event < ActiveRecord::Base
     }
     options[:series] = [{
       name: 'Signups',
-      data: [
-        Customer.where(signup_channel: 'Search').count,
-        Customer.where(signup_channel: 'Social Media').count,
-        Customer.where(signup_channel: 'Affiliate').count,
-        Customer.where(signup_channel: 'Organic').count
-      ]
+      data: PROPERTIES[:signup_channel].map do |channel|
+          Customer.where(signup_channel: channel[0]).count
+      end
     }]
 
     options
@@ -227,176 +220,65 @@ class Event < ActiveRecord::Base
         }
       }
     }
-    options[:series] = [{
-      name: 'Mac',
-      data: [
-        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Mac').count,
-        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Mac').count,
-        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Mac').count,
-        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Mac').count,
-        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Mac').count
-      ]
-    }, {
-      name: 'Windows',
-      data: [
-        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows').count,
-        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows').count,
-        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows').count,
-        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows').count,
-        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows').count
-      ]
-    }, {
-      name: 'iPhone',
-      data: [
-        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'iPhone').count,
-        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'iPhone').count,
-        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'iPhone').count,
-        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'iPhone').count,
-        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'iPhone').count
-      ]
-    }, {
-      name: 'Windows Phone',
-      data: [
-        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Windows Phone').count,
-        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Windows Phone').count,
-        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Windows Phone').count,
-        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Windows Phone').count,
-        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Windows Phone').count
-      ]
-    }, {
-      name: 'Android',
-      data: [
-        Event.purchase_between(90.days.ago, 76.days.ago).where(session_platform: 'Android').count,
-        Event.purchase_between(76.days.ago, 62.days.ago).where(session_platform: 'Android').count,
-        Event.purchase_between(62.days.ago, 48.days.ago).where(session_platform: 'Android').count,
-        Event.purchase_between(48.days.ago, 34.days.ago).where(session_platform: 'Android').count,
-        Event.purchase_between(34.days.ago, 20.days.ago).where(session_platform: 'Android').count
-      ]
-    }]
+    options[:series] = PROPERTIES[:signup_platform].map do |platform|
+      {
+        name: platform[0],
+        data: INTERVALS.map do |interval|
+          Event.purchase_between(interval[0], interval[1]).where(session_platform: platform[0]).count
+        end
+      }
+    end
 
     options
   end
 
   def self.segSeriesArr(query)
-    if query['events'][0] == 'Purchase'
-      event = 'purchase'
-      name = 'Purchases'
-    elsif query['events'][0] == 'Session'
-      event = 'session'
-      name = 'Sessions'
-    elsif query['events'][0] == 'Add to Cart'
-      event = 'add'
-      name = 'Cart Adds'
-    elsif query['events'][0] == 'Proceed to Checkout'
-      event = 'checkout'
-      name = 'Checkouts'
+    queryEvents = query['events'].map do |queryEvent|
+      EVENTS[queryEvent]
     end
 
-    if query['properties'] && query['properties'][0] == 'AB Group'
-      byProp = 'ab_group'
+    if query['properties']
+      byProp = PROP_NAMES[query['properties'][0]]
       segments = PROPERTIES[byProp.to_sym]
-      nameP = ' by ' + query['properties'][0]
-    elsif query['properties'] && query['properties'][0] == 'Marketing Channel'
-      byProp = 'signup_channel'
-      segments = PROPERTIES[byProp.to_sym]
-      nameP = ' by ' + query['properties'][0]
-    elsif query['properties'] && query['properties'][0] == 'Signup Platform'
-      byProp = 'signup_platform'
-      segments = PROPERTIES[byProp.to_sym]
-      nameP = ' by ' + query['properties'][0]
-    elsif query['properties']
-      byProp = query['properties'][0].downcase
-      segments = PROPERTIES[query['properties'][0].downcase.to_sym]
-      nameP = ' by ' + query['properties'][0]
     else
       byProp = 'none'
       segments = [['all']]
-      nameP = ''
     end
 
     seriesArr = []
 
-    segments.each_with_index do |segment, idx|
-      if segment[0] == "all"
-        segName = ""
-      else
-        segName = segment.to_s
-      end
+    queryEvents.each do |queryEvent|
+      eventName = queryEvent[0]
 
-      query['events'].each do |eventJawn|
-        if eventJawn == 'Add to Cart'
-          eventName = 'add'
-        elsif eventJawn == 'Proceed to Checkout'
-          eventName = 'checkout'
+      segments.each do |segment|
+        if segment[0] == "all"
+          segName = ""
         else
-          eventName = eventJawn.downcase
+          segName = segment.to_s
         end
 
         seriesArr << {
-          name: eventName.capitalize + 's' + segName,
-          data:
-            if byProp == 'none'
-              [
-                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                .count,
-
-                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                .count,
-
-                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                .count,
-
-                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                .count,
-
-                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                .count
-              ]
-            elsif segment.length < 2
-              [
-                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                .select{|event| event.customer.send(byProp) == segment[0]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                .select{|event| event.customer.send(byProp) == segment[0]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                .select{|event| event.customer.send(byProp) == segment[0]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                .select{|event| event.customer.send(byProp) == segment[0]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                .select{|event| event.customer.send(byProp) == segment[0]}
-                .count
-              ]
-            else
-              [
-                Event.send(eventName.downcase + '_between', 90.days.ago, 76.days.ago)
-                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 76.days.ago, 62.days.ago)
-                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 62.days.ago, 48.days.ago)
-                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 48.days.ago, 34.days.ago)
-                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                .count,
-
-                Event.send(eventName.downcase + '_between', 34.days.ago, 20.days.ago)
-                .select{|event| event.customer.send(byProp) >= segment[0] && event.customer.send(byProp) < segment[1]}
-                .count
-              ]
+          name: queryEvent[1] + segName,
+          data: if byProp == 'none'
+            INTERVALS.map do |interval|
+              Event.send(eventName.downcase + '_between', interval[0], interval[1]).count
             end
+          elsif segment.length < 2
+            INTERVALS.map do |interval|
+              Event.send(eventName.downcase + '_between', interval[0], interval[1])
+              .select do |event|
+                event.customer.send(byProp) == segment[0]
+              end.count
+            end
+          else
+            INTERVALS.map do |interval|
+              Event.send(eventName.downcase + '_between', interval[0], interval[1])
+              .select do |event|
+                event.customer.send(byProp) >= segment[0] &&
+                event.customer.send(byProp) < segment[1]
+              end.count
+            end
+          end
         }
       end
     end
@@ -435,6 +317,7 @@ class Event < ActiveRecord::Base
         }
       }
       options[:series] = Event.segSeriesArr(query)
+
 
       options
     else
