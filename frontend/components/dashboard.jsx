@@ -37,7 +37,6 @@ const Dashboard = React.createClass({
 
     OptionsActions.fetchOptions(SessionStore.currentUser().id);
 
-
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
     // this.queriesListener = QueriesStore.addListener(this._queriesChanged);
   },
