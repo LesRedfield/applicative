@@ -22,14 +22,12 @@ const Segmentation = React.createClass({
 
   _optionsChanged() {
     this.setState({ options: OptionsStore.all().segmentation });
-    this._addClickListener();
   },
 
   componentDidMount() {
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
 
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
-    // debugger
   },
 
   componentWillUnmount() {
@@ -38,26 +36,8 @@ const Segmentation = React.createClass({
     this.optionsListener.remove();
   },
 
-  _addClickListener() {
-
-    if (this.state.options.plotOptions) {
-      let newState = this.state.options;
-      newState.plotOptions.series.point = {
-        events: {
-          click: function() {
-            alert (this.category + ': ' + this.y);
-          }
-        }
-      };
-
-      this.setState({ options: newState });
-    }
-  },
-
   _titleInputHandler(e) {
-
     return (e) => this.setState({ title: e.target.value });
-
   },
 
   _handleRemoveEvent(event) {
@@ -80,42 +60,9 @@ const Segmentation = React.createClass({
     }
   },
 
-  _resetQueryBar() {
-    // this.setState({ title: "Untitled" });
-
-    OptionsActions.changeOptions({ events: [], properties: [], title: "Untitled" });
-  },
-
   render(){
 
     let query = { events: [], properties: [], title: this.state.title };
-
-    if (this.state.options.query) {
-      query = this.state.options.query;
-    }
-
-    if (query.title !== this.state.title && OptionsStore.canImport()) {
-      this._updateTitle();
-    }
-
-
-    let eventProperties = <div className="by">By</div>;
-    if (query.properties.length > 0) {
-      eventProperties = query.properties.map( (property, index) => {
-        return (
-          <div className="enclosing">
-            <div className="by">
-              By
-            </div>
-            <div className="seg-query-event-property">
-              <span className="seg-query-event-property-icon"></span>
-              {property}
-              <div id="remove" className="property-remove" onClick={ this._handleRemoveProperty.bind(this, property) }></div>
-            </div>
-          </div>
-        );
-      });
-    }
 
     return(
       <div className="segmentation group">

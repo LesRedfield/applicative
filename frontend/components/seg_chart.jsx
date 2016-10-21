@@ -13,12 +13,14 @@ const segChartTarget = {
     let itemType = monitor.getItemType();
 
     if (itemType == "EVENT") {
-      item.query.events.push(item.name);
+      // item.query.events.push(item.name);
+      OptionsStore.addEvent(item.name);
     } else if (itemType == "PROPERTY") {
-      item.query.properties = [item.name];
+      // item.query.properties = [item.name];
+      OptionsStore.addProperty(item.name);
     }
 
-    OptionsActions.changeOptions(item.query);
+    // OptionsActions.changeOptions(item.query);
   }
 };
 

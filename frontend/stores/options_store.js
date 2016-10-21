@@ -16,6 +16,32 @@ OptionsStore.allDashOptions = function(){
   // OptionsActions.fetchOptions();
 };
 
+OptionsStore.addEvent = function(event){
+  let idx = _options.segmentation.query.events.indexOf(`${event}`);
+
+  if (idx != -1) {
+    // handle error, event already added to query
+    alert('event already added to query');
+  } else {
+    _options.segmentation.query.events.push(`${event}`);
+
+    OptionsActions.changeOptions(_options.segmentation.query);
+  }
+};
+
+OptionsStore.addProperty = function(property){
+  let idx = _options.segmentation.query.properties.indexOf(`${property}`);
+
+  if (idx != -1) {
+    // handle error, property already added to query
+    alert('property already added to query');
+  } else {
+    _options.segmentation.query.properties = [property];
+
+    OptionsActions.changeOptions(_options.segmentation.query);
+  }
+},
+
 OptionsStore.removeEvent = function(event){
   let idx = _options.segmentation.query.events.indexOf(`${event}`);
 

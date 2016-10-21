@@ -30,7 +30,6 @@ const SegQueryBar = React.createClass({
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
 
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
-    debugger
   },
 
   componentWillUnmount() {

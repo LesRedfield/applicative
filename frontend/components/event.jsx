@@ -4,13 +4,16 @@ const Draggable = require('../constants/draggable_constants');
 const DragSource = require('react-dnd').DragSource;
 
 const OptionsActions = require('../actions/options_actions');
+const OptionsStore = require('../stores/options_store');
 
 const eventSource = {
   beginDrag(props) {
-    return { name: props.name, query: props.query };
+    // return { name: props.name, query: props.query };
+    return { name: props.name, query: OptionsStore.all().segmentation.query };
   },
 
   endDrag(props, monitor) {
+    // debugger
     // props.query.events.push(props.name);
     // OptionsActions.changeOptions(props.query);
   }

@@ -372,6 +372,11 @@ class Event < ActiveRecord::Base
       }
     else
       {
+        query: {
+          events: [],
+          properties: [],
+          title: "Untitled"
+        },
         credits: {
           enabled: false
         }

@@ -77,21 +77,3 @@ const App = React.createClass({
 });
 
 module.exports = App;
-
-// <div className="home-page">
-//   <div className="blackout">
-//     { this.greeting() }
-//   </div>
-// </div>
-
-// <header>
-//   <Link to="/" className="header-link"><h1></h1></Link>
-// </header>
-
-// return (
-//   <nav className="login-signup">
-//   <Link to="/login" activeClassName="current">Login</Link>
-//   &nbsp;or&nbsp;
-//   <Link to="/signup" activeClassName="current">Sign up!</Link>
-//   </nav>
-// );
