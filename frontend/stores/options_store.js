@@ -12,16 +12,15 @@ OptionsStore.all = function(){
   return Object.assign({}, _options);
 };
 
-OptionsStore.allDashOptions = function(){
-  // OptionsActions.fetchOptions();
-};
-
 OptionsStore.addEvent = function(event){
   let idx = _options.segmentation.query.events.indexOf(`${event}`);
 
   if (idx != -1) {
-    // handle error, event already added to query
-    alert('event already added to query');
+    let modal = document.getElementById('save-query-failed-modal');
+    let span = document.getElementById('error-message');
+
+    span.innerHTML = `${event} already added to query.`
+    modal.style.display = "block";
   } else {
     _options.segmentation.query.events.push(`${event}`);
 
@@ -32,9 +31,15 @@ OptionsStore.addEvent = function(event){
 OptionsStore.addProperty = function(property){
   let idx = _options.segmentation.query.properties.indexOf(`${property}`);
 
-  if (idx != -1) {
-    // handle error, property already added to query
-    alert('property already added to query');
+  let modal = document.getElementById('save-query-failed-modal');
+  let span = document.getElementById('error-message');
+
+  if (_options.segmentation.query.events.length < 1) {
+    span.innerHTML = "Please add an event first.";
+    modal.style.display = "block";
+  } else if (idx != -1) {
+    span.innerHTML = `${property} already added to query.`
+    modal.style.display = "block";
   } else {
     _options.segmentation.query.properties = [property];
 
