@@ -1,6 +1,5 @@
 const DraggableConstants = {
-  EVENT: "EVENT",
-  PROPERTY: "PROPERTY"
+  DRAG_OPTION: "DRAG_OPTION"
 };
 
 module.exports = DraggableConstants;

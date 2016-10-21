@@ -14,8 +14,6 @@ const SessionActions = require('../actions/session_actions');
 const SegChart = require('./seg_chart');
 const RightNav = require('./right_nav');
 
-
-
 const SegQueryBar = React.createClass({
   getInitialState(){
     return({ options: OptionsStore.all().segmentation, title: "Untitled" });
@@ -39,9 +37,7 @@ const SegQueryBar = React.createClass({
   },
 
   _titleInputHandler(e) {
-
     return (e) => this.setState({ title: e.target.value });
-
   },
 
   _handleRemoveEvent(event) {
@@ -78,7 +74,7 @@ const SegQueryBar = React.createClass({
   },
 
   _resetQueryBar() {
-    // this.setState({ title: "Untitled" });
+    this.setState({ title: "Untitled" });
 
     OptionsActions.changeOptions({ events: [], properties: [], title: "Untitled" });
   },

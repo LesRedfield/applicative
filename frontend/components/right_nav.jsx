@@ -1,8 +1,6 @@
 const React = require('react');
 
-const Segmentation = require('./segmentation');
-const Event = require('./event');
-const Property = require('./property');
+const DragOption = require('./drag_option');
 
 const Menu = React.createClass({
 
@@ -31,7 +29,6 @@ const Menu = React.createClass({
         {menuTabs}
       </div>
     );
-
   }
 
 });
@@ -40,11 +37,6 @@ const RightNav = React.createClass({
 
   getInitialState() {
     return ( { selectedNav: 'Events' } );
-  },
-
-  _handleOptionClick(e) {
-    e.preventDefault();
-
   },
 
   selectNav(nav) {
@@ -57,14 +49,15 @@ const RightNav = React.createClass({
       'Properties': ['AB Group', 'Age', 'Gender', 'Marketing Channel', 'Signup Platform']
     };
 
-    let navList = lists[this.state.selectedNav];
+    let selNav = this.state.selectedNav
+    let navList = lists[selNav];
 
     return(
       <div id='right-nav' className='right-nav group'>
         <div className='right-nav-header'>
           <div className="right-nav-header-icon"></div>
           <div className="right-nav-header-text">
-            {this.state.selectedNav}
+            {selNav}
           </div>
         </div>
 
@@ -73,27 +66,15 @@ const RightNav = React.createClass({
 
             {
               navList.map( (nav, index) => {
-                if (this.state.selectedNav === 'Events') {
-                  return (
-                    <div className="seg-opt">
-                      <Event
-                        key={index}
-                        name={nav}
-                        query={this.props.query}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div className="seg-opt">
-                      <Property
-                        key={index * 10}
-                        name={nav}
-                        query={this.props.query}
-                      />
-                    </div>
-                  );
-                }
+                return (
+                  <div className="seg-opt">
+                    <DragOption
+                      key={index}
+                      name={nav}
+                      type={ selNav }
+                    />
+                  </div>
+                );
               })
             }
 
@@ -101,7 +82,7 @@ const RightNav = React.createClass({
         </div>
         <div className="right-nav-menu">
           <Menu
-            selectedNav={ this.state.selectedNav }
+            selectedNav={ selNav }
             onNavChosen={ this.selectNav }
             navs={ ['Events', 'Properties'] }>
           </Menu>

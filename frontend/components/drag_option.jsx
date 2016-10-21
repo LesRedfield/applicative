@@ -3,19 +3,9 @@ const PropTypes = React.PropTypes;
 const Draggable = require('../constants/draggable_constants');
 const DragSource = require('react-dnd').DragSource;
 
-const OptionsActions = require('../actions/options_actions');
-
-const propertySource = {
+const dragOptionSource = {
   beginDrag(props) {
-    return { name: props.name, query: props.query };
-  },
-
-  endDrag(props, monitor) {
-
-    // props.query.properties.push(props.name);
-    //
-    //
-    // OptionsActions.changeOptions(props.query);
+    return { name: props.name, type: props.type };
   }
 };
 
@@ -26,7 +16,7 @@ function collect(connect, monitor) {
   };
 }
 
-const Property = React.createClass({
+const DragOption = React.createClass({
   propTypes: {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired
@@ -47,4 +37,4 @@ const Property = React.createClass({
   }
 });
 
-module.exports = DragSource(Draggable.PROPERTY, propertySource, collect)(Property);
+module.exports = DragSource(Draggable.DRAG_OPTION, dragOptionSource, collect)(DragOption);

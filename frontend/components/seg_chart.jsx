@@ -12,15 +12,11 @@ const segChartTarget = {
     let item = monitor.getItem();
     let itemType = monitor.getItemType();
 
-    if (itemType == "EVENT") {
-      // item.query.events.push(item.name);
+    if (item.type == "Events") {
       OptionsStore.addEvent(item.name);
-    } else if (itemType == "PROPERTY") {
-      // item.query.properties = [item.name];
+    } else if (item.type == "Properties") {
       OptionsStore.addProperty(item.name);
     }
-
-    // OptionsActions.changeOptions(item.query);
   }
 };
 
@@ -120,4 +116,4 @@ const SegChart = React.createClass({
 
 });
 
-module.exports = DropTarget([Draggable.EVENT, Draggable.PROPERTY], segChartTarget, collect)(SegChart);
+module.exports = DropTarget([Draggable.DRAG_OPTION], segChartTarget, collect)(SegChart);
