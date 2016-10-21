@@ -65,6 +65,19 @@ const SegQueryBar = React.createClass({
     }
   },
 
+  _saveQuery(e) {
+    e.preventDefault();
+
+    let params = {
+      title: this.state.title,
+      query: OptionsStore.all().segmentation.query,
+      user_id: SessionStore.currentUser().id,
+      dashboard: false
+    }
+
+    QueriesActions.saveQuery(params);
+  },
+
   _resetQueryBar() {
     // this.setState({ title: "Untitled" });
 
@@ -112,11 +125,15 @@ const SegQueryBar = React.createClass({
       <div className="seg-query-bar-inner group">
         <div className="query-header group">
           <span className="seg-query-icon"></span>
-          <input type="text"
-            value={this.state.title}
-            onChange={ this._titleInputHandler() }
-            placeholder={ "Untitled" }
-            className="seg-query-title" />
+
+          <form onSubmit={ this._saveQuery }>
+            <input type="text"
+              value={ this.state.title }
+              onChange={ this._titleInputHandler() }
+              placeholder={ "Untitled" }
+              className="seg-query-title" />
+          </form>
+
           <div className="query-header-right group">
 
             <div
