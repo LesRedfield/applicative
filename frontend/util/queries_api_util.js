@@ -11,13 +11,16 @@ const QueriesApiUtil = {
 		});
 	},
 
-  saveQuery(params, success) {
+  saveQuery(params, success, error) {
     $.ajax({
 			url: '/api/queries',
 			type: 'POST',
       data: { query: params },
 			success: function(queries){
         success(queries);
+      },
+      error: function(message){
+        error(message);
       }
 		});
   },

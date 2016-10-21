@@ -3,10 +3,12 @@ class Api::QueriesController < ApplicationController
   def create
     @query = Query.new(query_params)
 
-    if @query.save
+    if query_params['query']['events'] && @query.save
       @queries = Query.find_by(user_id: query_params[:user_id])
 
       render json: @queries
+    elsif !query_params['query']['events']
+      render json: ["You must add an event before saving your query."], status: 422
     else
       render json: @query.errors.full_messages, status: 422
     end

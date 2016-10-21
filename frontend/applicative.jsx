@@ -30,14 +30,17 @@ const appRouter = (
 );
 
 window.onclick = function(event) {
-  let modal = document.getElementById('save-query-modal');
+  let saveModal = document.getElementById('save-query-modal');
   let bm = document.getElementById('left-nav-bookmarks');
+  let modals = document.getElementsByClassName('modal');
 
-  if (event.target == modal) {
-    modal.style.display = "none";
-    // bm.style.backgroundColor = "red";
-    // bm.style.opacity = "0.5";
+  for (let i = 0; i < modals.length; i++) {
+    if (event.target == modals[i]) {
+      modals[i].style.display = "none";
+    }
+  }
 
+  if (event.target == saveModal) {
     window.setTimeout(function() {
       bm.style.backgroundColor = "red";
       bm.style.opacity = "0.5";

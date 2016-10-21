@@ -69,9 +69,11 @@ const SegQueryBar = React.createClass({
   },
 
   _closeModal() {
-    let modal = document.getElementById('save-query-modal');
+    let modals = document.getElementsByClassName('modal');
 
-    modal.style.display = "none";
+    for (let i = 0; i < modals.length; i++) {
+      modals[i].style.display = "none";
+    }
   },
 
   render(){
@@ -129,6 +131,12 @@ const SegQueryBar = React.createClass({
               <div className="modal-content">
                 <span onClick={ this._closeModal }>Query Saved Successfully To</span>
                 <Link to="/bookmarks" id="bm-link">Bookmarks</Link>
+              </div>
+            </div>
+
+            <div id="save-query-failed-modal" className="modal">
+              <div className="modal-content">
+                <span onClick={ this._closeModal } id="error-message"></span>
               </div>
             </div>
 

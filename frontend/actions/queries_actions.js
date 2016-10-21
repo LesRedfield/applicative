@@ -5,7 +5,6 @@ const QueriesApiUtil = require('../util/queries_api_util');
 const SessionStore = require('../stores/session_store');
 const QueriesStore = require('../stores/queries_store');
 
-
 const QueriesActions = {
 
   fetchQueries(user_id) {
@@ -21,7 +20,7 @@ const QueriesActions = {
   },
 
   saveQuery(params) {
-    QueriesApiUtil.saveQuery(params, QueriesActions.receiveNewQueries);
+    QueriesApiUtil.saveQuery(params, QueriesActions.receiveNewQueries, QueriesActions.saveQueryFailed);
 
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
   },
@@ -37,6 +36,14 @@ const QueriesActions = {
 
   addQueryToDash(params) {
     QueriesApiUtil.addQueryToDash(params, QueriesActions.receiveDashQueries);
+  },
+
+  saveQueryFailed(message) {
+    let modal = document.getElementById('save-query-failed-modal');
+    let span = document.getElementById('error-message');
+
+    span.innerHTML = message.responseJSON.join(', ');
+    modal.style.display = "block";
   },
 
   receiveNewQueries(queries) {
