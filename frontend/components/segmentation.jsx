@@ -61,6 +61,7 @@ const Segmentation = React.createClass({
 
       </div>
     );
+    
   }
 
 });

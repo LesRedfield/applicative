@@ -4,36 +4,25 @@ const DragDropContext = require('react-dnd').DragDropContext;
 const HTML5Backend = require('react-dnd-html5-backend');
 
 const OptionsStore = require('../stores/options_store');
-const QueriesStore = require('../stores/queries_store');
 const SessionStore = require('../stores/session_store');
 
 const OptionsActions = require('../actions/options_actions');
 const QueriesActions = require('../actions/queries_actions');
-const SessionActions = require('../actions/session_actions');
 
 const SegChart = require('./seg_chart');
 const RightNav = require('./right_nav');
 
 const SegQueryBar = React.createClass({
   getInitialState(){
-    return({ options: OptionsStore.all().segmentation, title: "Untitled" });
-
-  },
-
-  _optionsChanged() {
-    this.setState({ options: OptionsStore.all().segmentation });
+    return({ title: "Untitled" });
   },
 
   componentDidMount() {
-    this.optionsListener = OptionsStore.addListener(this._optionsChanged);
-
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
   },
 
   componentWillUnmount() {
     OptionsStore.removeAllOptions();
-
-    this.optionsListener.remove();
   },
 
   _titleInputHandler(e) {
@@ -43,18 +32,18 @@ const SegQueryBar = React.createClass({
   _handleRemoveEvent(event) {
     OptionsStore.removeEvent(event);
 
-    OptionsActions.changeOptions(OptionsStore.all().segmentation.query);
+    OptionsActions.changeOptions(this.props.options.query);
   },
 
   _handleRemoveProperty(property) {
     OptionsStore.removeProperty(property);
 
-    OptionsActions.changeOptions(OptionsStore.all().segmentation.query);
+    OptionsActions.changeOptions(this.props.options.query);
   },
 
   _updateTitle() {
-    if (this.state.options.query) {
-      this.setState({ title: this.state.options.query.title });
+    if (this.props.options.query) {
+      this.setState({ title: this.props.options.query.title });
 
       OptionsStore.disableImport();
     }
@@ -65,7 +54,7 @@ const SegQueryBar = React.createClass({
 
     let params = {
       title: this.state.title,
-      query: OptionsStore.all().segmentation.query,
+      query: this.props.options.query,
       user_id: SessionStore.currentUser().id,
       dashboard: false
     }
@@ -86,17 +75,11 @@ const SegQueryBar = React.createClass({
   },
 
   render(){
-
-    let query = { events: [], properties: [], title: this.state.title };
-
-    if (this.state.options.query) {
-      query = this.state.options.query;
-    }
+    let query = this.props.options.query;
 
     if (query.title !== this.state.title && OptionsStore.canImport()) {
       this._updateTitle();
     }
-
 
     let eventProperties = <div className="by">By</div>;
     if (query.properties.length > 0) {
@@ -135,7 +118,7 @@ const SegQueryBar = React.createClass({
               className="save-query group"
               onClick={ QueriesActions.saveQuery.bind(this, {
                 title: this.state.title,
-                query: OptionsStore.all().segmentation.query,
+                query: query,
                 user_id: SessionStore.currentUser().id,
                 dashboard: false}
               ) }>
@@ -175,7 +158,6 @@ const SegQueryBar = React.createClass({
               );
             })
           }
-
         </div>
 
         <div className="drop-an-event">
