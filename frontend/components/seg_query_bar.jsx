@@ -1,4 +1,5 @@
 const React = require('react');
+const Link = require('react-router').Link;
 const DragDropContext = require('react-dnd').DragDropContext;
 const HTML5Backend = require('react-dnd-html5-backend');
 
@@ -12,6 +13,8 @@ const SessionActions = require('../actions/session_actions');
 
 const SegChart = require('./seg_chart');
 const RightNav = require('./right_nav');
+
+
 
 const SegQueryBar = React.createClass({
   getInitialState(){
@@ -27,7 +30,7 @@ const SegQueryBar = React.createClass({
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
 
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
-    // debugger
+    debugger
   },
 
   componentWillUnmount() {
@@ -66,6 +69,12 @@ const SegQueryBar = React.createClass({
     // this.setState({ title: "Untitled" });
 
     OptionsActions.changeOptions({ events: [], properties: [], title: "Untitled" });
+  },
+
+  _closeModal() {
+    let modal = document.getElementById('save-query-modal');
+
+    modal.style.display = "none";
   },
 
   render(){
@@ -119,6 +128,13 @@ const SegQueryBar = React.createClass({
                 dashboard: false}
               ) }>
               SAVE QUERY
+            </div>
+
+            <div id="save-query-modal" className="modal">
+              <div className="modal-content">
+                <span onClick={ this._closeModal }>Query Saved Successfully To</span>
+                <Link to="/bookmarks" id="bm-link">Bookmarks</Link>
+              </div>
             </div>
 
             <div

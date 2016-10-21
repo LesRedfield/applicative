@@ -29,6 +29,27 @@ const appRouter = (
   </Router>
 );
 
+window.onclick = function(event) {
+  let modal = document.getElementById('save-query-modal');
+  let bm = document.getElementById('left-nav-bookmarks');
+
+  if (event.target == modal) {
+    modal.style.display = "none";
+    // bm.style.backgroundColor = "red";
+    // bm.style.opacity = "0.5";
+
+    window.setTimeout(function() {
+      bm.style.backgroundColor = "red";
+      bm.style.opacity = "0.5";
+    }, 500);
+
+    window.setTimeout(function() {
+      bm.style.backgroundColor = "transparent";
+      bm.style.opacity = "1";
+    }, 1000);
+  }
+},
+
 document.addEventListener('DOMContentLoaded', function() {
   const root = document.getElementById('content');
   if (window.currentUser) {

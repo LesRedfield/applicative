@@ -58,5 +58,3 @@ class Api::QueriesController < ApplicationController
   end
 
 end
-
-# params.require(:query).permit(:user_id, :title, :queryData)

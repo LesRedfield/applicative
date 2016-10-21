@@ -318,7 +318,6 @@ class Event < ActiveRecord::Base
       }
       options[:series] = Event.segSeriesArr(query)
 
-
       options
     else
       {

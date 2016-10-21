@@ -329,11 +329,8 @@ input {
   background-color: transparent;
   background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
-  // width: 20px;
-  // height: 20px;
   background-size: 26px auto;
   background-position: 10px -356px;
-  // border-bottom: rgba(176,182,182,0.2) solid 1px;
   margin-left: auto;
   margin-right: auto;
 
@@ -348,8 +345,6 @@ input {
   background-color: transparent;
   background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
-  // width: 20px;
-  // height: 23px;
   background-size: 26px auto;
   background-position: 10px -601px;
   margin-left: auto;
@@ -366,19 +361,16 @@ input {
   background-color: transparent;
   background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
-  // width: 20px;
-  // height: 23px;
   background-size: 26px auto;
-  background-position: 10px -214px;
+  background-position: 10px -217px;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 10px;
 }
 
 #left-nav-bookmarks.current {
-  background-position: 10px -250px;
+  background-position: 10px -253px;
 }
-
-
 
 .feature {
   float: left;
@@ -659,6 +651,40 @@ input {
 
 .save-query:hover {
   color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  // overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.7);
+  cursor: default;
+}
+
+.modal-content {
+  margin: 15% auto;
+  width: 50%;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#bm-link {
+  background-image: url(/assets/nav-sa86d591523-f7a558c26a135aa9a273847e94d53f14e604d038989cb63b903d9a24510364c3.png);
+  background-repeat: no-repeat;
+  background-size: 26px auto;
+  padding-left: 42px;
+  background-position: 11px -222px;
+}
+
+#bm-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .reset {

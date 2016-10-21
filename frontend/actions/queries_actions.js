@@ -21,7 +21,7 @@ const QueriesActions = {
   },
 
   saveQuery(params) {
-    QueriesApiUtil.saveQuery(params, QueriesActions.receiveQueries);
+    QueriesApiUtil.saveQuery(params, QueriesActions.receiveNewQueries);
 
     QueriesActions.fetchQueries(SessionStore.currentUser().id);
   },
@@ -37,6 +37,17 @@ const QueriesActions = {
 
   addQueryToDash(params) {
     QueriesApiUtil.addQueryToDash(params, QueriesActions.receiveDashQueries);
+  },
+
+  receiveNewQueries(queries) {
+    let modal = document.getElementById('save-query-modal');
+
+    modal.style.display = "block";
+
+    AppDispatcher.dispatch({
+      actionType: QueriesConstants.QUERIES_RECEIVED,
+      queries: queries
+    });
   },
 
   receiveQueries(queries) {
