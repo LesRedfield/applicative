@@ -21,8 +21,16 @@ const Bookmarks = React.createClass({
   },
 
   componentWillMount() {
-    QueriesActions.fetchQueries(SessionStore.currentUser().id);
+    this.queriesListener = QueriesStore.addListener(this._queriesChanged);
 
+    QueriesActions.fetchQueries(SessionStore.currentUser().id);
+  },
+
+  componentWillUnmount() {
+    this.queriesListener.remove();
+  },
+
+  _queriesChanged() {
     this.setState({ queries: QueriesStore.all() });
   },
 
@@ -45,6 +53,10 @@ const Bookmarks = React.createClass({
     this.context.router.push("/dashboard");
   },
 
+  deleteQuery(query) {
+    QueriesActions.deleteQuery(query.id);
+  },
+
   render(){
 
 
@@ -59,21 +71,37 @@ const Bookmarks = React.createClass({
 
 
     return(
-      <div className="bookmarks">
-        {
-          userQueries.map( query => {
-            return(
-              <div>
-                <div className="bookmark" onClick={ this.showBookmark.bind(this, query) }>
-                  {query.title}
+      <div className="bookmarks group">
+        <header className="bm-head group">
+          <h1 id="bm-head-title">Bookmarks</h1>
+        </header>
+
+        <div className="bm-list group">
+          {
+            userQueries.map( query => {
+              return(
+                <div className="bookmark-item group">
+                  <div className="bm-item-main" onClick={ this.showBookmark.bind(this, query)}>
+                    <div className="bm-query-logo-outer">
+                      <span className="bm-query-logo-inner"></span>
+                    </div>
+                    <div className="bookmark-item-name">
+                      {query.title}
+                    </div>
+                  </div>
+                  <div className="bm-query-options group">
+                    <div className="add-to-dash" onClick={ this.addToDash.bind(this, query) }>
+                      Add To Dashboard
+                    </div>
+                    <div className="delete-query" onClick={ this.deleteQuery.bind(this, query) }>
+                      Delete Query
+                    </div>
+                  </div>
                 </div>
-                <div className="add-to-dash" onClick={ this.addToDash.bind(this, query) }>
-                  Add To Dashboard
-                </div>
-              </div>
-            );
-          })
-        }
+              );
+            })
+          }
+        </div>
       </div>
 
     );

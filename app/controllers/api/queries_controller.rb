@@ -49,7 +49,7 @@ class Api::QueriesController < ApplicationController
     @query = Query.find(params[:id])
     @query.destroy
 
-    @queries = Query.find_by(user_id: query_params[:user_id])
+    @queries = Query.where(user_id: query_params[:user_id])
     render json: @queries
   end
 

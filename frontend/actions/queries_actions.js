@@ -26,8 +26,7 @@ const QueriesActions = {
   },
 
   deleteQuery(id) {
-    QueriesApiUtil.deleteQuery(id, QueriesActions.receiveQueries);
-
+    QueriesApiUtil.deleteQuery(id, SessionStore.currentUser().id, QueriesActions.receiveQueries);
   },
 
   showQueries(queries) {

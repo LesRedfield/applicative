@@ -58,10 +58,11 @@ const QueriesApiUtil = {
 		});
   },
 
-  deleteQuery(id, success) {
+  deleteQuery(id, user_id, success) {
     $.ajax({
 			url: '/api/queries/' + id,
 			type: 'DELETE',
+      data: { query: { user_id: user_id } },
 			success: function(queries){
         success(queries);
       }
