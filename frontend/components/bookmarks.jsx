@@ -35,7 +35,6 @@ const Bookmarks = React.createClass({
   },
 
   showBookmark(query) {
-
     let params = JSON.parse(query.query.split('=>').join(': '));
 
     params.title = query.title;
@@ -47,10 +46,12 @@ const Bookmarks = React.createClass({
     this.context.router.push("/segmentation");
   },
 
-  addToDash(query) {
-    QueriesActions.addQueryToDash(query);
-
-    this.context.router.push("/dashboard");
+  toggleDash(query) {
+    if (query.dashboard) {
+      QueriesActions.removeQueryFromDash(query);
+    } else {
+      QueriesActions.addQueryToDash(query);
+    }
   },
 
   deleteQuery(query) {
@@ -59,16 +60,35 @@ const Bookmarks = React.createClass({
 
   render(){
 
-
     let userQueries = [];
 
     if (this.state.queries.length > 0) {
-      userQueries = this.state.queries;
+      userQueries = this.state.queries.map( query => {
+        return(
+          <div className="bookmark-item group">
+            <div className="bm-item-main" onClick={ this.showBookmark.bind(this, query)}>
+              <div className="bm-query-logo-outer">
+                <span className="bm-query-logo-inner"></span>
+              </div>
+              <div className="bookmark-item-name">
+                {query.title}
+              </div>
+            </div>
+            <div className="bm-query-options group">
+              <div className="add-to-dash" onClick={ this.toggleDash.bind(this, query) }>
+                { query.dashboard ? 'Remove From Dashboard' : 'Add To Dashboard' }
+              </div>
+              <div className="delete-query" onClick={ this.deleteQuery.bind(this, query) }>
+                Delete Query
+              </div>
+            </div>
+          </div>
+        );
+      });
     }
     else {
-      userQueries = [ { title: "Sorry, You Don't Have Any Saved Queries" } ];
+      userQueries = <div className="no-queries">Sorry, you don't have any saved queries yet.</div>
     }
-
 
     return(
       <div className="bookmarks group">
@@ -77,30 +97,7 @@ const Bookmarks = React.createClass({
         </header>
 
         <div className="bm-list group">
-          {
-            userQueries.map( query => {
-              return(
-                <div className="bookmark-item group">
-                  <div className="bm-item-main" onClick={ this.showBookmark.bind(this, query)}>
-                    <div className="bm-query-logo-outer">
-                      <span className="bm-query-logo-inner"></span>
-                    </div>
-                    <div className="bookmark-item-name">
-                      {query.title}
-                    </div>
-                  </div>
-                  <div className="bm-query-options group">
-                    <div className="add-to-dash" onClick={ this.addToDash.bind(this, query) }>
-                      Add To Dashboard
-                    </div>
-                    <div className="delete-query" onClick={ this.deleteQuery.bind(this, query) }>
-                      Delete Query
-                    </div>
-                  </div>
-                </div>
-              );
-            })
-          }
+          { userQueries }
         </div>
       </div>
 

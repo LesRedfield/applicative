@@ -20,9 +20,9 @@ class Api::QueriesController < ApplicationController
         Event.dashSeg(query[1])
       end
     elsif query_params[:dashboard]
-      @queries = Query.where(user_id: query_params[:user_id]).where(dashboard: true)
+      @queries = Query.where(user_id: query_params[:user_id]).where(dashboard: true).order(:id)
     else
-      @queries = Query.where(user_id: query_params[:user_id])
+      @queries = Query.where(user_id: query_params[:user_id]).order(:id)
 
     end
 
@@ -37,7 +37,7 @@ class Api::QueriesController < ApplicationController
     @query = Query.find(params[:id])
 
     if @query.update(query_params)
-      @queries = Query.find_by(user_id: query_params[:user_id])
+      @queries = Query.where(user_id: query_params[:user_id]).order(:id)
 
       render json: @queries
     else
@@ -49,7 +49,7 @@ class Api::QueriesController < ApplicationController
     @query = Query.find(params[:id])
     @query.destroy
 
-    @queries = Query.where(user_id: query_params[:user_id])
+    @queries = Query.where(user_id: query_params[:user_id]).order(:id)
     render json: @queries
   end
 

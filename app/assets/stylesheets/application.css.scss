@@ -372,16 +372,16 @@ input {
   background-position: 10px -253px;
 }
 
-.bookmarks {
-
-}
-
-.bm-head {
-
-}
-
-.bm-head-title {
-
+.no-queries {
+  display: inline-block;
+  padding: 27px;
+  border-radius: 3px;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
+  float: left;
+  width: calc(33% - 20px);
+  height: 75px;
+  background-color: white;
+  margin: 0 20px 20px 0;
 }
 
 .bm-list {
@@ -410,7 +410,7 @@ input {
   border-radius: 3px;
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
   float: left;
-  width: 500px;
+  width: calc(33% - 20px);
   height: 75px;
   background-color: white;
   margin: 0 20px 20px 0;

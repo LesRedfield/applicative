@@ -34,7 +34,11 @@ const QueriesActions = {
   },
 
   addQueryToDash(params) {
-    QueriesApiUtil.addQueryToDash(params, QueriesActions.receiveDashQueries);
+    QueriesApiUtil.addQueryToDash(params, QueriesActions.receiveQueries);
+  },
+
+  removeQueryFromDash(params) {
+    QueriesApiUtil.removeQueryFromDash(params, QueriesActions.receiveQueries);
   },
 
   saveQueryFailed(message) {

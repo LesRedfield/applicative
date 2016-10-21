@@ -29,7 +29,18 @@ const QueriesApiUtil = {
     $.ajax({
 			url: '/api/queries/' + params.id,
 			type: 'PATCH',
-      data: { query: { dashboard: true } },
+      data: { query: { dashboard: true, user_id: params.user_id } },
+			success: function(queries){
+        success(queries);
+      }
+		});
+  },
+
+  removeQueryFromDash(params, success) {
+    $.ajax({
+			url: '/api/queries/' + params.id,
+			type: 'PATCH',
+      data: { query: { dashboard: false, user_id: params.user_id } },
 			success: function(queries){
         success(queries);
       }
