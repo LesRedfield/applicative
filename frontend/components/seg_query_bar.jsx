@@ -101,6 +101,25 @@ const SegQueryBar = React.createClass({
       });
     }
 
+    let eventLines = <div className="drop-an-event"></div>
+
+    if (query.events.length > 0) {
+      eventLines = query.events.map( event => {
+        return (
+          <div className="seg-query-event-line group">
+            <span className="seg-query-event">
+              <span className="seg-query-event-icon"></span>
+              {event}
+              <div id="remove" className="event-remove" onClick={ this._handleRemoveEvent.bind(this, event) }></div>
+            </span>
+            <div className="seg-query-event-properties">
+              {eventProperties}
+            </div>
+          </div>
+        );
+      });
+    }
+
     return(
       <div className="seg-query-bar-inner group">
         <div className="query-header group">
@@ -150,27 +169,9 @@ const SegQueryBar = React.createClass({
         </div>
 
         <div className="seg-query-events group">
-          {
-            query.events.map( event => {
-              return (
-                <div className="seg-query-event-line group">
-                  <span className="seg-query-event">
-                    <span className="seg-query-event-icon"></span>
-                    {event}
-                    <div id="remove" className="event-remove" onClick={ this._handleRemoveEvent.bind(this, event) }></div>
-                  </span>
-                  <div className="seg-query-event-properties">
-                    {eventProperties}
-                  </div>
-                </div>
-              );
-            })
-          }
+          { eventLines }
         </div>
 
-        <div className="drop-an-event">
-
-        </div>
       </div>
     );
   }
