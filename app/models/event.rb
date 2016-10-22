@@ -66,6 +66,8 @@ class Event < ActiveRecord::Base
     [34.days.ago, 20.days.ago]
   ]
 
+  COLORS = ['#26a8a6', '#912520', '#394960', '#3e89bb', '#816495', '#c8502a', '#bf962f', '#5a7b5e', '#834537', '#730e30']
+
   def self.options
     {
       colors: ['#26a8a6'],
@@ -78,17 +80,36 @@ class Event < ActiveRecord::Base
       },
       title: {
         style: {
-          fontSize: '12px',
+          fontSize: '14px',
           color: '#838383'
         }
       },
       xAxis: {
-        categories: []
+        categories: [],
+        lineWidth: 0.5,
+        lineColor: 'black',
+        tickmarkPlacement: 'on',
+        labels: {
+          style: {
+            color: '#999'
+          }
+        }
       },
       yAxis: {
         title: {
           text: ''
-        }
+        },
+        lineWidth: 0.5,
+        lineColor: 'black',
+        min: 0,
+        gridLineColor: '#f1f1f1',
+        labels: {
+          style: {
+            color: '#999'
+          }
+        },
+        endOnTick: false,
+        maxPadding: 0.1
       },
       credits: {
         enabled: false
@@ -101,6 +122,7 @@ class Event < ActiveRecord::Base
 
     options[:chart][:spacingBottom] = 50
     options[:title][:text] = 'Average Purchaser Age'
+    options[:chart][:marginBottom] = 65
     options[:xAxis][:categories] = DATES
     options[:yAxis][:title][:enabled] = false
     options[:legend] = {
@@ -146,10 +168,9 @@ class Event < ActiveRecord::Base
 
     options[:colors] = ['#26a8a6', '#912520']
     options[:chart][:type] = 'column'
+    options[:chart][:marginBottom] = 65
     options[:title][:text] = 'Signup Platform by Gender'
-    options[:xAxis] = {
-        categories: ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android']
-    }
+    options[:xAxis][:categories] = ['Mac', 'Windows', 'iPhone', 'Windows Phone', 'Android']
     options[:yAxis][:title][:enabled] = false
     options[:plotOptions] = {
         series: {
@@ -173,6 +194,7 @@ class Event < ActiveRecord::Base
 
     options[:chart][:spacingBottom] = 20
     options[:chart][:type] = 'bar'
+    options[:chart][:marginBottom] = 65
     options[:title][:text] = 'Signups by Marketing Channel'
     options[:xAxis][:categories] = ['Search', 'Social Media', 'Affiliate', 'Organic']
     options[:yAxis][:title][:text] = 'Signups'
@@ -193,9 +215,9 @@ class Event < ActiveRecord::Base
     options = Event.options
 
     options[:colors] = ['#912520', '#26a8a6', '#5C120C', '#C0FFFF', '#C76C61']
-    options[:title][:text] = 'Biweekly Purchases by Session Platform'
+    options[:title][:text] = 'Percent of Purchases by Session Platform'
     options[:xAxis][:categories] = DATES
-    options[:yAxis][:title][:text] = 'Percent of Purchases'
+    options[:yAxis][:title][:enabled] = false
     options[:tooltip] = {
       shared: true,
       valueSuffix: ' purchases'
@@ -299,20 +321,24 @@ class Event < ActiveRecord::Base
                     end,
         title: query['title']
       }
-      options[:colors] = ['#26a8a6', '#5C120C', '#6B71D1', '#6BD198', '#D16BA4', '#D1CB6B']
-      options[:chart][:type] = 'line'
+      options[:colors] = COLORS
+      options[:chart][:type] = 'spline'
       options[:title][:text] = query['title']
       options[:xAxis][:categories] = DATES
       options[:yAxis] = {
         title: {
-          text: 'Quantity'
+          enabled: false
         },
         min: 0
       }
       options[:plotOptions] = {
         series: {
           marker: {
-            symbol: 'circle'
+            symbol: 'circle',
+            lineWidth: 2,
+            lineColor: nil,
+            fillColor: 'white',
+            radius: 3
           }
         }
       }
@@ -340,28 +366,53 @@ class Event < ActiveRecord::Base
                       end,
           title: query['title']
         },
-        colors: ['#26a8a6', '#5C120C', '#6B71D1', '#6BD198', '#D16BA4', '#D1CB6B'],
+        colors: COLORS,
         chart: {
           spacingRight: 40,
           marginTop: 40,
-          type: 'line'
+          type: 'spline'
+        },
+        legend: {
+          enabled: query['events'].length > 1 || (query['properties'] && query['properties'].length > 0)
         },
         title: {
           text: ''
         },
         xAxis: {
-          categories: DATES
+          lineWidth: 0.5,
+          lineColor: 'black',
+          categories: DATES,
+          tickmarkPlacement: 'on',
+          labels: {
+            style: {
+              color: '#999'
+            }
+          }
         },
         yAxis: {
           title: {
-            text: 'Quantity'
+            enabled: false
           },
-          min: 0
+          lineWidth: 0.5,
+          lineColor: 'black',
+          min: 0,
+          gridLineColor: '#f1f1f1',
+          labels: {
+            style: {
+              color: '#999'
+            }
+          },
+          endOnTick: false,
+          maxPadding: 0.1
         },
         plotOptions: {
           series: {
             marker: {
-              symbol: 'circle'
+              symbol: 'circle',
+              lineWidth: 2,
+              lineColor: nil,
+              fillColor: 'white',
+              radius: 3
             }
           }
         },
