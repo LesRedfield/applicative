@@ -56,10 +56,6 @@ class Event < ActiveRecord::Base
     gender: [[false], [true]]
   }
 
-  PROPERTY_NAMES = {
-
-  }
-
   DATES = ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
 
   INTERVALS = [
@@ -85,7 +81,8 @@ class Event < ActiveRecord::Base
       title: {
         style: {
           fontSize: '14px',
-          color: '#838383'
+          # color: '#838383'
+          color: 'black'
         }
       },
       xAxis: {

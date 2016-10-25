@@ -109,8 +109,9 @@ const Dashboard = React.createClass({
                       container={"dash-" + dashNum}
                       />
 
-                    <div className="view-seg" onClick={ this.showInSeg.bind(this, dashNum) }>
-                      View In Segmentation
+                    <div className="view-seg group" onClick={ this.showInSeg.bind(this, dashNum) }>
+                      <div className="view-seg-text">View In</div>
+                      <span className="view-seg-logo"></span>
                     </div>
                   </div>
                 );

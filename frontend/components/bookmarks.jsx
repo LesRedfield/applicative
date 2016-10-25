@@ -66,7 +66,7 @@ const Bookmarks = React.createClass({
       userQueries = this.state.queries.map( query => {
         return(
           <div className="bookmark-item group">
-            <div className="bm-item-main" onClick={ this.showBookmark.bind(this, query)}>
+            <div className="bm-item-main">
               <div className="bm-query-logo-outer">
                 <span className="bm-query-logo-inner"></span>
               </div>
@@ -75,11 +75,19 @@ const Bookmarks = React.createClass({
               </div>
             </div>
             <div className="bm-query-options group">
-              <div className="add-to-dash" onClick={ this.toggleDash.bind(this, query) }>
-                { query.dashboard ? 'Remove From Dashboard' : 'Add To Dashboard' }
+              <div className="bm-query-option group" id="add-to-dash" onClick={ this.toggleDash.bind(this, query) }>
+                <span className="bm-query-option-logo" id="add-to-dash-logo"></span>
+                <div className="bm-query-option-text" id="add-to-dash-text">
+                  { query.dashboard ? 'Remove From' : 'Add To' }
+                </div>
               </div>
-              <div className="delete-query" onClick={ this.deleteQuery.bind(this, query) }>
-                Delete Query
+              <div className="bm-query-option group" id="bm-view-seg" onClick={ this.showBookmark.bind(this, query)}>
+                <span className="bm-query-option-logo" id="bm-view-seg-logo"></span>
+                <div className="bm-query-option-text" id="bm-view-seg-text">View In</div>
+              </div>
+              <div className="bm-query-option group" id="delete-query" onClick={ this.deleteQuery.bind(this, query) }>
+                <span className="bm-query-option-logo" id="delete-query-logo"></span>
+                <div className="bm-query-option-text" id="delete-query-text">Delete Query</div>
               </div>
             </div>
           </div>
