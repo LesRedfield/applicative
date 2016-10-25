@@ -56,6 +56,10 @@ class Event < ActiveRecord::Base
     gender: [[false], [true]]
   }
 
+  PROPERTY_NAMES = {
+
+  }
+
   DATES = ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
 
   INTERVALS = [
@@ -275,8 +279,14 @@ class Event < ActiveRecord::Base
       segments.each do |segment|
         if segment[0] == "all"
           segName = ""
+        elsif segment[0] == false
+          segName = "[Female]"
+        elsif segment[0] == true
+          segName = "[Male]"
+        elsif segment.length > 1
+          segName = "[Age #{segment[0]} to #{segment[1]}]"
         else
-          segName = segment.to_s
+          segName = "[#{segment[0]}]"
         end
 
         seriesArr << {
