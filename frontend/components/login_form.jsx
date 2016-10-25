@@ -106,6 +106,8 @@ const LoginForm = React.createClass({
 
       		        <br />
 
+                  <div id="login-failed"></div>
+
                   <button className="login-button">
                     Sign In
                     <span className="arrow"></span>

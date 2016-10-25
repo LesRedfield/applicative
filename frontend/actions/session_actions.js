@@ -8,15 +8,29 @@ const SessionActions = {
   signUp(formData){
     SessionApiUtil.signUp(
       formData,
-      SessionActions.receiveCurrentUser
+      SessionActions.receiveCurrentUser,
+      SessionActions.signUpFailed
     );
   },
 
   logIn(formData){
     SessionApiUtil.logIn(
       formData,
-      SessionActions.receiveCurrentUser
+      SessionActions.receiveCurrentUser,
+      SessionActions.logInFailed
     );
+  },
+
+  logInFailed(message){
+    let failed = document.getElementById('login-failed');
+
+    failed.innerHTML = message.responseJSON.join(', ');
+  },
+
+  signUpFailed(message){
+    let failed = document.getElementById('signup-failed');
+
+    failed.innerHTML = message.responseJSON.join(', ');
   },
 
   logOut() {

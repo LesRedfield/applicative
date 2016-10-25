@@ -1,10 +1,13 @@
 const SessionApiUtil = {
-	logIn(user, success) {
+	logIn(user, success, error) {
 		$.ajax({
 			url: '/api/session',
 			type: 'POST',
 			data: { user },
-			success
+			success,
+			error: function(message){
+        error(message);
+      }
 		});
 	},
 
@@ -19,13 +22,16 @@ const SessionApiUtil = {
 		});
 	},
 
-	signUp(user, success) {
+	signUp(user, success, error) {
 		$.ajax({
 			url: '/api/users',
 			type: 'POST',
 			dataType: 'json',
 			data: { user },
-			success
+			success,
+			error: function(message){
+        error(message);
+      }
 		});
 	},
 

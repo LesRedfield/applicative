@@ -144,12 +144,12 @@ body, h1, h2, h3 {
 
 .inside-login-form {
   margin-top: -17px;
-  /*padding: 18px;*/
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   box-sizing: border-box;
   letter-spacing: 1px;
   display: block;
   font-weight: 300;
+  position: relative;
 }
 
 .login-input-email {
@@ -194,9 +194,6 @@ input {
   text-indent: 0px;
   text-shadow: none;
   display: inline-block;
-
-
-
   width: 90%;
   box-sizing: border-box;
   padding: 8px 8px 8px 32px;
@@ -209,6 +206,22 @@ input {
   font-weight: 300;
   box-shadow: none;
   outline:none;
+}
+
+#login-failed, #signup-failed {
+  color: red;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 206px;
+  bottom: 64px;
+  left: -100px;
+  right: -100px;
+}
+
+#login-failed {
+  top: 110px;
 }
 
 .login-button {

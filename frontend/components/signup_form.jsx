@@ -116,6 +116,8 @@ const SignupForm = React.createClass({
 
       		        <br />
 
+                  <div id="signup-failed"></div>
+
                   <button className="login-button">
                     Sign Up
                     <span className="arrow"></span>
