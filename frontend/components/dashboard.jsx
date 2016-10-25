@@ -87,7 +87,7 @@ const Dashboard = React.createClass({
           <h1 id="dash-head-title">Dashboard</h1>
           <span id="dash-head-right">You are exploring Applicative on your own</span>
         </header>
-        <div className='dash-charts'>
+        <div className='dash-charts group'>
           {
             dashNums.map( dashNum => {
               if (dashNum === "one" || dashNum === "two" || dashNum === "three" || dashNum === "four") {

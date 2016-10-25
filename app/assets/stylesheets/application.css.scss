@@ -315,7 +315,7 @@ input {
   margin-left: auto;
   margin-right: auto;
   margin-top: 0;
-  height: 40px;
+  height: 39px;
   cursor: pointer;
   display: block;
 }
@@ -345,7 +345,7 @@ input {
   background-image: image-url("nav-sa86d591523.png");
   background-repeat: no-repeat;
   background-size: 26px auto;
-  background-position: 10px -601px;
+  background-position: 10px -602px;
   margin-left: auto;
   margin-right: auto;
 
@@ -353,7 +353,7 @@ input {
 }
 
 #left-nav-segmentation.current {
-  background-position: 10px -634px;
+  background-position: 10px -635px;
 }
 
 #left-nav-bookmarks {
@@ -405,24 +405,30 @@ input {
 
 .bookmark-item {
   display: inline-block;
-  padding: 10px;
+  padding: 6px;
   border-radius: 3px;
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
   float: left;
-  width: calc(50% - 20px);
+  width: calc(50% - 15px);
   min-width: 700px;
   height: 110px;
   background-color: #2DA29D;
-  margin: 0 20px 20px 0;
+  margin: 0 15px 15px 0;
+  position: relative;
+}
+
+@media (max-width: 1504px) {
+  .bookmark-item {
+    width: calc(100% - 15px);
+  }
 }
 
 .bm-item-main {
   height: 100%;
-  width: 70%;
+  width: calc(70% - 6px);
   float: left;
-  // cursor: pointer;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 .bookmark-item-name {
@@ -439,7 +445,8 @@ input {
   background-color: white;
   padding: 2px;
   border-radius: 3px;
-  width: 25%;
+  width: 30%;
+  height: 100%;
 }
 
 .bm-query-option {
@@ -455,20 +462,20 @@ input {
 
 .bm-query-option-logo {
   float: right;
-  width: 23px;
-  height: 23px;
+  width: 26px;
+  height: 26px;
   display: inline-block;
   background-repeat: no-repeat;
   background-color: #2DA29D;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .bm-query-option-text {
   float: right;
-  font-size: 13px;
+  font-size: 16px;
   text-align: right;
   padding: 4px;
-  padding-right: 5px;
+  padding-right: 6px;
 }
 
 #bm-view-seg {
@@ -481,8 +488,8 @@ input {
 
 #bm-view-seg-logo {
   background-image: image-url("bookmarks-s3560ed5b7d.png");
-  background-size: 31px auto;
-  background-position: 3px -271px;
+  background-size: 36px auto;
+  background-position: 4px -315px;
 }
 
 #add-to-dash {
@@ -495,8 +502,8 @@ input {
 
 #add-to-dash-logo {
   background-image: image-url("nav-sa86d591523.png");
-  background-size: 22px auto;
-  background-position: 3px -306px;
+  background-size: 26px auto;
+  background-position: 3px -363px;
 }
 
 #delete-query {
@@ -509,8 +516,8 @@ input {
 
 #delete-query-logo {
   background-image: image-url("bookmarks-s3560ed5b7d.png");
-  background-size: 31px auto;
-  background-position: 3px -107px;
+  background-size: 37px auto;
+  background-position: 3px -129px;
 }
 
 // .bookmark-item-name:hover, .add-to-dash:hover, .delete-query:hover, .bm-view-seg:hover {
@@ -524,12 +531,32 @@ input {
 }
 
 .dash-chart {
+  float: left;
+  display: inline-block;
   width: 550px;
   margin-bottom: 15px;
   margin-right: 15px;
   position: relative;
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.2);
 }
+
+// @media (max-width: 1576px) {
+//   .dash-chart {
+//     width: calc(50% - 15px);
+//   }
+// }
+//
+// @media (max-width: 1070px) {
+//   .dash-chart {
+//     width: calc(100% - 15px);
+//   }
+// }
+//
+// @media (min-width: 1577px) {
+//   .dash-chart {
+//     width: calc(33% - 15px);
+//   }
+// }
 
 .dash-seg {
   height: 265px;
@@ -575,10 +602,11 @@ input {
 
 .dash-charts {
   float: left;
-  display: flex;
-  flex-wrap: wrap;
+  // display: flex;
+  // flex-wrap: wrap;
   margin-top: 5px;
   margin-bottom: 25px;
+  position: relative;
 }
 
 .dash-head, .seg-head, .bm-head {
