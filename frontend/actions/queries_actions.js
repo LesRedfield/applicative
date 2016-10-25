@@ -42,6 +42,8 @@ const QueriesActions = {
   },
 
   saveQueryFailed(message) {
+    document.forms['title-form']['title-form-text'].disabled = false;
+
     let modal = document.getElementById('save-query-failed-modal');
     let span = document.getElementById('error-message');
 
@@ -50,6 +52,8 @@ const QueriesActions = {
   },
 
   receiveNewQueries(queries) {
+    document.forms['title-form']['title-form-text'].disabled = false;
+
     let modal = document.getElementById('save-query-modal');
 
     modal.style.display = "block";

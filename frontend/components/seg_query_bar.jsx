@@ -59,6 +59,8 @@ const SegQueryBar = React.createClass({
       dashboard: false
     }
 
+    document.forms['title-form']['title-form-text'].disabled = 'true';
+
     QueriesActions.saveQuery(params);
   },
 
@@ -125,8 +127,9 @@ const SegQueryBar = React.createClass({
         <div className="query-header group">
           <span className="seg-query-icon"></span>
 
-          <form onSubmit={ this._saveQuery }>
+          <form id="title-form" onSubmit={ this._saveQuery }>
             <input type="text"
+              id="title-form-text"
               value={ this.state.title }
               onChange={ this._titleInputHandler() }
               placeholder={ "Untitled" }
