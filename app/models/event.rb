@@ -376,6 +376,8 @@ class Event < ActiveRecord::Base
         colors: COLORS,
         chart: {
           spacingRight: 40,
+          spacingLeft: 25,
+          spacingBottom: query['events'].length > 1 ? 15 : 25,
           marginTop: 40,
           type: 'spline'
         },
