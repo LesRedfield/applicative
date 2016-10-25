@@ -26,6 +26,10 @@ const Dashboard = React.createClass({
     // this.setState({ options: OptionsStore.all().dashboard });
 
     this.setState({ dashNums: Object.keys(OptionsStore.all().dashboard) });
+
+    let loadingDash = document.getElementById('loading-dash-charts');
+
+    loadingDash.style.display = 'none';
   },
 
   _queriesChanged() {
@@ -42,6 +46,9 @@ const Dashboard = React.createClass({
   },
 
   componentDidMount() {
+    let loadingDash = document.getElementById('loading-dash-charts');
+
+    loadingDash.style.display = 'flex';
   },
 
   componentWillUnmount() {
@@ -65,21 +72,42 @@ const Dashboard = React.createClass({
 
   render(){
     let dashNums = this.state.dashNums;
-    let custOpts = [];
-    // let dCharts = {};
+    let four = ["one", "two", "three", "four"];
 
-    // let dashOptions = OptionsStore.all().dashboard;
-    let custDashOptions = [];
+    let dashCharts = [];
 
+    // if (dashNums.length > 0) {
+      dashCharts = dashNums.map( dashNum => {
+        if (dashNum === "one" || dashNum === "two" || dashNum === "three" || dashNum === "four") {
+          return(
+            <div key={dashNum + "-outer"} className="dash-chart">
+              <DashHighchart
+                key={dashNum}
+                dashNum={dashNum}
+                container={"dash-" + dashNum}
+                />
+            </div>
+          );
+        } else {
+          return(
+            <div key={dashNum + "-outer"} className="dash-chart">
+              <DashHighchart
+                key={dashNum}
+                dashNum={dashNum}
+                container={"dash-" + dashNum}
+                />
 
-    // if (this.state.options.four.title) {
-    //   dashNums = ['one', 'two', 'three', 'four'];
+              <div className="view-seg group" onClick={ this.showInSeg.bind(this, dashNum) }>
+                <div className="view-seg-text">View In</div>
+                <span className="view-seg-logo"></span>
+              </div>
+            </div>
+          );
+        }
+      });
+    // } else {
+    //   dashCharts = <div id="loading-dash-charts">Loading Dashboard...</div>;
     // }
-    //
-    // if (this.state.customOptions.length > 0) {
-    //   custOpts = this.state.customOptions;
-    // }
-
 
     return(
       <div className="dashboard group">
@@ -88,36 +116,8 @@ const Dashboard = React.createClass({
           <span id="dash-head-right">You are exploring Applicative on your own</span>
         </header>
         <div className='dash-charts group'>
-          {
-            dashNums.map( dashNum => {
-              if (dashNum === "one" || dashNum === "two" || dashNum === "three" || dashNum === "four") {
-                return(
-                  <div key={dashNum + "-outer"} className="dash-chart">
-                    <DashHighchart
-                      key={dashNum}
-                      dashNum={dashNum}
-                      container={"dash-" + dashNum}
-                      />
-                  </div>
-                );
-              } else {
-                return(
-                  <div key={dashNum + "-outer"} className="dash-chart">
-                    <DashHighchart
-                      key={dashNum}
-                      dashNum={dashNum}
-                      container={"dash-" + dashNum}
-                      />
-
-                    <div className="view-seg group" onClick={ this.showInSeg.bind(this, dashNum) }>
-                      <div className="view-seg-text">View In</div>
-                      <span className="view-seg-logo"></span>
-                    </div>
-                  </div>
-                );
-              }
-            })
-          }
+          <div id="loading-dash-charts">Loading Dashboard...</div>
+          { dashCharts }
         </div>
       </div>
     );
@@ -127,6 +127,3 @@ const Dashboard = React.createClass({
 });
 
 module.exports = Dashboard;
-// <div className='dash-charts'>
-//
-// </div>
