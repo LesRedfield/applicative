@@ -49,6 +49,31 @@ const Segmentation = React.createClass({
               />
             </div>
             <div className='seg-chart-outer'>
+              <div className="loading" id="loading-white" style={{
+                position: 'absolute',
+                top: 50,
+                left: 50,
+                right: 50,
+                bottom: 50,
+                zIndex: 1,
+                opacity: 1,
+                backgroundColor: 'white'
+              }}></div>
+            <div className="loading" id="loading-black" style={{
+                position: 'absolute',
+                top: 50,
+                left: 50,
+                right: 50,
+                bottom: 50,
+                zIndex: 2,
+                opacity: 0.5,
+                backgroundColor: 'black',
+                color: 'white',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontSize: 'xx-large'
+              }}>Loading...</div>
               <SegChart
                 options={this.state.options}
               />
@@ -61,7 +86,7 @@ const Segmentation = React.createClass({
 
       </div>
     );
-    
+
   }
 
 });

@@ -15,6 +15,11 @@ const Highchart = React.createClass({
     // } else {
     // OptionsActions.fetchOptions();
     // }
+
+    // this.chart = new Highcharts[this.props.type || "Chart"](
+    //   this.props.container,
+    //   this.props.options
+    // );
   },
 
   componentWillUpdate() {
@@ -23,6 +28,14 @@ const Highchart = React.createClass({
       this.props.options
     );
   },
+
+  // componentWillReceiveProps(nextProps) {
+  //
+  // },
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return nextProps.options.series !== this.props.options.series
+  // },
 
   // componentWillUnmount() {
   //   this.chart.destroy();

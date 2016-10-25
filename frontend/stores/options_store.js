@@ -19,6 +19,12 @@ OptionsStore.addEvent = function(event){
     let modal = document.getElementById('save-query-failed-modal');
     let span = document.getElementById('error-message');
 
+    let loadingBlack = document.getElementById('loading-black');
+    let loadingWhite = document.getElementById('loading-white');
+
+    loadingBlack.style.display = 'none';
+    loadingWhite.style.display = 'none';
+
     span.innerHTML = `${event} already added to query.`
     modal.style.display = "block";
   } else {
@@ -33,11 +39,20 @@ OptionsStore.addProperty = function(property){
 
   let modal = document.getElementById('save-query-failed-modal');
   let span = document.getElementById('error-message');
+  let loadingBlack = document.getElementById('loading-black');
+  let loadingWhite = document.getElementById('loading-white');
+
 
   if (_options.segmentation.query.events.length < 1) {
+    loadingBlack.style.display = 'none';
+    loadingWhite.style.display = 'none';
+
     span.innerHTML = "Please add an event first.";
     modal.style.display = "block";
   } else if (idx != -1) {
+    loadingBlack.style.display = 'none';
+    loadingWhite.style.display = 'none';
+
     span.innerHTML = `${property} already added to query.`
     modal.style.display = "block";
   } else {

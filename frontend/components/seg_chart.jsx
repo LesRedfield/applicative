@@ -12,6 +12,12 @@ const segChartTarget = {
     let item = monitor.getItem();
     let itemType = monitor.getItemType();
 
+    let loadingBlack = document.getElementById('loading-black');
+    let loadingWhite = document.getElementById('loading-white');
+
+    loadingBlack.style.display = 'flex';
+    loadingWhite.style.display = 'flex';
+
     if (item.type == "Events") {
       OptionsStore.addEvent(item.name);
     } else if (item.type == "Properties") {
@@ -30,15 +36,54 @@ function collect(connect, monitor) {
 const SegChart = React.createClass({
 
   getInitialState(){
-    return({options: OptionsStore.all().segmentation});
+    return({ options: OptionsStore.all().segmentation, isOver: false });
   },
 
   _optionsChanged() {
-    this.setState({options: OptionsStore.all().segmentation});
+    this.setState({ options: OptionsStore.all().segmentation, isOver: false });
+    // debugger
+    // this.setState({ isOver: false });
+    let loadingBlack = document.getElementById('loading-black');
+    let loadingWhite = document.getElementById('loading-white');
+
+    loadingBlack.style.display = 'none';
+    loadingWhite.style.display = 'none';
   },
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   // debugger
+  //   return this.state.shouldUpdate !== nextState.shouldUpdate || nextProps.isOver;
+  //   // return true;
+  // },
+
+  // componentWillUpdate(nextProps, nextState) {
+  //   debugger
+  // },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isOver === true) {
+      this.setState({ isOver: true });
+
+      // let loading = document.getElementById('loading');
+      //
+      // loading.style.display = "block";
+    }
+  },
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   // let segBy = document.getElementsByClassName('seg-by');
+  //
+  //   debugger
+  // },
 
   componentDidMount() {
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
+
+    let loadingBlack = document.getElementById('loading-black');
+    let loadingWhite = document.getElementById('loading-white');
+
+    loadingBlack.style.display = 'none';
+    loadingWhite.style.display = 'none';
   },
 
   componentWillUnmount() {
@@ -55,17 +100,17 @@ const SegChart = React.createClass({
           <Highchart
             key="seg-chart"
             container="seg-chart"
-            options={this.state.options}
+            options={ this.state.options }
             />
           {isOver &&
-            <div style={{
+            <div className="seg-by" style={{
               position: 'absolute',
               top: 50,
               left: 50,
               right: 50,
               bottom: 50,
               zIndex: 1,
-              opacity: 0.5,
+              opacity: 1,
               backgroundColor: 'white',
               borderColor: '#2DA29D',
               borderWidth: '8px',

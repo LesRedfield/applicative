@@ -17,13 +17,13 @@ const SegQueryBar = React.createClass({
     return({ title: "Untitled" });
   },
 
-  componentDidMount() {
-    QueriesActions.fetchQueries(SessionStore.currentUser().id);
-  },
+  // componentDidMount() {
+  //   QueriesActions.fetchQueries(SessionStore.currentUser().id);
+  // },
 
-  componentWillUnmount() {
-    OptionsStore.removeAllOptions();
-  },
+  // componentWillUnmount() {
+  //   OptionsStore.removeAllOptions();
+  // },
 
   _titleInputHandler(e) {
     return (e) => this.setState({ title: e.target.value });
