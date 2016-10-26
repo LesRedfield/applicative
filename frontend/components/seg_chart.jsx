@@ -27,9 +27,16 @@ const segChartTarget = {
 };
 
 function collect(connect, monitor) {
+  let type = 'None';
+
+  if (monitor.getItem()) {
+    type = monitor.getItem().type;
+  }
+
   return {
     connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver()
+    isOver: monitor.isOver(),
+    type: type
   };
 }
 
@@ -51,6 +58,24 @@ const SegChart = React.createClass({
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOver === true) {
       this.setState({ isOver: true });
+    }
+  },
+
+  componentDidUpdate() {
+    if (this.state.options.chart) {
+      let segBy = document.getElementById('option-hover');
+
+      if (this.props.type === 'Events') {
+        segBy.innerHTML = "+";
+      } else if (this.props.type === 'Properties') {
+        segBy.innerHTML = "Segment By...";
+      }
+
+      if (this.props.isOver) {
+        segBy.style.display = 'flex';
+      } else {
+        segBy.style.display = 'none';
+      }
     }
   },
 
@@ -80,28 +105,25 @@ const SegChart = React.createClass({
             container="seg-chart"
             options={ this.state.options }
             />
-          {isOver &&
-            <div className="seg-by" style={{
-              position: 'absolute',
-              top: 50,
-              left: 50,
-              right: 50,
-              bottom: 50,
-              zIndex: 1,
-              opacity: 1,
-              backgroundColor: 'white',
-              borderColor: '#2DA29D',
-              borderWidth: '8px',
-              borderStyle: 'dashed',
-              color: '#2DA29D',
-              fontSize: '50px',
-              textAlign: 'center',
-              fontWeight: 400,
-              justifyContent: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-            }}>Segment By...</div>
-          }
+          <div id="option-hover" className="seg-by" style={{
+            position: 'absolute',
+            top: 50,
+            left: 50,
+            right: 50,
+            bottom: 50,
+            zIndex: 1,
+            opacity: 1,
+            backgroundColor: 'white',
+            borderColor: '#2DA29D',
+            borderWidth: '8px',
+            borderStyle: 'dashed',
+            color: '#2DA29D',
+            fontSize: '50px',
+            textAlign: 'center',
+            fontWeight: 400,
+            justifyContent: 'center',
+            flexDirection: 'column',
+          }}></div>
         </div>
       );
     } else {
