@@ -662,6 +662,31 @@ input {
   flex-direction: column;
 }
 
+.loading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#loading-black {
+  z-index: 2;
+  opacity: 0.5;
+  background-color: black;
+}
+
+#loading-white {
+  z-index: 1;
+  opacity: 1;
+  background-color: white;
+  color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+}
+
 .seg-query-bar {
   color: white;
   padding-bottom: 10px;
@@ -903,6 +928,26 @@ input {
   height: 100%;
   background-color: white;
   position: relative;
+}
+
+.seg-by {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  right: 50px;
+  bottom: 50px;
+  z-index: 1;
+  opacity: 1;
+  background-color: white;
+  border-color: #2DA29D;
+  border-width: 8px;
+  border-style: dashed;
+  color: #2DA29D;
+  font-size: 50px;
+  text-align: center;
+  font-weight: 400;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .no-event {

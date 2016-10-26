@@ -36,6 +36,7 @@ const Segmentation = React.createClass({
 
     return(
       <div className="segmentation group">
+
         <header className="seg-head group">
           <h1 id="seg-head-title">Segmentation</h1>
           <span id="seg-head-right">You are exploring Applicative on your own</span>
@@ -43,37 +44,14 @@ const Segmentation = React.createClass({
 
         <div className='seg-body group'>
           <div className='seg-query-chart group'>
-            <div className="loading" id="loading-black" style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                zIndex: 2,
-                opacity: 0.5,
-                backgroundColor: 'black'
-              }}></div>
+            <div className="loading" id="loading-black"></div>
             <div className='seg-query-bar group'>
               <SegQueryBar
                 options={this.state.options}
               />
             </div>
             <div className='seg-chart-outer'>
-              <div className="loading" id="loading-white" style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                zIndex: 1,
-                opacity: 1,
-                backgroundColor: 'white',
-                color: 'gray',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                fontSize: 'xx-large'
-              }}>Loading...</div>
+              <div className="loading" id="loading-white">Loading...</div>
               <SegChart
                 options={this.state.options}
               />

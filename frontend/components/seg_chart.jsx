@@ -29,7 +29,7 @@ const segChartTarget = {
 function collect(connect, monitor) {
   let type = 'None';
 
-  if (monitor.getItem()) {
+  if (monitor.getItem() && monitor.isOver()) {
     type = monitor.getItem().type;
   }
 
@@ -105,25 +105,7 @@ const SegChart = React.createClass({
             container="seg-chart"
             options={ this.state.options }
             />
-          <div id="option-hover" className="seg-by" style={{
-            position: 'absolute',
-            top: 50,
-            left: 50,
-            right: 50,
-            bottom: 50,
-            zIndex: 1,
-            opacity: 1,
-            backgroundColor: 'white',
-            borderColor: '#2DA29D',
-            borderWidth: '8px',
-            borderStyle: 'dashed',
-            color: '#2DA29D',
-            fontSize: '50px',
-            textAlign: 'center',
-            fontWeight: 400,
-            justifyContent: 'center',
-            flexDirection: 'column',
-          }}></div>
+          <div id="option-hover" className="seg-by"></div>
         </div>
       );
     } else {
