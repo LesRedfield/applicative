@@ -138,6 +138,3 @@ const SignupForm = React.createClass({
 });
 
 module.exports = SignupForm;
-
-
-// Please { this.formType() } or { navLink }

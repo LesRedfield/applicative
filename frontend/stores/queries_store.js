@@ -30,27 +30,13 @@ function _resetAllQueries(queries){
 function _resetAllDashQueries(queries){
   _dash_queries = queries;
   QueriesStore.__emitChange();
-
-  // const customs = _dash_queries.map( dashQuery => {
-  //
-  //   let params = JSON.parse(dashQuery.query.split('=>').join(': '));
-  //   params.title = dashQuery.title;
-  //
-  //   return params;
-  // });
-  //
-  // if (customs.length > 0) {
-  //   QueriesActions.fetchDashQueriesOptions(customs);
-  // }
 }
 
 function _resetAllDashQueriesOptions(options){
-
   options.forEach( option => {
     _dash_queries_options[option.query.title] = option;
   });
 
-  // _dash_queries_options = options;
   QueriesStore.__emitChange();
 }
 

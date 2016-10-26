@@ -6,7 +6,6 @@ const SessionActions = require('../actions/session_actions');
 const LeftNav = require('./left_nav');
 const Dashboard = require('./dashboard');
 
-
 const ReactRouter = require('react-router');
 const hashHistory = ReactRouter.hashHistory;
 

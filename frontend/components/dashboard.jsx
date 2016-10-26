@@ -17,14 +17,10 @@ const Dashboard = React.createClass({
 	},
 
   getInitialState(){
-  //   return({ options: OptionsStore.all().dashboard, customOptions: QueriesStore.allDashOptions(SessionStore.currentUser().id) });
-
     return( { dashNums: [] } );
   },
 
   _optionsChanged() {
-    // this.setState({ options: OptionsStore.all().dashboard });
-
     this.setState({ dashNums: Object.keys(OptionsStore.all().dashboard) });
 
     let loadingDash = document.getElementById('loading-dash-charts');
@@ -42,7 +38,6 @@ const Dashboard = React.createClass({
     OptionsActions.fetchOptions(SessionStore.currentUser().id);
 
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);
-    // this.queriesListener = QueriesStore.addListener(this._queriesChanged);
   },
 
   componentDidMount() {
@@ -53,16 +48,9 @@ const Dashboard = React.createClass({
 
   componentWillUnmount() {
     this.optionsListener.remove();
-    // this.queriesListener.remove();
-
-
   },
 
   showInSeg(title) {
-    // let params = JSON.parse(options.query.split('=>').join(': '));
-    // params.title = options.title;
-
-    // debugger
     OptionsActions.changeOptions(OptionsStore.all().dashboard[title].query);
 
     OptionsStore.enableImport();
@@ -76,38 +64,34 @@ const Dashboard = React.createClass({
 
     let dashCharts = [];
 
-    // if (dashNums.length > 0) {
-      dashCharts = dashNums.map( dashNum => {
-        if (dashNum === "one" || dashNum === "two" || dashNum === "three" || dashNum === "four") {
-          return(
-            <div key={dashNum + "-outer"} className="dash-chart">
-              <DashHighchart
-                key={dashNum}
-                dashNum={dashNum}
-                container={"dash-" + dashNum}
-                />
-            </div>
-          );
-        } else {
-          return(
-            <div key={dashNum + "-outer"} className="dash-chart">
-              <DashHighchart
-                key={dashNum}
-                dashNum={dashNum}
-                container={"dash-" + dashNum}
-                />
+    dashCharts = dashNums.map( dashNum => {
+      if (dashNum === "one" || dashNum === "two" || dashNum === "three" || dashNum === "four") {
+        return(
+          <div key={dashNum + "-outer"} className="dash-chart">
+            <DashHighchart
+              key={dashNum}
+              dashNum={dashNum}
+              container={"dash-" + dashNum}
+              />
+          </div>
+        );
+      } else {
+        return(
+          <div key={dashNum + "-outer"} className="dash-chart">
+            <DashHighchart
+              key={dashNum}
+              dashNum={dashNum}
+              container={"dash-" + dashNum}
+              />
 
-              <div className="view-seg group" onClick={ this.showInSeg.bind(this, dashNum) }>
-                <div className="view-seg-text">View In</div>
-                <span className="view-seg-logo"></span>
-              </div>
+            <div className="view-seg group" onClick={ this.showInSeg.bind(this, dashNum) }>
+              <div className="view-seg-text">View In</div>
+              <span className="view-seg-logo"></span>
             </div>
-          );
-        }
-      });
-    // } else {
-    //   dashCharts = <div id="loading-dash-charts">Loading Dashboard...</div>;
-    // }
+          </div>
+        );
+      }
+    });
 
     return(
       <div className="dashboard group">

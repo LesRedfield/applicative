@@ -41,8 +41,6 @@ const SegChart = React.createClass({
 
   _optionsChanged() {
     this.setState({ options: OptionsStore.all().segmentation, isOver: false });
-    // debugger
-    // this.setState({ isOver: false });
     let loadingBlack = document.getElementById('loading-black');
     let loadingWhite = document.getElementById('loading-white');
 
@@ -50,31 +48,11 @@ const SegChart = React.createClass({
     loadingWhite.style.display = 'none';
   },
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   // debugger
-  //   return this.state.shouldUpdate !== nextState.shouldUpdate || nextProps.isOver;
-  //   // return true;
-  // },
-
-  // componentWillUpdate(nextProps, nextState) {
-  //   debugger
-  // },
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOver === true) {
       this.setState({ isOver: true });
-
-      // let loading = document.getElementById('loading');
-      //
-      // loading.style.display = "block";
     }
   },
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   // let segBy = document.getElementsByClassName('seg-by');
-  //
-  //   debugger
-  // },
 
   componentDidMount() {
     this.optionsListener = OptionsStore.addListener(this._optionsChanged);

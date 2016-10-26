@@ -7,9 +7,6 @@
 #  title   :string
 #  query   :string
 #
-
-
-
 class Query < ActiveRecord::Base
 
   belongs_to :user

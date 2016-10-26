@@ -116,13 +116,3 @@ const Bookmarks = React.createClass({
 });
 
 module.exports = Bookmarks;
-
-// return(
-//   userQueries.map( query => {
-//     return(
-//       <div key={query.title} className="bookmark" onClick={ this.showBookmark.bind(this, query) }>
-//         {query.title}
-//       </div>
-//     );
-//   })
-// );

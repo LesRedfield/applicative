@@ -91,10 +91,7 @@ body, h1, h2, h3 {
 .blackout {
   opacity: 1;
   transition: opacity 200ms 100ms ease;
-
   visibility: visible;
-
-  /*position: absolute;*/
   top: 0;
   left: 0;
   right: 0;
@@ -181,7 +178,6 @@ body, h1, h2, h3 {
   display: inline-block;
   vertical-align: middle;
   background-image: image-url("login-s97928a4df8.png");
-
   background-repeat: no-repeat;
   background-size: 190px auto;
 }
@@ -333,10 +329,6 @@ input {
   display: block;
 }
 
-// #bot-bord {
-//   border-bottom: rgba(176,182,182,0.2) solid 1px;
-// }
-
 #left-nav-dashboard {
   background-color: transparent;
   background-image: image-url("nav-sa86d591523.png");
@@ -345,7 +337,6 @@ input {
   background-position: 10px -356px;
   margin-left: auto;
   margin-right: auto;
-
   border-bottom: rgba(176,182,182,0.2) solid 1px;
 }
 
@@ -361,7 +352,6 @@ input {
   background-position: 10px -602px;
   margin-left: auto;
   margin-right: auto;
-
   border-bottom: rgba(176,182,182,0.2) solid 1px;
 }
 
@@ -495,10 +485,6 @@ input {
   margin-bottom: 5px;
 }
 
-#bm-view-seg-text {
-
-}
-
 #bm-view-seg-logo {
   background-image: image-url("bookmarks-s3560ed5b7d.png");
   background-size: 36px auto;
@@ -509,22 +495,10 @@ input {
   margin-bottom: 5px;
 }
 
-#add-to-dash-text {
-
-}
-
 #add-to-dash-logo {
   background-image: image-url("nav-sa86d591523.png");
   background-size: 26px auto;
   background-position: 3px -363px;
-}
-
-#delete-query {
-
-}
-
-#delete-query-text {
-
 }
 
 #delete-query-logo {
@@ -532,10 +506,6 @@ input {
   background-size: 37px auto;
   background-position: 3px -129px;
 }
-
-// .bookmark-item-name:hover, .add-to-dash:hover, .delete-query:hover, .bm-view-seg:hover {
-//   font-weight: bold;
-// }
 
 .feature {
   float: left;
@@ -586,7 +556,6 @@ input {
   right: 3px;
   top: 3px;
   cursor: pointer;
-  // color: #838383;
   color: black;
 }
 
@@ -622,8 +591,6 @@ input {
 .dash-charts {
   float: left;
   width: 100%;
-  // display: flex;
-  // flex-wrap: wrap;
   margin-top: 5px;
   margin-bottom: 25px;
   position: relative;
@@ -829,16 +796,12 @@ input {
   width: 60%;
   margin: 0;
   color: white;
-
   background-color: #29B0AB;
-
   float: left;
   line-height: 22px;
   border: 1px dashed transparent;
   font-weight: normal;
-  // padding-left: 7px;
   padding: 2px 2px;
-
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -859,17 +822,13 @@ input {
 
 .save-query {
   cursor: pointer;
-
   margin-top: 5px;
   margin-right: 10px;
-
   padding-right: 10px;
-
   color: rgba(255,255,255,0.5);
   font-size: 10px;
   padding-left: 20px;
   float: left;
-
   border-right: rgba(255,255,255,0.5) solid 1px;
 }
 
@@ -885,7 +844,6 @@ input {
   top: 0;
   width: 100%;
   height: 100%;
-  // overflow: auto;
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.7);
   cursor: default;
@@ -913,16 +871,12 @@ input {
 
 .reset {
   cursor: pointer;
-
   margin-top: 5px;
   margin-right: 5px;
-
   background-image: image-url("query-s4ab1fdab27.png");
-
   background-repeat: no-repeat;
   background-size: 312px auto;
   background-position: 0 -2855px;
-
   color: rgba(255,255,255,0.5);
   font-size: 10px;
   padding-left: 20px;
@@ -939,21 +893,10 @@ input {
 }
 
 .seg-chart-outer {
-  // height: calc(100% - 67px);
   height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-#loading {
-  // position: absolute;
-  // top: 50;
-  // left: 50;
-  // right: 50;
-  // bottom: 50;
-  // opacity: 1;
-  // background-color: 'black';
 }
 
 .seg-chart-inner {
@@ -1010,10 +953,6 @@ input {
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.no-event-messages {
-
 }
 
 .top-text {
@@ -1108,7 +1047,6 @@ input {
   background-size: 312px;
   background-repeat: no-repeat;
   margin: auto;
-
   display: block;
 }
 
@@ -1157,7 +1095,6 @@ input {
 
 .right-nav-header-text {
   text-align: left;
-
 }
 
 .right-navs {
@@ -1178,7 +1115,6 @@ input {
   color: black;
   text-align: left;
   padding-left: 28px;
-
   background-image: image-url("query-s4ab1fdab27.png");
   background-repeat: no-repeat;
   background-size: 312px auto;

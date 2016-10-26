@@ -1,5 +1,4 @@
 const React = require('react');
-
 const DragOption = require('./drag_option');
 
 const Menu = React.createClass({

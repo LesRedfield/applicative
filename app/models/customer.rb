@@ -15,16 +15,6 @@ class Customer < ActiveRecord::Base
 
   has_many :events
 
-  # scope :by_reg_platform, lambda { |platform| where(platform: platform) }
-  #
-  # scope :by_channel, lambda { |channel| where(channel: channel) }
-  #
-  # scope :by_a_b, lambda { |a_b| where(ab_group: a_b) }
-  #
-  # scope :by_gender, lambda { |gender| where(gender: gender) }
-
-
-
   scope :by_ages, lambda { |age1, age2| where("age >= ? AND age < ?", age1, age2) }
 
 end

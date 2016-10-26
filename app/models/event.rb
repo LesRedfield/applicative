@@ -56,8 +56,6 @@ class Event < ActiveRecord::Base
     gender: [[false], [true]]
   }
 
-  # DATES = ['May 03', 'May 17', 'May 31', 'Jun 14', 'Jun 28']
-
   DATES = [
     "#{90.days.ago.strftime('%b')} #{90.days.ago.strftime('%d')}",
     "#{76.days.ago.strftime('%b')} #{76.days.ago.strftime('%d')}",

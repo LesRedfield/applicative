@@ -44,7 +44,6 @@ const LeftNav = React.createClass({
         <Link to="/bookmarks" id="left-nav-bookmarks" className="left-nav-button" activeClassName="current">
         </Link>
 
-
       </div>
     );
   }
@@ -52,11 +51,3 @@ const LeftNav = React.createClass({
 });
 
 module.exports = LeftNav;
-
-// <div id="bot-bord" className="left-nav-button">
-//   <div id="left-nav-dashboard" />
-// </div>
-//
-// <div className="left-nav-button">
-//   <div id="left-nav-segmentation" />
-// </div>
